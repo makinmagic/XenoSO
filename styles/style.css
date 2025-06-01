@@ -59,8 +59,8 @@ body {
     }
 
     tr:hover {
-        background-color: #001884; 
-        color: #e7e7e7; 
+        background-color: #dda0dd; 
+        color: #f0f0f0; 
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 

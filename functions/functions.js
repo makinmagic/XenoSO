@@ -481,7 +481,7 @@ async function displayPlayerInfo(avatarId) {
                 tsomins = "0" + tsomins;
             }
 
-            document.getElementById('tempoSim').innerHTML = "Time in Eldorado: " + tsohours + ":" + tsomins + " " + timesuffix;
+            document.getElementById('tempoSim').innerHTML = "Time in Xenovia: " + tsohours + ":" + tsomins + " " + timesuffix;
 
             setTimeout(tempoSim, 1000);
         }

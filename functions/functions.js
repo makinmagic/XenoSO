@@ -444,7 +444,7 @@ async function displayPlayerInfo(avatarId) {
                  alt="Profile Picture" 
                  class="console-img">
             <p style="text-align: center; margin-top: -9px;">
-                <a href="https://forms.gle/sw6fbLx4iud8xGpc9" target="_blank" style="text-decoration: underline;">Submit/Change Profile Picture</a>
+                <a href="https://forms.gle/p7DTPGDpiztywdsM9" target="_blank" style="text-decoration: underline;">Submit/Change Profile Picture</a>
             </p>
             <p><strong>Description:</strong></p>
             <div class="description-container">${formattedDescription}</div>
@@ -563,7 +563,7 @@ async function searchSim(event) {
                    alt="Profile Picture" 
                    class="console-img">
                 <p style="text-align: center; margin-top: -9px;">
-                    <a href="https://forms.gle/sw6fbLx4iud8xGpc9" target="_blank" style="text-decoration: underline;">Submit/Change Profile Picture</a>
+                    <a href="https://forms.gle/p7DTPGDpiztywdsM9" target="_blank" style="text-decoration: underline;">Submit/Change Profile Picture</a>
                 </p>
                 <p><strong>Description:</strong></p>
                 <div class="description-container">${(playerData.description || 'No description available.').replace(/(\r\n|\n|\r)/g, '<br>')}</div>

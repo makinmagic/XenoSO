@@ -109,6 +109,7 @@ async function init() {
     await loadLots(); // Load active lots
     fetchEvents(); // Load and display upcoming events
     displayCurrentEvent(); // Initial check for any ongoing event and add balloon icon
+    generateStars(); // Starry background - used with permission from Sorta
 }
 
 window.onload = () => {

@@ -330,6 +330,29 @@ body.dark-mode #console-content a {
     content: "\f073";
 }
 
+    /* Stars background - used with permission from Sorta */
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+    }
+    
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
 .console-icon::before {
     font: var(--fa-font-solid);
     content: "\f05a";

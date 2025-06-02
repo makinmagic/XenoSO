@@ -106,12 +106,12 @@ async function init() {
     // launchFireworks();
     tempoSim(); // Start simulation timing
     fetchMoneyObject(); // Display the money object
+    generateStars(); // Starry background - used with permission from Sorta
     // updateCountdown();
     await loadOnlinePlayers(); // Load online players
     await loadLots(); // Load active lots
     fetchEvents(); // Load and display upcoming events
     displayCurrentEvent(); // Initial check for any ongoing event and add balloon icon
-    generateStars(); // Starry background - used with permission from Sorta
 }
 
 window.onload = () => {

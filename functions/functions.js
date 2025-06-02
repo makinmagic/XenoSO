@@ -981,6 +981,33 @@ function sortByFavorites() {
   const tbody = table.tBodies[0];
   rows.forEach(row => tbody.appendChild(row));
 }
+
+// Generate stars - used with permission from Sorta
+    function generateStars() {
+      const stars = document.getElementById('stars');
+      const starCount = 150;
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        
+        // Random size
+        const size = Math.random() * 2 + 1;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        // Add twinkling effect to some stars
+        if (Math.random() > 0.7) {
+          star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite ease-in-out`;
+        }
+        
+        stars.appendChild(star);
+      }
+    }
         
 document.addEventListener('DOMContentLoaded', () => {
     // Check if dark mode was previously enabled

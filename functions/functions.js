@@ -381,7 +381,7 @@ async function displayLotInfo(lotId) {
             <p><strong>Owner:</strong> ${ownerName}</p>
             <p><strong>Roommates:</strong> ${roommateNames.length > 0 ? roommateNames.join(', ') : 'None'}</p>
             <p><strong>Known Sims Inside:</strong> ${knownSims.length > 0 ? knownSims.join(', ') : 'None'}</p>
-            ${showHiddenNote ? `<p><em>There may be sims inside with their location hidden.</em></p>` : ''}
+            ${showHiddenNote ? `<p><em>There are sims inside with their location hidden.</em></p>` : ''}
         `;
     } catch (error) {
         console.error('Failed to fetch lot details:', error);
@@ -644,6 +644,16 @@ async function searchLot(event) {
 });
 
             const activeStatus = isActive ? 'Yes' : 'No';
+            
+            const lotRow = Array.from(lotsContainer.querySelectorAll('tr')).find(row =>
+    row.querySelector('td')?.textContent.trim().toLowerCase() === lotData.name.trim().toLowerCase()
+);
+
+            let totalSimsInside = 0;
+            if (lotRow) {
+                const simsInsideCell = lotRow.querySelector('td:nth-child(2)');
+                totalSimsInside = parseInt(simsInsideCell?.textContent.trim() || '0', 10);
+            }
 
             // Fetch owner's name using owner_id
             const ownerResponse = await fetch(`https://api.xenoso.space/userapi/avatars/${lotData.owner_id}`);
@@ -674,6 +684,8 @@ async function searchLot(event) {
                     return locationCell && locationCell.textContent == lotData.location;
                 })
                 .map(row => row.querySelector('td').textContent);
+                
+            const showHiddenNote = totalSimsInside > knownSims.length;
 
                         // Display lot information in Console
             const consoleContent = document.getElementById('console-content');
@@ -695,17 +707,16 @@ async function searchLot(event) {
                 <p><strong>Roommates:</strong> ${roommateNames.length > 0 ? roommateNames.join(', ') : 'None'}</p>
                 <p><strong>Currently Active:</strong> ${activeStatus}</p>
                 ${activeStatus === 'Yes' ? `
-        <p><strong>Known Sims Inside:</strong> ${knownSims.length > 0 ? knownSims.map(name => name.trim()).join(', ') : 'None'}</p>
-        <p><em>There may be sims inside with their location hidden.</em></p>
-    ` : ''}
-            `;
+    <p><strong>Known Sims Inside:</strong> ${knownSims.length > 0 ? knownSims.map(name => name.trim()).join(', ') : 'None'}</p>
+    ${showHiddenNote ? `<p><em>There are sims inside with their location hidden.</em></p>` : ''}
+` : ''}
+`;
         } catch (error) {
             console.error('Failed to fetch lot details:', error);
             document.getElementById('console-content').innerHTML = 'Lot not found.';
         }
     }
 }
-
 const eventsUrl = 'https://makinmagic.github.io/XenoSO/events.json';
 
 async function fetchEvents() {

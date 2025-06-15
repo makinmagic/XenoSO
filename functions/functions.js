@@ -346,6 +346,19 @@ async function displayLotInfo(lotId) {
             })
             .map(row => row.querySelector('td').textContent.trim()); // Trim each Sim's name
 
+	// Get total Sims inside from Active Lots table
+        let totalSimsInside = 0;
+        const lotsContainer = document.getElementById('lots');
+        const lotRow = Array.from(lotsContainer.querySelectorAll('tr')).find(row =>
+            row.dataset.lotId === lotId.toString()
+        );
+        if (lotRow) {
+            const simsInsideCell = lotRow.querySelector('td:nth-child(2)');
+            totalSimsInside = parseInt(simsInsideCell?.textContent.trim() || '0', 10);
+        }
+
+        const showHiddenNote = totalSimsInside > knownSims.length;
+
         // Check for favorites in localStorage
         const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
         const isFavorite = favorites.lots && favorites.lots[lotId];
@@ -368,7 +381,7 @@ async function displayLotInfo(lotId) {
             <p><strong>Owner:</strong> ${ownerName}</p>
             <p><strong>Roommates:</strong> ${roommateNames.length > 0 ? roommateNames.join(', ') : 'None'}</p>
             <p><strong>Known Sims Inside:</strong> ${knownSims.length > 0 ? knownSims.join(', ') : 'None'}</p>
-            <p><em>There may be sims inside with their location hidden.</em></p>
+            ${showHiddenNote ? `<p><em>There may be sims inside with their location hidden.</em></p>` : ''}
         `;
     } catch (error) {
         console.error('Failed to fetch lot details:', error);

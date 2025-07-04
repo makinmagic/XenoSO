@@ -107,9 +107,29 @@ async function loadOnlinePlayers() {
             const creationDate = new Date(playerDetails.date * 1000); // Convert to milliseconds
             const currentDate = new Date();
             const ageInDays = Math.floor((currentDate - creationDate) / (1000 * 60 * 60 * 24)); // Age in days
+
+// Check if this Sim is a favorite
+const isFavorite = favoriteSims[avatar.avatar_id];
 			
-			// Check if this Sim is a favorite
-            const isFavorite = favoriteSims[avatar.avatar_id];
+// Define emoji rules
+const adminNames = ["Sorta", "Savaki", "Daat", "Xeno", "Eric", "Sneaky"];
+const emojiMap = {
+    "Mr Teddy": "🐻"
+};
+
+// Display name
+let displayName = avatar.name;
+
+if (emojiMap[avatar.name]) {
+    displayName += ` ${emojiMap[avatar.name]}`;
+}
+
+// Add shield for admins
+
+if (adminNames.includes(avatar.name)) {
+    displayName += ` <span title="Admin">🛡️</span>`;
+}
+
 
             tableHtml += `
             <tr data-avatar-id="${avatar.avatar_id}">
@@ -118,7 +138,7 @@ async function loadOnlinePlayers() {
                title="Click to toggle favorite" 
                data-favorite-id="${avatar.avatar_id}" 
                onclick="toggleFavorite('sims', '${avatar.avatar_id}', '${avatar.name}', event)"></i>
-            ${avatar.name}
+            ${displayName}
         </td>
         <td class="hidden">${avatar.avatar_id}</td>
         <td>${ageInDays} days</td>
@@ -156,6 +176,7 @@ async function loadOnlinePlayers() {
         }
     }
 }
+
        // Mapping for lot categories
         const categoryMapping = {
             1: 'Money',

@@ -1053,6 +1053,26 @@ function sortByFavorites() {
         stars.appendChild(star);
       }
     }
+
+// One-off announcements
+document.addEventListener("DOMContentLoaded", function () {
+  const now = new Date();
+
+  const expiry = new Date(Date.UTC(2025, 6, 5, 4, 0, 0));
+
+  const timeUntilExpire = expiry - now;
+
+  if (timeUntilExpire > 0) {
+    setTimeout(() => {
+      const msg = document.getElementById('event-message');
+      if (msg) msg.style.display = 'none';
+    }, timeUntilExpire);
+  } else {
+    
+    const msg = document.getElementById('event-message');
+    if (msg) msg.style.display = 'none';
+  }
+});
         
 document.addEventListener('DOMContentLoaded', () => {
     // Check if dark mode was previously enabled

@@ -1073,6 +1073,26 @@ document.addEventListener("DOMContentLoaded", function () {
     if (msg) msg.style.display = 'none';
   }
 });
+
+//Countdown
+
+function updateCountdown() {
+    const endTime = new Date("July 5, 2025 04:00:00 UTC").getTime();
+    const now = new Date().getTime();
+    const timeRemaining = endTime - now;
+
+    if (timeRemaining > 0) {
+      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+      document.getElementById("time").innerHTML = `${hours}h ${minutes}m ${seconds}s`; //add ${days}d as needed
+    } else {
+      document.getElementById("countdown").style.display = "none";
+      clearInterval(countdownInterval);
+    }
+  }
         
 document.addEventListener('DOMContentLoaded', () => {
     // Check if dark mode was previously enabled

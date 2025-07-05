@@ -1077,7 +1077,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //Countdown
 
 function updateCountdown() {
-    const endTime = new Date("July 5, 2025 04:00:00 UTC").getTime();
+    const endTime = new Date("July 6, 2025 04:00:00 UTC").getTime();
     const now = new Date().getTime();
     const timeRemaining = endTime - now;
 

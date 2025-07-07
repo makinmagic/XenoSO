@@ -101,13 +101,15 @@ body {
   text-decoration: underline;
 }
 
-#money-object a {
-    color: #c169ff; 
-    text-decoration: none; 
-    font-weight: bold; 
+#viewAllLink {
+  display: none;
+  margin-left: 10px;
+  color: #c169ff;
+  text-decoration: none;
+  font-weight: bold;
 }
 
-#money-object a:hover {
+#viewAllLink:hover {
   text-decoration: underline;
 }
 

@@ -411,11 +411,25 @@ async function displayLotInfo(lotId) {
 }
 
 async function fetchPlayerImages() {
-    const playerImagesUrl = 'https://makinmagic.github.io/XenoSO/profile-pictures.json';
+    const playerImagesUrl = 'https://opensheet.vercel.app/1CJQX1Y5zwayEqCpu3T2DljNkHBOCSNPTbH0YEhnpkqA/PFP';
+
     try {
         const response = await fetch(playerImagesUrl);
         if (!response.ok) throw new Error('Failed to fetch player images.');
-        return await response.json();
+
+        const rawData = await response.json();
+        const result = {};
+
+        rawData.forEach(entry => {
+            const name = entry["Sim Name"]?.trim();
+            const url = entry["PFP URL"]?.trim();
+
+            if (name && url) {
+                result[name] = url;
+            }
+        });
+
+        return result;
     } catch (error) {
         console.error(error);
         return {}; // Return an empty object on error
@@ -738,7 +752,7 @@ async function searchLot(event) {
         }
     }
 }
-const eventsUrl = 'https://makinmagic.github.io/XenoSO/events.json';
+const eventsUrl = 'https://opensheet.elk.sh/1xWQc2P86fisaRSdxyGWwTddX_a4ZGmWYaWRK0ZfXb_4/Events';
 
 async function fetchEvents() {
     try {
@@ -802,7 +816,7 @@ function displayEventInfo(event) {
         <div class="console-title">
             ${event.name}
         </div>
-        <p><strong>Description:</strong> ${event.description}</p>
+        <p><strong>Description:</strong> ${event.description.replace(/(\r\n|\n|\r)/g, "<br>")}</p>
         <p><strong>Date:</strong> ${formattedDate}</p>
         <p><strong>Time:</strong> ${formattedTime}</p>
         <p><strong>Location:</strong> ${event.location}</p>
@@ -1075,26 +1089,45 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //Countdown
+async function loadCountdown() {
+  try {
+    const response = await fetch('https://opensheet.elk.sh/1eTaXmyKRXZmWCvX5ZnSbjaWlT8X_KDWvN2PwBrlwEmc/Countdown');
+    const data = await response.json();
 
-function updateCountdown() {
-    const endTime = new Date("July 14, 2025 03:00:00 UTC").getTime();
-    const now = new Date().getTime();
-    const timeRemaining = endTime - now;
+    const countdownData = data[0];
+    const endTime = new Date(countdownData.endTime).getTime();
+    const message = countdownData.message;
 
-    if (timeRemaining > 0) {
-      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+    const countdownEl = document.getElementById("countdown");
+    countdownEl.innerHTML = `${message} <span id="time"></span>`;
+    const timeEl = document.getElementById("time");
 
-      document.getElementById("time").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`; //add/remove ${days}d as needed
-    } else {
-      document.getElementById("countdown").style.display = "none";
-      clearInterval(countdownInterval);
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const timeRemaining = endTime - now;
+
+      if (timeRemaining > 0) {
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        timeEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      } else {
+        countdownEl.style.display = "none";
+        clearInterval(interval);
+      }
     }
-  }
 
-const countdownInterval = setInterval(updateCountdown, 1000);
+    const interval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+  } catch (error) {
+    console.error("Failed to load countdown data:", error);
+  }
+}
+
+loadCountdown();
         
 document.addEventListener('DOMContentLoaded', () => {
     // Check if dark mode was previously enabled

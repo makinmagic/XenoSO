@@ -169,7 +169,7 @@ if (adminNames.includes(avatar.name)) {
 
 } catch (error) {
         console.error('Failed to load online players:', error);
-        document.getElementById('players').innerHTML = 'Error loading online players.';
+        document.getElementById('players').innerHTML = 'Error loading data.';
         // If there is an error, reset the title to show 0
         if (playersTitle) {
             playersTitle.innerHTML = `<span class="sims-online-icon"></span> Sims Online: 0 <span class="sims-online-icon"></span>`;

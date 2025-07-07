@@ -1112,7 +1112,11 @@ async function loadCountdown() {
         const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-        timeEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        let display = '';
+	if (days > 0) display += `${days}d `;
+	display += `${hours}h ${minutes}m ${seconds}s`;
+	timeEl.innerHTML = display;
+
       } else {
         countdownEl.style.display = "none";
         clearInterval(interval);

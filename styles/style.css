@@ -302,13 +302,13 @@ body.dark-mode {
     border-color: #888 !important;
 }
 
-#events-container a, #money-object a {
+#events-container a {
     color: #c169ff;
     text-decoration: underline;
     font-weight: bold;
 }
 
-body.dark-mode #events-container a, body.dark-mode #money-object a {
+body.dark-mode #events-container a {
     color: #f1f1f1;
 }
 

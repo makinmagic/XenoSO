@@ -91,6 +91,16 @@ body {
   text-decoration: underline;
 }
 
+#countdown a { 
+    color: #c169ff; 
+    text-decoration: none; 
+    font-weight: bold; 
+}
+
+#countdown a:hover { 
+  text-decoration: underline;
+}
+
 .search-icon {
     color: #f0f0f0;
     cursor: pointer;

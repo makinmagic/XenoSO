@@ -101,6 +101,16 @@ body {
   text-decoration: underline;
 }
 
+#money-object a {
+    color: #c169ff; 
+    text-decoration: none; 
+    font-weight: bold; 
+}
+
+#money-object a:hover {
+  text-decoration: underline;
+}
+
 .search-icon {
     color: #f0f0f0;
     cursor: pointer;

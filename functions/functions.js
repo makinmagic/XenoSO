@@ -960,19 +960,14 @@ function addFavoriteStar(type, id, name) {
 }
 
 //Top-paying MOs
+//Top-paying MOs
 async function loadTopPayingMOs() {
   const url = 'https://opensheet.elk.sh/1DJHQ0f5X9NUuAouEf5osJgLV2r2nuzsGLIyjLkm-0NM/MOs';
 
   try {
     const response = await fetch(url);
     const data = await response.json();
-
-    const container = document.getElementById("money-object");
-
-    if (!data.length) {
-      container.style.display = "none";
-      return;
-    }
+    if (!data.length) return;
 
     const latest = data[data.length - 1];
     const formTimestamp = new Date(latest.Timestamp);
@@ -984,12 +979,18 @@ async function loadTopPayingMOs() {
       formTimestamp.getUTCDate(),
       3, 0, 0
     ));
-
     const endTime = new Date(startTime);
     endTime.setUTCDate(startTime.getUTCDate() + 1);
 
+    const container = document.getElementById("money-object");
+    const guideLink = document.getElementById("guideLink");
+
     if (utcNow < startTime || utcNow >= endTime) {
       container.style.display = "none";
+
+      const tempoSim = document.getElementById("tempoSim");
+      tempoSim.parentNode.insertBefore(guideLink, tempoSim);
+
       return;
     }
 
@@ -998,13 +999,14 @@ async function loadTopPayingMOs() {
       .sort((a, b) => parseInt(b[1]) - parseInt(a[1]))
       .map(([key, val]) => `${key} (${parseInt(val)}%)`);
 
-    const output = `Today's top-paying MOs are: ${topMOs.join(', ')}`;
-    container.textContent = output;
+    container.textContent = `Today's top-paying MOs are: ${topMOs.join(', ')}`;
     container.style.display = "block";
+
+    const bottomContainer = document.getElementById("bottom-container");
+    bottomContainer.parentNode.insertBefore(guideLink, document.getElementById("footer-note"));
 
   } catch (error) {
     console.error("Error fetching top-paying MOs:", error);
-    document.getElementById("money-object").style.display = "none";
   }
 }
 

@@ -362,6 +362,7 @@ body.dark-mode #console-content a {
   width: 80%;
   color: #fff;
   max-width: 600px;
+  text-align: center;
 }
 
 .close {

@@ -997,9 +997,14 @@ async function loadTopPayingMOs() {
     const viewAllLink = document.getElementById("viewAllLink");
     const allMOList = document.getElementById("all-mo-list");
     const modal = document.getElementById("moModal");
+    const guideLink = document.getElementById("guideLink");
 
     if (utcNow < startTime || utcNow >= endTime) {
       container.style.display = "none";
+  const tempoSim = document.getElementById("tempoSim");
+  if (guideLink && tempoSim) {
+    tempoSim.parentNode.insertBefore(guideLink, tempoSim);
+  }
       return;
     }
 
@@ -1037,6 +1042,14 @@ async function loadTopPayingMOs() {
     };
 
     container.style.display = "block";
+
+	    // Move guideLink back to bottom
+  const bottomContainer = document.getElementById("bottom-container");
+  const footerNote = document.getElementById("footer-note");
+  if (bottomContainer && footerNote && guideLink) {
+    bottomContainer.parentNode.insertBefore(guideLink, footerNote);
+  }
+
 
   } catch (error) {
     console.error("Error fetching top-paying MOs:", error);

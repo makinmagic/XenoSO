@@ -399,9 +399,26 @@ async function displayLotInfo(lotId) {
             <div class="description-container">${formattedDescription}</div>
             <p><strong>Lot Type:</strong> ${categoryMapping[lotData.category] || 'Unknown'}</p>
             <p><strong>Admit Mode:</strong> ${admitModeMapping[lotData.admit_mode] || 'Unknown'}</p>
-            <p><strong>Owner:</strong> ${ownerName}</p>
-            <p><strong>Roommates:</strong> ${roommateNames.length > 0 ? roommateNames.join(', ') : 'None'}</p>
-            <p><strong>Known Sims Inside:</strong> ${knownSims.length > 0 ? knownSims.join(', ') : 'None'}</p>
+            <p><strong>Owner:</strong> <span style="color: #FFA502;">${ownerName}</span></p>
+            <p><strong>Roommates:</strong> ${
+  		roommateNames.length > 0
+    		? roommateNames.map(name => `<span style="color: #dda0dd;">${name}</span>`).join(', ')
+ 		   : 'None'
+		}</p>
+            <p><strong>Known Sims Inside:</strong> ${
+  knownSims.length > 0
+    ? knownSims.map(name => {
+        const trimmed = name.trim();
+        if (trimmed === ownerName) {
+          return `<span style="color: #FFA502;">${trimmed}</span>`;
+        } else if (roommateNames.includes(trimmed)) {
+          return `<span style="color: #DDA0DD;">${trimmed}</span>`;
+        } else {
+          return trimmed;
+        }
+      }).join(', ')
+    : 'None'
+}</p>
             ${showHiddenNote ? `<p><em>There are sims inside with their location hidden.</em></p>` : ''}
         `;
     } catch (error) {
@@ -738,11 +755,28 @@ async function searchLot(event) {
                 <div class="description-container">${formattedDescription}</div>
                 <p><strong>Lot Type:</strong> ${categoryMapping[lotData.category] || 'Unknown'}</p>
                 <p><strong>Admit Mode:</strong> ${admitModeMapping[lotData.admit_mode] || 'Unknown'}</p>
-                <p><strong>Owner:</strong> ${ownerName || 'Unknown'}</p>
-                <p><strong>Roommates:</strong> ${roommateNames.length > 0 ? roommateNames.join(', ') : 'None'}</p>
+                <p><strong>Owner:</strong> <span style="color: #FFA502;">${ownerName}</span></p>
+                <p><strong>Roommates:</strong> ${
+  roommateNames.length > 0
+    ? roommateNames.map(name => `<span style="color: #dda0dd;">${name}</span>`).join(', ')
+    : 'None'
+}</p>
                 <p><strong>Currently Active:</strong> ${activeStatus}</p>
                 ${activeStatus === 'Yes' ? `
-    <p><strong>Known Sims Inside:</strong> ${knownSims.length > 0 ? knownSims.map(name => name.trim()).join(', ') : 'None'}</p>
+    <p><strong>Known Sims Inside:</strong> ${
+  knownSims.length > 0
+    ? knownSims.map(name => {
+        const trimmed = name.trim();
+        if (trimmed === ownerName) {
+          return `<span style="color: #FFA502;">${trimmed}</span>`;
+        } else if (roommateNames.includes(trimmed)) {
+          return `<span style="color: #DDA0DD;">${trimmed}</span>`;
+        } else {
+          return trimmed;
+        }
+      }).join(', ')
+    : 'None'
+}</p>
     ${showHiddenNote ? `<p><em>There are sims inside with their location hidden.</em></p>` : ''}
 ` : ''}
 `;
@@ -752,6 +786,7 @@ async function searchLot(event) {
         }
     }
 }
+
 const eventsUrl = 'https://opensheet.elk.sh/1xWQc2P86fisaRSdxyGWwTddX_a4ZGmWYaWRK0ZfXb_4/Events';
 
 async function fetchEvents() {

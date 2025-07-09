@@ -988,7 +988,7 @@ async function loadTopPayingMOs() {
       formTimestamp.getUTCFullYear(),
       formTimestamp.getUTCMonth(),
       formTimestamp.getUTCDate(),
-      3, 0, 0
+      4, 0, 0
     ));
     const endTime = new Date(startTime);
     endTime.setUTCDate(startTime.getUTCDate() + 1);

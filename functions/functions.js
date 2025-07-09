@@ -1011,7 +1011,7 @@ async function loadTopPayingMOs() {
     const entries = Object.entries(latest).filter(([key]) => key !== "Timestamp");
 
     const topMOs = entries
-      .filter(([, val]) => parseInt(val) > 140)
+      .filter(([, val]) => parseInt(val) > 139)
       .sort((a, b) => parseInt(b[1]) - parseInt(a[1]))
       .map(([key, val]) => `${key} (${parseInt(val)}%)`);
 

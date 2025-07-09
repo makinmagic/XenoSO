@@ -8,11 +8,17 @@ body {
     }
 
     h1 {
-        text-align: center;
-        color: #C169FF; 
-        font-size: 32px;
-        text-shadow: 0 0 32px rgba(146, 21, 230, 0.8), 0 0 30px rgba(193, 105, 255, 0.8);
-    }
+    text-align: center;
+    color: #C169FF; 
+    font-size: 32px;
+    text-shadow: 0 0 32px rgba(146, 21, 230, 0.8), 0 0 30px rgba(193, 105, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+    white-space: nowrap;
+}
     
     h3 {
         text-align: center;

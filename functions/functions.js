@@ -112,7 +112,7 @@ async function loadOnlinePlayers() {
 const isFavorite = favoriteSims[avatar.avatar_id];
 			
 // Define emoji rules
-const adminNames = ["Sorta", "Savaki", "Daat", "Xeno", "Eric", "Sneaky"];
+const adminNames = ["Sorta", "Savaki", "Daat", "Xeno", "Eric", "Sneaky", "Nyx"];
 const emojiMap = {
     "Mr Teddy": "🐻"
 };

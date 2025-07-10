@@ -367,6 +367,39 @@ async function displayLotInfo(lotId) {
             })
             .map(row => row.querySelector('td').textContent.trim()); // Trim each Sim's name
 
+	// Identify a single host with location = Unknown
+let appendedHiddenHost = null;
+const allHosts = [ownerName, ...roommateNames];
+
+const candidateHosts = playersRows
+  .map(row => {
+    const nameCell = row.querySelector('td');
+    const locationCell = row.querySelector('.hidden:nth-child(4)');
+    const name = nameCell?.textContent.trim();
+    const location = locationCell?.textContent.trim();
+
+    const normalizedName = name?.trim().toLowerCase() || '';
+const normalizedHosts = allHosts.map(n => n.trim().toLowerCase());
+const normalizedKnown = knownSims.map(n => n.trim().toLowerCase());
+
+const isHost = normalizedHosts.includes(normalizedName);
+const cleanedLocation = location?.trim().toLowerCase() || '';
+const isUnknown = cleanedLocation === '0' || /unknown|^\s*$|^[-–]$/.test(cleanedLocation);
+const alreadyListed = normalizedKnown.includes(normalizedName);
+
+    return isHost && isUnknown && !alreadyListed ? name : null;
+  })
+  .filter(Boolean);
+
+if (candidateHosts.length === 1) {
+  appendedHiddenHost = candidateHosts[0];
+}
+
+	const fullKnownSimsList = [...knownSims];
+if (appendedHiddenHost) {
+  fullKnownSimsList.push(`${appendedHiddenHost} (hidden)`);
+}
+
 	// Get total Sims inside from Active Lots table
         let totalSimsInside = 0;
         const lotsContainer = document.getElementById('lots');
@@ -406,19 +439,21 @@ async function displayLotInfo(lotId) {
  		   : 'None'
 		}</p>
             <p><strong>Known Sims Inside:</strong> ${
-  knownSims.length > 0
-    ? knownSims.map(name => {
-        const trimmed = name.trim();
+  fullKnownSimsList.length > 0
+    ? fullKnownSimsList.map(name => {
+        const trimmed = name.trim().replace(' (hidden)', '');
+        const isHidden = name.includes('(hidden)');
         if (trimmed === ownerName) {
-          return `<span style="color: #FFA502;">${trimmed}</span>`;
+          return `<span style="color: #FFA502;">${trimmed}${isHidden ? ' (hidden)' : ''}</span>`;
         } else if (roommateNames.includes(trimmed)) {
-          return `<span style="color: #DDA0DD;">${trimmed}</span>`;
+          return `<span style="color: #DDA0DD;">${trimmed}${isHidden ? ' (hidden)' : ''}</span>`;
         } else {
-          return trimmed;
+          return `${trimmed}${isHidden ? ' (hidden)' : ''}`;
         }
       }).join(', ')
     : 'None'
-}</p>
+}
+</p>
             ${showHiddenNote ? `<p><em>There are sims inside with their location hidden.</em></p>` : ''}
         `;
     } catch (error) {
@@ -736,6 +771,35 @@ async function searchLot(event) {
                     return locationCell && locationCell.textContent == lotData.location;
                 })
                 .map(row => row.querySelector('td').textContent);
+
+		let appendedHiddenHost = null;
+const allHosts = [ownerName, ...roommateNames];
+const normalizedHosts = new Set(allHosts.map(n => n.trim().toLowerCase()));
+const normalizedKnown = new Set(knownSims.map(n => n.trim().toLowerCase()));
+
+const candidateHosts = Array.from(playersContainer.querySelectorAll('tr'))
+  .map(row => {
+    const nameCell = row.querySelector('td');
+    const locationCell = row.querySelector('.hidden:nth-child(4)');
+    const name = nameCell?.textContent.trim();
+    const location = locationCell?.textContent.trim().toLowerCase() || '';
+
+    const isHost = name && normalizedHosts.has(name.toLowerCase());
+    const isUnknown = location === '0' || /unknown|^$|^[-–]$/.test(location);
+    const alreadyListed = name && normalizedKnown.has(name.toLowerCase());
+
+    return isHost && isUnknown && !alreadyListed ? name : null;
+  })
+  .filter(Boolean);
+
+if (candidateHosts.length === 1) {
+  appendedHiddenHost = candidateHosts[0];
+}
+
+const fullKnownSimsList = [...knownSims];
+if (appendedHiddenHost) {
+  fullKnownSimsList.push(`${appendedHiddenHost} (hidden)`);
+}
                 
             const showHiddenNote = totalSimsInside > knownSims.length;
 
@@ -763,18 +827,17 @@ async function searchLot(event) {
 }</p>
                 <p><strong>Currently Active:</strong> ${activeStatus}</p>
                 ${activeStatus === 'Yes' ? `
-    <p><strong>Known Sims Inside:</strong> ${
-  knownSims.length > 0
-    ? knownSims.map(name => {
-        const trimmed = name.trim();
-        if (trimmed === ownerName) {
-          return `<span style="color: #FFA502;">${trimmed}</span>`;
-        } else if (roommateNames.includes(trimmed)) {
-          return `<span style="color: #DDA0DD;">${trimmed}</span>`;
-        } else {
-          return trimmed;
-        }
-      }).join(', ')
+    <p><strong>Known Sims Inside:</strong> ${fullKnownSimsList.length > 0
+    ? fullKnownSimsList.map(name => {
+    const trimmed = name.trim().replace(' (hidden)', '');
+    if (trimmed === ownerName) {
+      return `<span style="color: #FFA502;">${name}</span>`;
+    } else if (roommateNames.includes(trimmed)) {
+      return `<span style="color: #DDA0DD;">${name}</span>`;
+    } else {
+      return name;
+    }
+  }).join(', ')
     : 'None'
 }</p>
     ${showHiddenNote ? `<p><em>There are sims inside with their location hidden.</em></p>` : ''}

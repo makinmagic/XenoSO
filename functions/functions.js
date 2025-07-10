@@ -595,7 +595,7 @@ function toggleSearch(type) {
     } else {
         simSearchInput.style.display = 'none';
         simSearchInput.value = '';
-        document.getElementById('console-content').innerHTML = '<p style="text-align: center; color: black;">Select a Sim or a Lot to see more information.</p>';
+        document.getElementById('console-content').innerHTML = '<p style="text-align: center; color: #F0F0F0;">Select or search for a Sim or Lot to see more information, or click on an Event to view details.</p>';
     }
 }
 

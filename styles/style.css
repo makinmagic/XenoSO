@@ -394,6 +394,63 @@ body.dark-mode #console-content a {
   color: #fff;
 }
 
+#job-scheduler-container .panel {
+  background: transparent;
+  border: none;
+}
+
+.panel-header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.job-selector {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.job-btn {
+  background: #f0f0f0;
+  color: #000;
+  border: 2px solid #9215e6;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.job-btn:hover {
+  background: #9215e6;
+  color: white;
+}
+
+.job-btn.active {
+  background: #9215e6;
+  color: white;
+}
+
+.job-info {
+  text-align: center;
+  font-size: 16px;
+}
+
+.job-info .info-row {
+  margin: 6px 0;
+}
+
+.job-countdown {
+  font-weight: bold;
+  color: #eeba30;
+}
+
     /* Stars background - used with permission from Sorta */
     .stars {
       position: fixed;

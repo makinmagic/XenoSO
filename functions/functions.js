@@ -109,6 +109,7 @@ const isJobLot = avatar.location.toString().length === 10;
 const jobMap = {
     1: "Factory",
     2: "Diner",
+    4: "Club:,
     5: "Club"
 };
 

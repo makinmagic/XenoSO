@@ -222,7 +222,7 @@ body {
         to { opacity: 1; }
     }
 
-#lots-title {
+#lots-title, #players-title {
     margin-bottom: 10px;
     margin-top: 20px;
 }
@@ -394,27 +394,41 @@ body.dark-mode #console-content a {
   color: #fff;
 }
 
-#job-scheduler-container .panel {
-  background: transparent;
-  border: none;
-  padding: 0;
+/* Job Scheduler Modal */
+#jobSchedulerModal .modal-content {
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #1c003b;
+  border: 2px solid #9215e6;
+  max-width: 600px;
+  width: 80%;
+  text-align: center;
+  font-size: 16px;
+}
+
+#job-scheduler-container {
+  font-family: inherit;
+  font-size: inherit;
+  color: #fff;
 }
 
 #job-scheduler-container .panel-header {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  font-size: 1.2em;
+  font-size: 1.6em;
   font-weight: bold;
   color: #dda0dd;
   margin-bottom: 20px;
 }
 
 #job-scheduler-container .panel-header span:first-child {
-  font-size: 1.4em;
   display: flex;
   align-items: center;
+  font-size: inherit;
+  line-height: 1;
 }
 
 .job-selector {
@@ -426,13 +440,13 @@ body.dark-mode #console-content a {
 
 .job-btn {
   padding: 8px 16px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 8px;
   background-color: rgba(146, 21, 230, 0.2);
   color: #dda0dd;
   border: 1px solid rgba(146, 21, 230, 0.5);
-  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
   transition: all 0.3s ease;
   min-width: 80px;
 }
@@ -452,9 +466,9 @@ body.dark-mode #console-content a {
 .job-info {
   border-top: 1px solid rgba(146, 21, 230, 0.3);
   padding-top: 15px;
-  font-size: 1.2em;
-  color: white;
+  font-size: 1.125em;
   line-height: 1.6;
+  color: white;
   text-align: center;
 }
 
@@ -462,12 +476,7 @@ body.dark-mode #console-content a {
   color: #ffa502;
   font-weight: 700;
   font-family: 'Courier New', monospace;
-  font-size: 1.2em;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+  font-size: 1.125em;
 }
 
 @media (max-width: 500px) {
@@ -475,6 +484,36 @@ body.dark-mode #console-content a {
     font-size: 11px;
     padding: 6px 8px;
   }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.job-credit {
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #aaa;
+  text-align: center;
+}
+
+.current-job-summary {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 4px 0 10px 0;
+  padding-bottom: 4px;
+}
+
+.job-link {
+  color: #c169ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.job-link:hover {
+  text-decoration: underline;
 }
 
     /* Stars background - used with permission from Sorta */

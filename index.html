@@ -31,10 +31,20 @@
     <div id="main-container">
 <div class="container">
             <div style="display: flex; align-items: center;">
-    <h3 id="players-title" style="flex-grow: 1; text-align: center;"><span class="sims-online-icon"></span> Sims Online: 0 <span class="sims-online-icon"></span></h3>
-    <i class="fa-solid fa-search search-icon" onclick="toggleSearch('sim')" style="margin-left: 10px;"></i>
-    <input type="text" id="sim-search" placeholder="Search any Sim" autocomplete="off" style="display: none; margin-left: 10px;" onkeyup="searchSim(event)">
+  <h3 id="players-title" style="flex-grow: 1; text-align: center;">
+    <span class="sims-online-icon"></span> Sims Online: 0 <span class="sims-online-icon"></span>
+  </h3>
+  <i class="fa-solid fa-search search-icon" onclick="toggleSearch('sim')"></i>
+  <input type="text" id="sim-search" placeholder="Search any Sim" autocomplete="off" style="display: none; margin-left: 10px;" onkeyup="searchSim(event)">
 </div>
+
+<div style="display: flex; align-items: center; justify-content: center; margin-top: 8px; margin-bottom: 12px;">
+  <div class="current-job-summary" style="text-align: center; margin: 0;">
+  <strong>💼 Current Job: <span id="current-job-label">Loading...</span></strong> |
+  <a href="#" class="job-link" onclick="openJobSchedulerModal()">View Schedule</a>
+</div>
+</div>
+	
             <div class="scrollable" id="players"></div>
         </div>
         <div class="container">
@@ -117,15 +127,69 @@ async function init() {
     await loadLots(); // Load active lots
     fetchEvents(); // Load and display upcoming events
     displayCurrentEvent(); // Initial check for any ongoing event and add balloon icon
+    switchJob('factory');
+}
+
+function openJobSchedulerModal() {
+  document.getElementById("jobSchedulerModal").style.display = "block";
+}
+
+function closeJobSchedulerModal() {
+  document.getElementById("jobSchedulerModal").style.display = "none";
 }
 
 window.onload = () => {
+
+	document.querySelectorAll(".modal .close").forEach(closeBtn => {
+  closeBtn.addEventListener("click", () => {
+    closeBtn.closest(".modal").style.display = "none";
+  });
+});
+
     init();
     setInterval(displayCurrentEvent, 60000); // Update "Current Event" status every minute
 };
 </script>
 
-<!-- Modal -->
+<div id="jobSchedulerModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeJobSchedulerModal()">&times;</span>
+    <div id="job-scheduler-container">
+      <div class="panel">
+  <div class="panel-header">
+    <span>💼</span>
+    <span>Job Scheduler</span>
+  </div>
+  <div class="panel-content">
+    <div class="job-selector">
+      <button id="job-factory" class="job-btn active" onclick="switchJob('factory')">Factory</button>
+      <button id="job-restaurant" class="job-btn" onclick="switchJob('restaurant')">Diner</button>
+      <button id="job-nightclub" class="job-btn" onclick="switchJob('nightclub')">Club</button>
+    </div>
+    <div class="job-info">
+      <div class="info-row">
+        <span>Job:</span>
+        <span id="current-job-name" class="time-value">Robot Factory</span>
+      </div>
+      <div class="info-row">
+        <span>Shift Time:</span>
+        <span id="current-job-time" class="time-value">9:00 AM</span>
+      </div>
+      <div class="info-row">
+        <span>Next Shift:</span>
+        <span id="job-countdown" class="time-value job-countdown">--:--:--</span>
+      </div>
+	<div class="job-credit">
+  <span style="font-style: italic;">Made by and used with permission from Sorta</span> 💜
+</div>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+	
+<!-- MO Modal -->
 <div id="moModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>

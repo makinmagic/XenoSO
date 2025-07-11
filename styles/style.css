@@ -394,32 +394,39 @@ body.dark-mode #console-content a {
   color: #fff;
 }
 
+#jobSchedulerModal .modal-content {
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
 #job-scheduler-container .panel {
   background: transparent;
   border: none;
   padding: 0;
 }
 
-.panel-header {
+#job-scheduler-container .panel-header {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   color: #dda0dd;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-.panel-header span:first-child {
-  font-size: 18px;
+#job-scheduler-container .panel-header span:first-child {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .job-selector {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin: 20px 0 15px;
+  gap: 12px;
+  margin-bottom: 15px;
 }
 
 .job-btn {
@@ -450,7 +457,7 @@ body.dark-mode #console-content a {
 .job-info {
   border-top: 1px solid rgba(146, 21, 230, 0.3);
   padding-top: 15px;
-  font-size: 14px;
+  font-size: 15px;
   color: white;
   line-height: 1.6;
   text-align: center;
@@ -458,10 +465,9 @@ body.dark-mode #console-content a {
 
 .job-countdown {
   color: #ffa502;
-  font-wei
-
-.pulse {
-  animation: pulse 2s infinite;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
 }
 
 @keyframes pulse {

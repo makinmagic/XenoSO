@@ -1372,7 +1372,126 @@ async function loadCountdown() {
   }
 }
 
-loadCountdown();
+// Job Scheduler Modal
+
+const jobs = {
+  factory: {
+    name: 'Robot Factory',
+    time: '9:00 AM',
+    startMinutes: 9 * 60
+  },
+  restaurant: {
+    name: 'Diner',
+    time: '11:00 AM',
+    startMinutes: 11 * 60
+  },
+  nightclub: {
+    name: 'Club',
+    time: '8:00 PM',
+    startMinutes: 20 * 60
+  }
+};
+
+let currentJob = 'factory';
+
+function switchJob(jobKey) {
+  currentJob = jobKey;
+
+  // Deactivate all buttons
+  document.querySelectorAll('.job-btn').forEach(btn => btn.classList.remove('active'));
+
+  // Activate selected button
+  const selectedButton = document.getElementById(`job-${jobKey}`);
+  if (selectedButton) selectedButton.classList.add('active');
+
+  // Update display
+  const job = jobs[jobKey];
+  document.getElementById('current-job-name').textContent = job.name;
+  document.getElementById('current-job-time').textContent = job.time;
+
+  updateJobCountdown();
+}
+
+function updateJobCountdown() {
+  const job = jobs[currentJob];
+  const currentTime = new Date();
+  let hours = currentTime.getUTCHours();
+  let minutes = currentTime.getUTCMinutes();
+  let seconds = currentTime.getUTCSeconds();
+  let cycle = (hours % 2 === 1) ? 3600 : 0;
+  cycle += minutes * 60 + seconds;
+
+  const currentMinutes = cycle / 5; // fractional minutes
+
+  let minutesUntilJob;
+  if (currentMinutes < job.startMinutes) {
+    minutesUntilJob = job.startMinutes - currentMinutes;
+  } else {
+    minutesUntilJob = (24 * 60) - currentMinutes + job.startMinutes;
+  }
+
+  const realSeconds = Math.round(minutesUntilJob * 5); // round to avoid weird decimals
+
+  const hrs = Math.floor(realSeconds / 3600);
+  const mins = Math.floor((realSeconds % 3600) / 60);
+  const secs = realSeconds % 60;
+
+  const display =
+    hrs > 0
+      ? `${hrs}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+      : `${mins}:${secs.toString().padStart(2, '0')}`;
+
+  document.getElementById('job-countdown').textContent = display;
+}
+
+function getXenoviaMinutes() {
+  const currentTime = new Date();
+  let hours = currentTime.getUTCHours();
+  let minutes = currentTime.getUTCMinutes();
+  let seconds = currentTime.getUTCSeconds();
+  let cycle = (hours % 2 === 1) ? 3600 : 0;
+  cycle += minutes * 60 + seconds;
+
+  let tsoHours = Math.floor(cycle / 300);
+  if (tsoHours > 12) tsoHours -= 12;
+  if (tsoHours === 0) tsoHours = 12;
+
+  let tsoMinutes = Math.floor((cycle % 300) / 5);
+
+  let suffix = (hours % 2 === 1) ? "PM" : "AM";
+
+  const totalMinutes = (suffix === "PM" ? 12 * 60 : 0) + (tsoHours === 12 ? 0 : tsoHours * 60) + tsoMinutes;
+  return totalMinutes;
+}
+
+function updateCurrentJobLabel() {
+  const currentMinutes = getXenoviaMinutes();
+  const activeJobs = [];
+
+  // Factory: 9:00 AM (540) to 5:00 PM (1020)
+  if (currentMinutes >= 540 && currentMinutes < 1020) {
+    activeJobs.push("Factory");
+  }
+
+  // Diner: 11:00 AM (660) to 7:00 PM (1140)
+  if (currentMinutes >= 660 && currentMinutes < 1140) {
+    activeJobs.push("Diner");
+  }
+
+  // Club: 8:00 PM (1200) to 4:00 AM (240 or next day)
+  if (currentMinutes >= 1200 || currentMinutes < 240) {
+    activeJobs.push("Club");
+  }
+
+  const label = activeJobs.length ? activeJobs.join(" + ") : "None";
+  document.getElementById("current-job-label").textContent = label;
+}
+
+setInterval(() => {
+  tempoSim();
+  updateCurrentJobLabel();
+  updateJobCountdown();
+}, 1000);
         
 /* document.addEventListener('DOMContentLoaded', () => {
     // Check if dark mode was previously enabled

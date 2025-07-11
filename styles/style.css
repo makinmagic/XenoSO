@@ -394,61 +394,65 @@ body.dark-mode #console-content a {
   color: #fff;
 }
 
-#job-scheduler-container .panel {
-  background: transparent;
-  border: none;
-}
-
-.panel-header {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 15px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-}
-
 .job-selector {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 5px;
+  margin-bottom: 20px;
 }
 
 .job-btn {
-  background: #f0f0f0;
-  color: #000;
-  border: 2px solid #9215e6;
-  padding: 6px 12px;
-  border-radius: 5px;
-  font-weight: bold;
+  flex: 1;
+  padding: 8px 12px;
+  background-color: rgba(146, 21, 230, 0.3);
+  color: #dda0dd;
+  border: 1px solid rgba(146, 21, 230, 0.5);
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .job-btn:hover {
-  background: #9215e6;
+  background-color: rgba(146, 21, 230, 0.5);
   color: white;
 }
 
 .job-btn.active {
-  background: #9215e6;
+  background-color: #9215e6;
   color: white;
+  border-color: #9215e6;
+  box-shadow: 0 0 10px rgba(146, 21, 230, 0.5);
 }
 
 .job-info {
-  text-align: center;
-  font-size: 16px;
-}
-
-.job-info .info-row {
-  margin: 6px 0;
+  border-top: 1px solid rgba(146, 21, 230, 0.3);
+  padding-top: 15px;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .job-countdown {
-  font-weight: bold;
-  color: #eeba30;
+  color: #ffa502;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@media (max-width: 500px) {
+  .job-btn {
+    font-size: 11px;
+    padding: 6px 8px;
+  }
 }
 
     /* Stars background - used with permission from Sorta */

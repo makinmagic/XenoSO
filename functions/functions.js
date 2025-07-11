@@ -552,6 +552,15 @@ async function displayPlayerInfo(avatarId) {
         const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
         const isFavorite = favorites.sims && favorites.sims[avatarId];
 
+	// Job mapping
+	const jobMap = {
+   	 1: 'Factory',
+ 	 2: 'Diner',
+	 4: 'Club',
+	 5: 'Club'
+	};
+	const jobName = jobMap[playerData.current_job];
+
         // Display all information in the Console
         consoleContent.innerHTML = `
             <div class="console-title">
@@ -570,6 +579,7 @@ async function displayPlayerInfo(avatarId) {
             <div class="description-container">${formattedDescription}</div>
             <p><strong>Age:</strong> ${ageInDays} days old</p>
             <p><strong>Location:</strong> ${playerLocation}</p>
+	    ${jobName ? `<p><strong>Job:</strong> ${jobName}</p>` : ''}
         `;
     } catch (error) {
         console.error('Failed to fetch player details:', error);
@@ -671,6 +681,15 @@ async function searchSim(event) {
             const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
             const isFavorite = favorites.sims && favorites.sims[idFromName];
 
+	    // Job mapping
+	   const jobMap = {
+ 	   1: 'Factory',
+    	   2: 'Diner',
+	   4: 'Club',
+    	   5: 'Club'
+	    };
+	   const jobName = jobMap[playerData.current_job];
+
             // Display all information in the Console
             consoleContent.innerHTML = `
                 <div class="console-title">
@@ -689,6 +708,7 @@ async function searchSim(event) {
                 <div class="description-container">${(playerData.description || 'No description available.').replace(/(\r\n|\n|\r)/g, '<br>')}</div>
                 <p><strong>Age:</strong> ${ageInDays} days old</p>
                 ${isOnline ? `<p><strong>Location:</strong> ${playerLocation}</p>` : ''}
+		${jobName ? `<p><strong>Job:</strong> ${jobName}</p>` : ''}
                 <p><strong>Currently Online:</strong> ${isOnline ? 'Yes' : 'No'}</p>
             `;
         } catch (error) {

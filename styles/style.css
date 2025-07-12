@@ -170,6 +170,9 @@ body {
         word-wrap: break-word; 
         white-space: pre-wrap; 
         margin: 0 auto;
+        padding: 15px;
+        background-color: rgba(200, 0, 255, 0.15);
+        border-radius: 10px;
     }
         
 @media (max-width: 768px) {

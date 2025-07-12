@@ -117,7 +117,7 @@ let lotName;
 
 if (isJobLot && playerDetails.current_job) {
     const jobName = jobMap[playerDetails.current_job] || "Job";
-    lotName = `At ${jobName} Job`;
+    lotName = `At ${jobName} Job 💼`;
 } else {
     lotName = lotMapping[avatar.location] || 'Unknown';
 }

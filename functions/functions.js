@@ -117,7 +117,20 @@ let lotName;
 
 if (isJobLot && playerDetails.current_job) {
     const jobName = jobMap[playerDetails.current_job] || "Job";
-    lotName = `At ${jobName} Job 💼`;
+    // Attempt to extract job level from description (if present)
+let jobLevel = null;
+if (typeof playerDetails.description === 'string') {
+    const levelMatch = playerDetails.description.match(/level\s*([1-9]|10)\b/i);
+    if (levelMatch) {
+        jobLevel = parseInt(levelMatch[1]);
+    }
+}
+
+lotName = `At ${jobName} Job 💼`;
+if (jobLevel) {
+    lotName += ` (Lv. ${jobLevel})`;
+}
+
 } else {
     lotName = lotMapping[avatar.location] || 'Unknown';
 }

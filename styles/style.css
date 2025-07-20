@@ -173,6 +173,7 @@ body {
         padding: 15px;
         background-color: rgba(180, 100, 255, 0.25);
         border-radius: 10px;
+        text-align: left;
     }
         
 @media (max-width: 768px) {

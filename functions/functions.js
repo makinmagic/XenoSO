@@ -28,6 +28,19 @@ async function loadLotName(lotId) {
     }
 }
 
+// Define emoji rules
+function formatDisplayName(name) {
+  const adminNames = ["Sorta", "Savaki", "Daat", "Xeno", "Eric", "Sneaky", "Nyx"];
+  const emojiMap = {
+    "Mr Teddy": "🐻"
+  };
+
+  let display = name;
+  if (emojiMap[name]) display += ` ${emojiMap[name]}`;
+  if (adminNames.includes(name)) display += ` <span title="Admin">🛡️</span>`;
+  return display;
+}
+
 async function loadOnlinePlayers() {
     try {
 
@@ -143,35 +156,15 @@ if (isJobLot && playerDetails.current_job) {
 
 // Check if this Sim is a favorite
 const isFavorite = favoriteSims[avatar.avatar_id];
-			
-// Define emoji rules
-const adminNames = ["Sorta", "Savaki", "Daat", "Xeno", "Eric", "Sneaky", "Nyx"];
-const emojiMap = {
-    "Mr Teddy": "🐻"
-};
-
-// Display name
-let displayName = avatar.name;
-
-if (emojiMap[avatar.name]) {
-    displayName += ` ${emojiMap[avatar.name]}`;
-}
-
-// Add shield for admins
-
-if (adminNames.includes(avatar.name)) {
-    displayName += ` <span title="Admin">🛡️</span>`;
-}
-
-
+					
             tableHtml += `
             <tr data-avatar-id="${avatar.avatar_id}">
-        <td>
+        <td data-simname="${avatar.name}">
             <i class="${isFavorite ? 'fa-solid fa-star' : 'fa-regular fa-star'}" 
                title="Click to toggle favorite" 
                data-favorite-id="${avatar.avatar_id}" 
                onclick="toggleFavorite('sims', '${avatar.avatar_id}', '${avatar.name}', event)"></i>
-            ${displayName}
+            ${formatDisplayName(avatar.name)}
         </td>
         <td class="hidden">${avatar.avatar_id}</td>
         <td>${ageInDays} days</td>
@@ -398,7 +391,7 @@ async function displayLotInfo(lotId) {
                 const locationCell = row.querySelector('.hidden:nth-child(4)');
                 return locationCell && locationCell.textContent === lotId.toString();
             })
-            .map(row => row.querySelector('td').textContent.trim()); // Trim each Sim's name
+            .map(row => row.querySelector('td')?.dataset.simname?.trim() || '');
 
 	// Identify a single host with location = Unknown
 let appendedHiddenHost = null;
@@ -482,10 +475,10 @@ consoleContent.innerHTML = `
             const isRoommate = roommateNames.includes(trimmed);
             const color = isOwner ? '#FFA502' : isRoommate ? '#DDA0DD' : '#FFF';
             return `
-                <span class="sim-name" data-simname="${trimmed}" onclick="openSimModal(event)" style="color: ${color};">
-                    ${trimmed}${isHidden ? ' (hidden)' : ''}
-                </span>
-            `;
+  <span class="sim-name" data-simname="${trimmed}" onclick="openSimModal(event)" style="color: ${color};">
+    ${formatDisplayName(trimmed)}${isHidden ? ' (hidden)' : ''}
+  </span>
+`;
         }).join(', ')
         : 'None'
     }</p>
@@ -841,7 +834,8 @@ async function searchLot(event) {
                     const locationCell = row.querySelector('.hidden:nth-child(4)');
                     return locationCell && locationCell.textContent == lotData.location;
                 })
-                .map(row => row.querySelector('td').textContent);
+		.map(row => row.querySelector('td')?.dataset.simname?.trim() || '');
+
 
 		let appendedHiddenHost = null;
 const allHosts = [ownerName, ...roommateNames];
@@ -921,10 +915,10 @@ ${activeStatus === 'Yes' ? `
           const isRoommate = roommateNames.includes(trimmed);
           const color = isOwner ? '#FFA502' : isRoommate ? '#DDA0DD' : '#FFF';
           return `
-            <span class="sim-name" data-simname="${trimmed}" onclick="openSimModal(event)" style="color: ${color};">
-              ${trimmed}${isHidden ? ' (hidden)' : ''}
-            </span>
-          `;
+  <span class="sim-name" data-simname="${trimmed}" onclick="openSimModal(event)" style="color: ${color};">
+    ${formatDisplayName(trimmed)}${isHidden ? ' (hidden)' : ''}
+  </span>
+`;
         }).join(', ')
       : 'None'
   }</p>

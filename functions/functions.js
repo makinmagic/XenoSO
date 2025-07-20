@@ -461,11 +461,11 @@ consoleContent.innerHTML = `
     <p><strong>Owner:</strong> <span class="sim-name" data-simname="${ownerName}" onclick="openSimModal(event)" style="color: #FFA502;">${ownerName}</span></p>
     <p><strong>Roommates:</strong> ${
         roommateNames.length > 0
-        ? roommateNames.map(name => `
-            <span class="sim-name" data-simname="${name}" onclick="openSimModal(event)" style="color: #DDA0DD;">${name}</span>
-        `).join(', ')
-        : 'None'
-    }</p>
+        ? roommateNames.map(name =>
+            `<span class="sim-name" data-simname="${name}" onclick="openSimModal(event)" style="color: #DDA0DD;">${name}</span>`
+      ).join(', ')
+    : 'None'
+}</p>
     <p><strong>Known Sims Inside:</strong> ${
         fullKnownSimsList.length > 0
         ? fullKnownSimsList.map(name => {
@@ -474,14 +474,10 @@ consoleContent.innerHTML = `
             const isOwner = trimmed === ownerName;
             const isRoommate = roommateNames.includes(trimmed);
             const color = isOwner ? '#FFA502' : isRoommate ? '#DDA0DD' : '#FFF';
-            return `
-  <span class="sim-name" data-simname="${trimmed}" onclick="openSimModal(event)" style="color: ${color};">
-    ${formatDisplayName(trimmed)}${isHidden ? ' (hidden)' : ''}
-  </span>
-`;
-        }).join(', ')
-        : 'None'
-    }</p>
+            return `<span class="sim-name" data-simname="${trimmed}" onclick="openSimModal(event)" style="color: ${color};">${formatDisplayName(trimmed)}${isHidden ? ' (hidden)' : ''}</span>`;
+      }).join(', ')
+    : 'None'
+}</p>
     ${showHiddenNote ? `<p><em>There are sims inside with their location hidden.</em></p>` : ''}
 `;
 
@@ -895,11 +891,9 @@ if (appendedHiddenHost) {
 
 <p><strong>Roommates:</strong> ${
   roommateNames.length > 0
-    ? roommateNames.map(name => `
-        <span class="sim-name" data-simname="${name}" onclick="openSimModal(event)" style="color: #DDA0DD;">
-          ${name}
-        </span>
-      `).join(', ')
+    ? roommateNames.map(name =>
+        `<span class="sim-name" data-simname="${name}" onclick="openSimModal(event)" style="color: #DDA0DD;">${name}</span>`
+      ).join(', ')
     : 'None'
 }</p>
 
@@ -914,14 +908,10 @@ ${activeStatus === 'Yes' ? `
           const isOwner = trimmed === ownerName;
           const isRoommate = roommateNames.includes(trimmed);
           const color = isOwner ? '#FFA502' : isRoommate ? '#DDA0DD' : '#FFF';
-          return `
-  <span class="sim-name" data-simname="${trimmed}" onclick="openSimModal(event)" style="color: ${color};">
-    ${formatDisplayName(trimmed)}${isHidden ? ' (hidden)' : ''}
-  </span>
-`;
-        }).join(', ')
-      : 'None'
-  }</p>
+          return `<span class="sim-name" data-simname="${trimmed}" onclick="openSimModal(event)" style="color: ${color};">${formatDisplayName(trimmed)}${isHidden ? ' (hidden)' : ''}</span>`;
+      }).join(', ')
+    : 'None'
+}</p>
   ${showHiddenNote ? `<p><em>There are sims inside with their location hidden.</em></p>` : ''}
 ` : ''}
 `;

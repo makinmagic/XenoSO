@@ -143,15 +143,24 @@ function closeJobSchedulerModal() {
 
 window.onload = () => {
 
-	document.querySelectorAll(".modal .close").forEach(closeBtn => {
-  closeBtn.addEventListener("click", () => {
-    closeBtn.closest(".modal").style.display = "none";
+  document.querySelectorAll(".modal .close").forEach(closeBtn => {
+    closeBtn.addEventListener("click", () => {
+      closeBtn.closest(".modal").style.display = "none";
+    });
+  });
+
+  // "Back to Top" button
+  document.getElementById("backToTopBtn").addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
   });
 });
 
-    init();
-    setInterval(displayCurrentEvent, 60000); // Update "Current Event" status every minute
+  init();
+  setInterval(displayCurrentEvent, 60000);
 };
+	
 </script>
 
 <div id="jobSchedulerModal" class="modal">

@@ -322,7 +322,7 @@ body.dark-mode #events-container a {
     color: #f1f1f1;
 }
 
-#console-content a {
+#console-content a, #sim-modal a {
     color: #c169ff;
     text-decoration: underline;
     font-size: 14px;
@@ -349,6 +349,21 @@ body.dark-mode #console-content a {
   display: inline-block;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
+}
+
+.sim-name {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.sim-name:hover {
+  text-decoration: underline;
+}
+
+#sim-modal .close {
+  color: #ffffff;
+  padding: 4px 10px;
+  font-weight: bold;
 }
 
 .sims-online-icon::before {
@@ -410,6 +425,10 @@ body.dark-mode #console-content a {
   max-width: 600px;
   text-align: center;
   border: 2px solid #9215e6;
+}
+
+#sim-modal .modal-content {
+  margin-top: 5% !important;
 }
 
 .close {

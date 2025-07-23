@@ -1225,6 +1225,19 @@ const emojiMap = {
   Gnomes: "⚒️"
 };
 
+const moPayoutAt150 = {
+  Writers: 529,
+  Boards: 381,
+  Pinatas: 529,
+  Phones: 529,
+  Easels: 529,
+  Gnomes: 576,
+  Jams: 546,
+  Potions: 596
+};
+
+let percentChart = null;
+
 async function loadTopPayingMOs() {
   const url = 'https://opensheet.elk.sh/1DJHQ0f5X9NUuAouEf5osJgLV2r2nuzsGLIyjLkm-0NM/MOs';
 
@@ -1256,7 +1269,6 @@ const formTimestamp = new Date(Date.UTC(
 
     const container = document.getElementById("money-object");
     const viewAllLink = document.getElementById("viewAllLink");
-    const allMOList = document.getElementById("all-mo-list");
     const modal = document.getElementById("moModal");
     const guideLink = document.getElementById("guideLink");
 
@@ -1282,16 +1294,162 @@ const formTimestamp = new Date(Date.UTC(
     // Populate modal list
     const sorted = entries.sort((a, b) => parseInt(b[1]) - parseInt(a[1]));
 
-	allMOList.innerHTML = sorted.map(([key, val]) => {
-  const emoji = emojiMap[key];
-  return `<p style="font-size: 1.2em;">${emoji} <strong>${key}</strong>: ${parseInt(val)}%</p>`;
-	}).join('');
-
     // Event listener for opening modal
     viewAllLink.onclick = (e) => {
       e.preventDefault();
       modal.style.display = "block";
     };
+
+// Create Percentage Chart
+const ctx = document.getElementById("percentChart").getContext("2d");
+const labels = sorted.map(([key]) => `${emojiMap[key] || ''} ${key}`);
+const dataPoints = sorted.map(([, val]) => parseInt(val));
+
+if (percentChart) {
+  percentChart.destroy();
+}
+
+percentChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: labels,
+    datasets: [{
+      label: '% Multiplier',
+      borderRadius: 6,
+      data: dataPoints,
+      backgroundColor: dataPoints.map(val =>
+        val >= 130 ? '#8e44ad' : val >= 100 ? '#9b59b6' : '#c0392b'
+      )
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    layout: {
+  padding: {
+    left: 10,
+    right: 10,
+    top: 5,
+    bottom: 5
+  }
+},
+    scales: {
+      x: {
+        display: false
+      },
+      y: {
+        ticks: {
+          color: '#eee',
+          font: {
+            size: 16,
+            weight: 'bold'
+          }
+        },
+        grid: {
+          color: '#333'
+        }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `${ctx.raw}%`
+        }
+      },
+      datalabels: {
+  anchor: 'center',
+  align: 'center',
+  color: '#fff',
+  font: {
+    weight: 'bold',
+    size: 16
+  },
+  formatter: value => `${value}%`
+      }
+    }
+  },
+  plugins: [ChartDataLabels]
+});
+
+const payoutCtx = document.getElementById("payoutChart").getContext("2d");
+
+const entriesWithPayout = entries.map(([key, val]) => {
+  const pct = parseInt(val);
+  const payout150 = moPayoutAt150[key];
+  const base = payout150 / 1.5;
+  const actual = Math.round(base * (pct / 100));
+  return { key, pct, actual };
+}).sort((a, b) => b.actual - a.actual);  // Sort by payout
+
+const payoutLabels = entriesWithPayout.map(entry => `${emojiMap[entry.key] || ''} ${entry.key}`);
+const payoutValues = entriesWithPayout.map(entry => entry.actual);
+
+const payoutColors = payoutValues.map(val =>
+  val >= 500 ? '#27ae60' : val >= 300 ? '#f39c12' : '#c0392b'
+);
+
+new Chart(payoutCtx, {
+  type: 'bar',
+  data: {
+    labels: payoutLabels,
+    datasets: [{
+      label: 'Total Payout ($)',
+      borderRadius: 6,
+      data: payoutValues,
+      backgroundColor: payoutColors
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    layout: {
+      padding: { left: 10, right: 10, top: 5, bottom: 5 }
+    },
+    scales: {
+      x: {
+        display: false
+      },
+      y: {
+        ticks: {
+          color: '#eee',
+          font: {
+            size: 16,
+            weight: 'bold'
+          }
+        },
+        grid: { color: '#333' }
+      }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `$${ctx.raw}`
+        }
+      },
+      datalabels: {
+        anchor: 'center',
+        align: 'center',
+        color: '#fff',
+        font: {
+          weight: 'bold',
+          size: 16
+        },
+        formatter: value => `$${value}`
+      }
+    }
+  },
+  plugins: [ChartDataLabels]
+});
+	  
+	  document.querySelectorAll(".tab-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
+
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).style.display = "block";
+  });
+});
 
     // Close modals when clicking the X
 document.querySelectorAll(".modal .close").forEach((btn) => {

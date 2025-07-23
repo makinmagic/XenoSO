@@ -418,7 +418,7 @@ body.dark-mode #console-content a {
 
 .modal-content {
   background-color: #1c003b;
-  margin: 10% auto;
+  margin: 4% auto;
   padding: 20px;
   border-radius: 10px;
   width: 80%;
@@ -440,6 +440,31 @@ body.dark-mode #console-content a {
 }
 .close:hover {
   color: #fff;
+}
+
+.tab-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+  gap: 1em;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  font-size: 1em;
+  background: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.tab-btn.active {
+  background: #6600cc;
+}
+
+.tab-content {
+  display: none;
 }
 
 /* Job Scheduler Modal */

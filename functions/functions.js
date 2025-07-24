@@ -1231,7 +1231,7 @@ const moPayoutAt150 = {
   Pinatas: 529,
   Phones: 529,
   Easels: 529,
-  Gnomes: 576,
+  Gnomes: 529,
   Jams: 546,
   Potions: 596
 };

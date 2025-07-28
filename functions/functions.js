@@ -1048,6 +1048,10 @@ async function fetchEvents() {
                 `;
                 row.addEventListener('click', () => {
                     displayEventInfo(event); // Show details in the Console when clicked
+			document.getElementById('console-container')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
                 });
             });
         }

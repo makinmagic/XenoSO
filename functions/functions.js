@@ -273,7 +273,10 @@ function filterLots(type) {
             if (b.isFavorite !== a.isFavorite) {
                 return b.isFavorite - a.isFavorite; // Favorites come first
             }
-            return b.count - a.count; // Then sort by Sims Inside
+            if (b.count !== a.count) {
+    	return b.count - a.count;
+	}
+	return a.name.localeCompare(b.name);
         });
 
         const fetchLotDetailsPromises = lotsData.map(lot =>

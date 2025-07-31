@@ -1076,7 +1076,7 @@ function displayEventInfo(event) {
         <div class="console-title">
             ${event.name}
         </div>
-        <p><strong>ℹ️ Description:</strong> ${event.description.replace(/(\r\n|\n|\r)/g, "<br>")}</p>
+        <p><strong>ℹ️ Description:</strong><br><div class="event-card"> ${event.description.replace(/(\r\n|\n|\r)/g, "<br>")}</p></div>
         <p><strong>📅 Date:</strong> ${formattedDate}</p>
         <p><strong>🕐 Time:</strong> ${formattedTime}</p>
         <p><strong>📍 Location:</strong> ${event.location}</p>

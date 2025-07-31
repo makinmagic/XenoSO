@@ -793,7 +793,7 @@ async function searchLot(event) {
     return firstCell && firstCell.textContent.trim().toLowerCase() === lotData.name.trim().toLowerCase();
 });
 
-            const activeStatus = isActive ? 'Yes' : 'No';
+            const activeStatus = isActive ? 'Yes 🟢' : 'No 🔴';
             
             const lotRow = Array.from(lotsContainer.querySelectorAll('tr')).find(row =>
     row.querySelector('td')?.textContent.trim().toLowerCase() === lotData.name.trim().toLowerCase()

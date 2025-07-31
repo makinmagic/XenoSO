@@ -382,8 +382,22 @@ async function displayLotInfo(lotId) {
             })
         );
 
-        // Replace \r\n with <br> in description
-        const formattedDescription = (lotData.description || 'No description available.').replace(/(\r\n|\n|\r)/g, '<br>');
+        // Format description and creation date
+        const formattedDescription = ((lotData.description || 'No description available.')
+  .split(/\r?\n/)
+  .map(line => {
+    if (/^-{5,}$/.test(line.trim())) {
+      return `<span style="font-family: monospace;">${line}</span>`;
+    }
+    return line;
+  }).join('<br>')
+);
+
+	const creationDate = new Date(lotData.created_date * 1000).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+});
 
         // Find known Sims inside the lot (from the Sims Online table)
         const playersContainer = document.getElementById('players');
@@ -460,6 +474,7 @@ consoleContent.innerHTML = `
     <div class="description-container">${formattedDescription}</div>
     <p><strong>Lot Type:</strong> ${categoryMapping[lotData.category] || 'Unknown'}</p>
     <p><strong>Admit Mode:</strong> ${admitModeMapping[lotData.admit_mode] || 'Unknown'}</p>
+    <p><strong>Established on:</strong> ${creationDate}</p>
     <p><strong>Owner:</strong> <span class="sim-name" data-simname="${ownerName}" onclick="openSimModal(event)" style="color: #FFA502;">${ownerName}</span></p>
     <p><strong>Roommates:</strong> ${
         roommateNames.length > 0
@@ -557,8 +572,16 @@ async function displayPlayerInfo(avatarId) {
             .find(row => row.querySelector('.hidden:nth-child(2)').textContent === avatarId.toString()); // Match avatar ID
         const playerLocation = locationRow ? locationRow.querySelector('td:nth-child(5)').textContent : 'Unknown'; // Get location name
 
-        // Replace \r\n with <br> in description
-        const formattedDescription = (playerData.description || 'No description available.').replace(/(\r\n|\n|\r)/g, '<br>');
+        // Format description
+	const formattedDescription = ((playerData.description || 'No description available.')
+  .split(/\r?\n/)
+  .map(line => {
+    if (/^-{5,}$/.test(line.trim())) {
+      return `<span style="font-family: monospace;">${line}</span>`;
+    }
+    return line;
+  }).join('<br>')
+);
 
         // Check for favorites in localStorage
         const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
@@ -778,8 +801,20 @@ async function searchLot(event) {
             };
 
             // Format description and creation date
-            const formattedDescription = (lotData.description || 'No description available.').replace(/(\r\n|\n|\r)/g, '<br>');
-            const creationDate = new Date(lotData.created_date * 1000).toLocaleDateString();
+            const formattedDescription = ((lotData.description || 'No description available.')
+  .split(/\r?\n/)
+  .map(line => {
+    if (/^-{5,}$/.test(line.trim())) {
+      return `<span style="font-family: monospace;">${line}</span>`;
+    }
+    return line;
+  }).join('<br>')
+);
+            const creationDate = new Date(lotData.created_date * 1000).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+});
 			
 			// Check for favorites in localStorage
             const favorites = JSON.parse(localStorage.getItem('favorites')) || {};
@@ -884,6 +919,7 @@ if (appendedHiddenHost) {
                    class="console-img">
                 <div class="description-container">${formattedDescription}</div>
                 <p><strong>Lot Type:</strong> ${categoryMapping[lotData.category] || 'Unknown'}</p>
+		<p><strong>Established on:</strong> ${creationDate}</p>
                 <p><strong>Admit Mode:</strong> ${admitModeMapping[lotData.admit_mode] || 'Unknown'}</p>
                 <p><strong>Owner:</strong> 
   <span class="sim-name" data-simname="${ownerName}" onclick="openSimModal(event)" style="color: #FFA502;">

@@ -203,19 +203,18 @@ const isFavorite = favoriteSims[avatar.avatar_id];
     }
 }
 
-       // Mapping for lot categories
         const categoryMapping = {
-            1: 'Money',
-            2: 'Money',
-            3: 'Romance',
-            4: 'Service',
-            5: 'Store',
-            6: 'Skills',
-            7: 'Welcome',
-            8: 'Games',
-            9: 'Entertainment',
-            10: 'Residential',
-            11: 'Community'
+                1: '💲 Money',
+                2: '💲 Money',
+                3: '❤️ Romance',
+                4: '🍵 Service',
+                5: '🎁 Store',
+                6: '🔨 Skills',
+                7: '🤝 Welcome',
+                8: '🎲 Games',
+                9: '🎭 Entertainment',
+                10: '🏠 Residential',
+                11: '🏨 Community'
         };
 
 let currentFilter = ''; // Track the current filter

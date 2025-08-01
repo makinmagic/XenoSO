@@ -165,6 +165,18 @@ body {
     display: none;
 }
 
+.join-label {
+  display: inline-block;
+  background: linear-gradient(to right, #facc15, #f472b6);
+  color: #1a1a1a;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 16px;
+  font-size: 0.75em;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
     .description-container {
         max-width: 260px; 
         word-wrap: break-word; 

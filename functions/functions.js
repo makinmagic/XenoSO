@@ -573,15 +573,7 @@ async function displayPlayerInfo(avatarId) {
         const playerLocation = locationRow ? locationRow.querySelector('td:nth-child(5)').textContent : 'Unknown'; // Get location name
 
         // Format description
-	const formattedDescription = ((playerData.description || 'No description available.')
-  .split(/\r?\n/)
-  .map(line => {
-    if (/^-{5,}$/.test(line.trim())) {
-      return `<span style="font-family: monospace;">${line}</span>`;
-    }
-    return line;
-  }).join('<br>')
-);
+	const formattedDescription = (playerData.description || 'No description available.').replace(/(\r\n|\n|\r)/g, '<br>');
 
         // Check for favorites in localStorage
         const favorites = JSON.parse(localStorage.getItem('favorites')) || {};

@@ -168,8 +168,8 @@ const isFavorite = favoriteSims[avatar.avatar_id];
         </td>
         <td class="hidden">${avatar.avatar_id}</td>
         <td>${ageInDays} days</td>
-        <td class="hidden">${avatar.location}</td> <!-- This should be the Location ID (hidden) -->
-        <td>${lotName}</td> <!-- This should be the visible Location name -->
+        <td class="hidden">${avatar.location}</td>
+        <td>${lotName}</td>
     </tr>`;
         });
 
@@ -581,10 +581,10 @@ async function displayPlayerInfo(avatarId) {
 
 	// Job mapping
 	const jobMap = {
-   	 1: 'Factory',
- 	 2: 'Diner',
-	 4: 'Club',
-	 5: 'Club'
+   	 1: 'Factory 🏭',
+ 	 2: 'Diner 🍽️',
+	 4: 'Club 🪩',
+	 5: 'Club 🪩'
 	};
 	const jobName = jobMap[playerData.current_job];
 
@@ -715,10 +715,10 @@ async function searchSim(event) {
 
 	    // Job mapping
 	   const jobMap = {
- 	   1: 'Factory',
-    	   2: 'Diner',
-	   4: 'Club',
-    	   5: 'Club'
+ 	   1: 'Factory 🏭',
+    	   2: 'Diner 🍽️',
+	   4: 'Club 🪩',
+    	   5: 'Club 🪩'
 	    };
 	   const jobName = jobMap[playerData.current_job];
 
@@ -999,10 +999,10 @@ async function openSimModal(event) {
     const isFavorite = favorites.sims && favorites.sims[idFromName];
 
     const jobMap = {
-      1: 'Factory',
-      2: 'Diner',
-      4: 'Club',
-      5: 'Club'
+      1: 'Factory 🏭',
+      2: 'Diner 🍽️',
+      4: 'Club 🪩',
+      5: 'Club 🪩'
     };
     const jobName = jobMap[playerData.current_job];
 

@@ -140,10 +140,10 @@ if (isJobLot && playerDetails.current_job) {
         }
     }
 
-    lotName = `At ${jobName} Job 💼`;
-    if (jobLevel !== null && !isNaN(jobLevel)) {
-        lotName += ` (Lv. ${jobLevel})`;
-    }
+    lotName = `At ${jobName} 💼`;
+if (jobLevel !== null && !isNaN(jobLevel)) {
+    lotName += ` (Lv. ${jobLevel})`;
+}
 
 } else {
     lotName = lotMapping[avatar.location] || 'Unknown';
@@ -164,7 +164,7 @@ const isFavorite = favoriteSims[avatar.avatar_id];
                title="Click to toggle favorite" 
                data-favorite-id="${avatar.avatar_id}" 
                onclick="toggleFavorite('sims', '${avatar.avatar_id}', '${avatar.name}', event)"></i>
-            ${formatDisplayName(avatar.name)}
+            ${formatDisplayName(avatar.name)}${/join me at/i.test(playerDetails.description || '') ? ' <span class="join-label" title="This sim is looking for others to join them at work!">Join me at work!</span>' : ''}
         </td>
         <td class="hidden">${avatar.avatar_id}</td>
         <td>${ageInDays} days</td>

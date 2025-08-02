@@ -41,6 +41,13 @@ function formatDisplayName(name) {
   return display;
 }
 
+let jobFilterEnabled = false;
+
+function toggleJobFilter() {
+    jobFilterEnabled = !jobFilterEnabled;
+    loadOnlinePlayers();
+}
+
 async function loadOnlinePlayers() {
     try {
 
@@ -102,21 +109,27 @@ async function loadOnlinePlayers() {
         </th>
         <th class="hidden">Location ID</th>
         <th>
-            Location 
-            <i class="fa-solid fa-arrow-up-arrow-down" 
-               style="cursor: pointer;" 
-               onclick="sortTable(4, 'text')"></i>
-        </th>
+    Location 
+    <i class="fa-solid fa-arrow-up-arrow-down" 
+       style="cursor: pointer;" 
+       onclick="sortTable(4, 'text')"></i>
+    <i class="fa-solid fa-briefcase" 
+       style="cursor: pointer; margin-left: 6px;" 
+       title="Show sims at work"
+       onclick="toggleJobFilter()"></i>
+</th>
     </tr>
 </thead>
                 <tbody>`;
 
         // Process sorted online players
         sortedAvatars.forEach((avatar, index) => {
-            const playerDetails = playerDetailsArray[index]; // Get the corresponding player details
+    const playerDetails = playerDetailsArray[index];
 
-// Determine if this is a job lot
-const isJobLot = avatar.location.toString().length === 10;
+	//Determine if sim is at a job lot
+    const isJobLot = avatar.location.toString().length === 10;
+
+    if (jobFilterEnabled && !isJobLot) return;
 
 // Map job ID to name
 const jobMap = {

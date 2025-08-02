@@ -134,7 +134,7 @@ if (isJobLot && playerDetails.current_job) {
     // Attempt to extract job level from description
     let jobLevel = null;
     if (typeof playerDetails.description === 'string') {
-        const levelMatch = playerDetails.description.match(/level\s*(\b(?:[0-9]|10))\b/i);
+        const levelMatch = playerDetails.description.match(/\b(?:level|lvl)\s*(\b(?:[0-9]|10))\b/i);
         if (levelMatch) {
             jobLevel = parseInt(levelMatch[1]);
         }

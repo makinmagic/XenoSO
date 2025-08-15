@@ -1278,17 +1278,6 @@ function addFavoriteStar(type, id, name) {
 
 //Top-paying MOs
 
-const emojiMap = {
-  Pinatas: "🪅",
-  Writers: "📝",
-  Boards: "🧑‍🏫",
-  Easels: "🖌️",
-  Jams: "🍓",
-  Potions: "🧑‍🔬",
-  Phones: "☎️",
-  Gnomes: "⚒️"
-};
-
 const moPayoutAt150 = {
   Writers: 529,
   Boards: 381,
@@ -1312,14 +1301,14 @@ async function loadTopPayingMOs() {
 
     const latest = data[data.length - 1];
     const local = new Date(latest.Timestamp);
-const formTimestamp = new Date(Date.UTC(
-  local.getFullYear(),
-  local.getMonth(),
-  local.getDate(),
-  local.getHours(),
-  local.getMinutes(),
-  local.getSeconds()
-));
+    const formTimestamp = new Date(Date.UTC(
+      local.getFullYear(),
+      local.getMonth(),
+      local.getDate(),
+      local.getHours(),
+      local.getMinutes(),
+      local.getSeconds()
+    ));
     const utcNow = new Date();
 
     const startTime = new Date(Date.UTC(
@@ -1338,10 +1327,10 @@ const formTimestamp = new Date(Date.UTC(
 
     if (utcNow < startTime || utcNow >= endTime) {
       container.style.display = "none";
-  const tempoSim = document.getElementById("tempoSim");
-  if (guideLink && tempoSim) {
-    tempoSim.parentNode.insertBefore(guideLink, tempoSim);
-  }
+      const tempoSim = document.getElementById("tempoSim");
+      if (guideLink && tempoSim) {
+        tempoSim.parentNode.insertBefore(guideLink, tempoSim);
+      }
       return;
     }
 
@@ -1355,197 +1344,147 @@ const formTimestamp = new Date(Date.UTC(
     container.firstChild.textContent = `Today's top-paying MOs are: ${topMOs.join(', ')}`;
     viewAllLink.style.display = "inline";
 
-    // Populate modal list
     const sorted = entries.sort((a, b) => parseInt(b[1]) - parseInt(a[1]));
 
-    // Event listener for opening modal
     viewAllLink.onclick = (e) => {
       e.preventDefault();
       modal.style.display = "block";
     };
 
-// Create Percentage Chart
-const ctx = document.getElementById("percentChart").getContext("2d");
-const labels = sorted.map(([key]) => `${emojiMap[key] || ''} ${key}`);
-const dataPoints = sorted.map(([, val]) => parseInt(val));
+    // Percentage Chart
+    const ctx = document.getElementById("percentChart").getContext("2d");
+    const labels = sorted.map(([key]) => key); // TEXT ONLY
+    const dataPoints = sorted.map(([, val]) => parseInt(val));
 
-if (percentChart) {
-  percentChart.destroy();
-}
+    if (percentChart) {
+      percentChart.destroy();
+    }
 
-percentChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: labels,
-    datasets: [{
-      label: '% Multiplier',
-      borderRadius: 6,
-      data: dataPoints,
-      backgroundColor: dataPoints.map(val =>
-        val >= 130 ? '#8e44ad' : val >= 100 ? '#9b59b6' : '#c0392b'
-      )
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    layout: {
-  padding: {
-    left: 10,
-    right: 10,
-    top: 5,
-    bottom: 5
-  }
-},
-    scales: {
-      x: {
-        display: false
+    percentChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: '% Multiplier',
+          borderRadius: 6,
+          data: dataPoints,
+          backgroundColor: dataPoints.map(val =>
+            val >= 130 ? '#8e44ad' : val >= 100 ? '#9b59b6' : '#c0392b'
+          )
+        }]
       },
-      y: {
-        ticks: {
-          color: '#eee',
-          font: {
-            size: 16,
-            weight: 'bold'
+      options: {
+        indexAxis: 'y',
+        layout: { padding: { left: 10, right: 10, top: 5, bottom: 5 } },
+        scales: {
+          x: { display: false },
+          y: {
+            ticks: { color: '#eee', font: { size: 18, weight: 'bold' } },
+            grid: { color: '#333' }
           }
         },
-        grid: {
-          color: '#333'
-        }
-      }
-    },
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => `${ctx.raw}%`
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => `${ctx.raw}%` } },
+          datalabels: {
+            anchor: 'center',
+            align: 'center',
+            color: '#fff',
+            font: { weight: 'bold', size: 18 },
+            formatter: value => `${value}%`
+          }
         }
       },
-      datalabels: {
-  anchor: 'center',
-  align: 'center',
-  color: '#fff',
-  font: {
-    weight: 'bold',
-    size: 16
-  },
-  formatter: value => `${value}%`
-      }
-    }
-  },
-  plugins: [ChartDataLabels]
-});
+      plugins: [ChartDataLabels]
+    });
 
-const payoutCtx = document.getElementById("payoutChart").getContext("2d");
+    // Payout Chart
+    const payoutCtx = document.getElementById("payoutChart").getContext("2d");
+    const entriesWithPayout = entries.map(([key, val]) => {
+      const pct = parseInt(val);
+      const payout150 = moPayoutAt150[key];
+      const base = payout150 / 1.5;
+      const actual = Math.round(base * (pct / 100));
+      return { key, pct, actual };
+    }).sort((a, b) => b.actual - a.actual);
 
-const entriesWithPayout = entries.map(([key, val]) => {
-  const pct = parseInt(val);
-  const payout150 = moPayoutAt150[key];
-  const base = payout150 / 1.5;
-  const actual = Math.round(base * (pct / 100));
-  return { key, pct, actual };
-}).sort((a, b) => b.actual - a.actual);  // Sort by payout
+    const payoutLabels = entriesWithPayout.map(entry => entry.key);
+    const payoutValues = entriesWithPayout.map(entry => entry.actual);
+    const payoutColors = payoutValues.map(val =>
+      val >= 500 ? '#27ae60' : val >= 300 ? '#f39c12' : '#c0392b'
+    );
 
-const payoutLabels = entriesWithPayout.map(entry => `${emojiMap[entry.key] || ''} ${entry.key}`);
-const payoutValues = entriesWithPayout.map(entry => entry.actual);
-
-const payoutColors = payoutValues.map(val =>
-  val >= 500 ? '#27ae60' : val >= 300 ? '#f39c12' : '#c0392b'
-);
-
-new Chart(payoutCtx, {
-  type: 'bar',
-  data: {
-    labels: payoutLabels,
-    datasets: [{
-      label: 'Total Payout ($)',
-      borderRadius: 6,
-      data: payoutValues,
-      backgroundColor: payoutColors
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    layout: {
-      padding: { left: 10, right: 10, top: 5, bottom: 5 }
-    },
-    scales: {
-      x: {
-        display: false
+    new Chart(payoutCtx, {
+      type: 'bar',
+      data: {
+        labels: payoutLabels,
+        datasets: [{
+          label: 'Total Payout ($)',
+          borderRadius: 6,
+          data: payoutValues,
+          backgroundColor: payoutColors
+        }]
       },
-      y: {
-        ticks: {
-          color: '#eee',
-          font: {
-            size: 16,
-            weight: 'bold'
+      options: {
+        indexAxis: 'y',
+        layout: { padding: { left: 10, right: 10, top: 5, bottom: 5 } },
+        scales: {
+          x: { display: false },
+          y: {
+            ticks: { color: '#eee', font: { size: 18, weight: 'bold' } },
+            grid: { color: '#333' }
           }
         },
-        grid: { color: '#333' }
-      }
-    },
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => `$${ctx.raw}`
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => `$${ctx.raw}` } },
+          datalabels: {
+            anchor: 'center',
+            align: 'center',
+            color: '#fff',
+            font: { weight: 'bold', size: 18 },
+            formatter: value => `$${value}`
+          }
         }
       },
-      datalabels: {
-        anchor: 'center',
-        align: 'center',
-        color: '#fff',
-        font: {
-          weight: 'bold',
-          size: 16
-        },
-        formatter: value => `$${value}`
-      }
-    }
-  },
-  plugins: [ChartDataLabels]
-});
-	  
-	  document.querySelectorAll(".tab-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-    document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
+      plugins: [ChartDataLabels]
+    });
 
-    btn.classList.add("active");
-    document.getElementById(btn.dataset.tab).style.display = "block";
-  });
-});
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
 
-    // Close modals when clicking the X
-document.querySelectorAll(".modal .close").forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    const modal = e.target.closest(".modal");
-    if (modal) modal.style.display = "none";
-  });
-});
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.tab).style.display = "block";
+      });
+    });
 
-// Close modals when clicking outside the modal content
-window.addEventListener("click", (e) => {
-  const modals = document.querySelectorAll(".modal");
-  modals.forEach((modal) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-});
-	  
+    document.querySelectorAll(".modal .close").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const modal = e.target.closest(".modal");
+        if (modal) modal.style.display = "none";
+      });
+    });
+
+    window.addEventListener("click", (e) => {
+      const modals = document.querySelectorAll(".modal");
+      modals.forEach((modal) => {
+        if (e.target === modal) modal.style.display = "none";
+      });
+    });
+
     window.onclick = (e) => {
       if (e.target == modal) modal.style.display = "none";
     };
 
     container.style.display = "block";
 
-	    // Move guideLink back to bottom
-  const bottomContainer = document.getElementById("bottom-container");
-  const footerNote = document.getElementById("footer-note");
-  if (bottomContainer && footerNote && guideLink) {
-    bottomContainer.parentNode.insertBefore(guideLink, footerNote);
-  }
-
+    const bottomContainer = document.getElementById("bottom-container");
+    const footerNote = document.getElementById("footer-note");
+    if (bottomContainer && footerNote && guideLink) {
+      bottomContainer.parentNode.insertBefore(guideLink, footerNote);
+    }
 
   } catch (error) {
     console.error("Error fetching top-paying MOs:", error);

@@ -165,6 +165,12 @@ body {
     display: none;
 }
 
+.emoji {
+  height: 1em;
+  width: 1em;
+  vertical-align: -0.1em;
+}
+
 .join-label {
   display: inline-block;
   background: linear-gradient(to right, #facc15, #f472b6);

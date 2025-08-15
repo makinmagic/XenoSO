@@ -1369,7 +1369,7 @@ async function loadTopPayingMOs() {
           borderRadius: 6,
           data: dataPoints,
           backgroundColor: dataPoints.map(val =>
-            val >= 130 ? '#8e44ad' : val >= 100 ? '#9b59b6' : '#c0392b'
+            val === 150 ? '#f39c12' : val >= 140 ? '#27ae60' : val >= 100 ? '#8e44ad' : '#c0392b'
           )
         }]
       },
@@ -1411,7 +1411,7 @@ async function loadTopPayingMOs() {
     const payoutLabels = entriesWithPayout.map(entry => entry.key);
     const payoutValues = entriesWithPayout.map(entry => entry.actual);
     const payoutColors = payoutValues.map(val =>
-      val >= 500 ? '#27ae60' : val >= 300 ? '#f39c12' : '#c0392b'
+      val >= 500 ? '#f39c12' : val >= 300 ? '#27ae60' : '#c0392b'
     );
 
     new Chart(payoutCtx, {

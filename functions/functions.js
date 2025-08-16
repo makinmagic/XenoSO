@@ -1185,9 +1185,12 @@ function addEventIconToLocation(locationName) {
     rows.forEach(row => {
         const locationCell = row.querySelector("td:first-child");
         if (locationCell && locationCell.textContent.trim().toLowerCase() === locationName.trim().toLowerCase()) {
-            // Check if the balloon icon is already present to avoid duplicates
-            if (!locationCell.textContent.includes("🔥")) {
-    locationCell.innerHTML += ' <span title="Event is ongoing!">🔥</span>';
+            // Check if the fire icon is already present to avoid duplicates
+if (!locationCell.querySelector('.event-icon')) {
+    locationCell.insertAdjacentHTML(
+        'beforeend',
+        ' <span class="event-icon" title="Event is ongoing!">🔥</span>'
+    );
 }
         }
     });

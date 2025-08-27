@@ -235,7 +235,7 @@ const isFavorite = favoriteSims[avatar.avatar_id];
 
         const categoryMapping = {
                 1: 'Money',
-                2: 'Money',
+                2: 'Offbeat',
                 3: 'Romance',
                 4: 'Service',
                 5: 'Store',
@@ -810,7 +810,7 @@ async function searchLot(event) {
             // Mapping for lot categories
             const categoryMapping = {
                 1: '💲 Money',
-                2: '💲 Money',
+                2: '🦆 Offbeat',
                 3: '❤️ Romance',
                 4: '🍵 Service',
                 5: '🎁 Store',

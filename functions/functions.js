@@ -1080,8 +1080,10 @@ async function fetchEvents() {
 
         const now = new Date();
 
-        // Filter upcoming events
-        const upcomingEvents = events.filter(event => new Date(event.startTime) > now);
+        // Filter upcoming events and sort them by startTime
+	const upcomingEvents = events
+    .filter(event => new Date(event.startTime) > now)
+    .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
         if (upcomingEvents.length === 0) {
             // Add a single row if there are no upcoming events

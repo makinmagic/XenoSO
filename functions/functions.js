@@ -1611,19 +1611,24 @@ function sortByFavorites() {
 document.addEventListener("DOMContentLoaded", function () {
   const now = new Date();
 
-  const expiry = new Date(Date.UTC(2025, 7, 31, 4, 0, 0)); // August 31 4am UTC (midnight EST)
+  // Begin midnight Aug 30 EST
+  const start = new Date(Date.UTC(2025, 7, 30, 4, 0, 0)); 
 
-  const timeUntilExpire = expiry - now;
+  // End midnight Aug 31 EST
+  const expiry = new Date(Date.UTC(2025, 7, 31, 4, 0, 0));
 
-  if (timeUntilExpire > 0) {
-    setTimeout(() => {
-      const msg = document.getElementById('event-message');
-      if (msg) msg.style.display = 'none';
-    }, timeUntilExpire);
-  } else {
+  const msg = document.getElementById('event-message');
+
+  if (!msg) return;
+
+  if (now < start || now >= expiry) {
     
-    const msg = document.getElementById('event-message');
-    if (msg) msg.style.display = 'none';
+    msg.style.display = 'none';
+  } else {
+    msg.style.display = '';
+    setTimeout(() => {
+      msg.style.display = 'none';
+    }, expiry - now);
   }
 });
 

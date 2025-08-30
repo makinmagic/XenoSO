@@ -1607,28 +1607,25 @@ function sortByFavorites() {
       }
     }
 
-// One-off announcements
 document.addEventListener("DOMContentLoaded", function () {
   const now = new Date();
 
-  // Begin midnight Aug 30 EST
-  const start = new Date(Date.UTC(2025, 7, 30, 4, 0, 0)); 
-
-  // End midnight Aug 31 EST
-  const expiry = new Date(Date.UTC(2025, 7, 31, 4, 0, 0));
+  const start = new Date(Date.UTC(2025, 7, 30, 4, 0, 0)); // Aug 30 midnight EST
+  const expiry = new Date(Date.UTC(2025, 7, 31, 4, 0, 0)); // Aug 31 midnight EST
 
   const msg = document.getElementById('event-message');
-
   if (!msg) return;
 
-  if (now < start || now >= expiry) {
-    
-    msg.style.display = 'none';
-  } else {
+  if (now >= start && now < expiry) {
+	  
     msg.style.display = '';
+    setTimeout(() => msg.style.display = 'none', expiry - now);
+  } else if (now < start) {
+
     setTimeout(() => {
-      msg.style.display = 'none';
-    }, expiry - now);
+      msg.style.display = '';
+      setTimeout(() => msg.style.display = 'none', expiry - start);
+    }, start - now);
   }
 });
 

@@ -1611,7 +1611,7 @@ function sortByFavorites() {
 document.addEventListener("DOMContentLoaded", function () {
   const now = new Date();
 
-  const expiry = new Date(Date.UTC(2025, 6, 7, 4, 0, 0));
+  const expiry = new Date(Date.UTC(2025, 7, 31, 4, 0, 0)); // August 31 4am UTC (midnight EST)
 
   const timeUntilExpire = expiry - now;
 

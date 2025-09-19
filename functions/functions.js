@@ -1607,11 +1607,13 @@ function sortByFavorites() {
       }
     }
 
+//One-off events
+
 document.addEventListener("DOMContentLoaded", function () {
   const now = new Date();
 
-  const start = new Date(Date.UTC(2025, 8, 1, 4, 0, 0)); // Sep 1 midnight EST
-  const expiry = new Date(Date.UTC(2025, 8, 2, 4, 0, 0)); // Sep 2 midnight EST
+  const start = new Date(Date.UTC(2025, 8, 19, 4, 0, 0)); // Sep 1 midnight EST
+  const expiry = new Date(Date.UTC(2025, 8, 20, 4, 0, 0)); // Sep 2 midnight EST
 
   const msg = document.getElementById('event-message');
   if (!msg) return;

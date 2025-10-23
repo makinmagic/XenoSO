@@ -1811,7 +1811,7 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.style.display = 'block';
   };
 
-  const saveBtn = document.getElementById('save-note-btn');
+const saveBtn = document.getElementById('save-note-btn');
 if (saveBtn) {
   saveBtn.addEventListener('click', () => {
     const modal = document.getElementById('notes-modal');
@@ -1830,7 +1830,6 @@ if (saveBtn) {
     localStorage.setItem('simNotes', JSON.stringify(notesData));
     modal.style.display = 'none';
 
-    // Always refresh the note inline in the console and sim modal
     showSimNoteInline(simId);
     const simModal = document.getElementById('sim-modal');
     if (simModal && simModal.style.display === 'block') {

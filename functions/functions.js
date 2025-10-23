@@ -1794,6 +1794,100 @@ setInterval(() => {
   updateCurrentJobLabel();
   updateJobCountdown();
 }, 1000);
+
+// ---- SIM NOTES ----
+document.addEventListener('DOMContentLoaded', () => {
+
+  window.openNotesModal = function(simId, simName) {
+    const modal = document.getElementById('notes-modal');
+    const textarea = document.getElementById('notes-textarea');
+    const title = document.getElementById('notes-modal-title');
+
+    const notesData = JSON.parse(localStorage.getItem('simNotes')) || {};
+    textarea.value = notesData[simId] || '';
+
+    title.textContent = `Notes for ${simName}`;
+    modal.dataset.simId = simId;
+    modal.style.display = 'block';
+  };
+
+  const saveBtn = document.getElementById('save-note-btn');
+  if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+      const modal = document.getElementById('notes-modal');
+      const textarea = document.getElementById('notes-textarea');
+      const simId = modal.dataset.simId;
+      const noteText = textarea.value.trim();
+
+      const notesData = JSON.parse(localStorage.getItem('simNotes')) || {};
+
+      if (noteText) {
+        notesData[simId] = noteText;
+      } else {
+        delete notesData[simId];
+      }
+
+      localStorage.setItem('simNotes', JSON.stringify(notesData));
+      modal.style.display = 'none';
+
+      const consoleContent = document.getElementById('console-content');
+      if (consoleContent && consoleContent.dataset.id === simId) {
+        showSimNoteInline(simId);
+      }
+
+      const simModal = document.getElementById('sim-modal');
+      if (simModal && simModal.style.display === 'block') {
+        showSimNoteInline(simId, true);
+      }
+    });
+  }
+
+  const notesClose = document.querySelector('#notes-modal .close');
+  if (notesClose) {
+    notesClose.addEventListener('click', () => {
+      document.getElementById('notes-modal').style.display = 'none';
+    });
+  }
+
+  window.showSimNoteInline = function(simId, isModal = false) {
+  const notesData = JSON.parse(localStorage.getItem('simNotes')) || {};
+  const note = notesData[simId];
+  const target = isModal
+    ? document.getElementById('sim-modal-content')
+    : document.getElementById('console-content');
+
+  if (!target) return;
+
+  const existingNoteDiv = target.querySelector('.sim-note');
+  if (existingNoteDiv) existingNoteDiv.remove();
+
+  const noteDiv = document.createElement('div');
+  noteDiv.className = 'sim-note';
+  noteDiv.style.marginTop = '4px';
+
+  if (note) {
+    noteDiv.innerHTML = `
+      <p><strong>Your Note:</strong> ${note.replace(/\n/g, '<br>')}</p>
+      <p style="margin: 0;">
+        <a href="#" class="sim-note-link" onclick="openNotesModal('${simId}', '${target.querySelector('.console-title')?.textContent.trim() || 'Sim'}'); return false;">
+          ✏️ Edit Note
+        </a>
+      </p>
+    `;
+  } else {
+    noteDiv.innerHTML = `
+      <p style="margin: 0;">
+        <a href="#" class="sim-note-link" onclick="openNotesModal('${simId}', '${target.querySelector('.console-title')?.textContent.trim() || 'Sim'}'); return false;">
+          📝 Add Note
+        </a>
+      </p>
+    `;
+  }
+
+  target.appendChild(noteDiv);
+};
+
+});
         
 /* document.addEventListener('DOMContentLoaded', () => {
     // Check if dark mode was previously enabled

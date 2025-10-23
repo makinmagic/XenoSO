@@ -632,6 +632,16 @@ body.dark-mode #console-content a {
   text-decoration: underline;
 }
 
+.sim-note-link {
+  color: #FF7518;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.sim-note-link:hover {
+  text-decoration: underline;
+}
+
     /* Stars background - used with permission from Sorta */
     .stars {
       position: fixed;

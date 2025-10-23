@@ -637,6 +637,7 @@ async function displayPlayerInfo(avatarId) {
             <p><strong>Location:</strong> ${playerLocation}</p>
 	    ${jobName ? `<p><strong>Job:</strong> ${jobName}</p>` : ''}
         `;
+		showSimNoteInline(avatarId);
 
 	document.getElementById('console-container')?.scrollIntoView({
     	behavior: 'smooth',
@@ -772,7 +773,8 @@ async function searchSim(event) {
 		${jobName ? `<p><strong>Job:</strong> ${jobName}</p>` : ''}
                 <p><strong>Currently Online:</strong> ${isOnline ? 'Yes 🟢' : 'No 🔴'}</p>
             `;
-		
+		showSimNoteInline(idFromName);
+
 	document.getElementById('console-container')?.scrollIntoView({
     	behavior: 'smooth',
    	block: 'start'
@@ -1055,6 +1057,8 @@ async function openSimModal(event) {
   	<p><strong>Currently Online:</strong> ${isOnline ? 'Yes 🟢' : 'No 🔴'}</p>
 	</div>
     `;
+	  showSimNoteInline(idFromName, true);
+
   } catch (error) {
     console.error('Failed to fetch sim details:', error);
     content.innerHTML = '<p>Failed to load Sim info.</p>';
@@ -1811,32 +1815,32 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.style.display = 'block';
   };
 
-  const saveBtn = document.getElementById('save-note-btn');
-  if (saveBtn) {
-    saveBtn.addEventListener('click', () => {
-      const modal = document.getElementById('notes-modal');
-      const textarea = document.getElementById('notes-textarea');
-      const simId = modal.dataset.simId;
-      const noteText = textarea.value.trim();
+const saveBtn = document.getElementById('save-note-btn');
+if (saveBtn) {
+  saveBtn.addEventListener('click', () => {
+    const modal = document.getElementById('notes-modal');
+    const textarea = document.getElementById('notes-textarea');
+    const simId = modal.dataset.simId;
+    const noteText = textarea.value.trim();
 
-      const notesData = JSON.parse(localStorage.getItem('simNotes')) || {};
+    const notesData = JSON.parse(localStorage.getItem('simNotes')) || {};
 
-      if (noteText) {
-        notesData[simId] = noteText;
-      } else {
-        delete notesData[simId];
-      }
+    if (noteText) {
+      notesData[simId] = noteText;
+    } else {
+      delete notesData[simId];
+    }
 
-      localStorage.setItem('simNotes', JSON.stringify(notesData));
-      modal.style.display = 'none';
+    localStorage.setItem('simNotes', JSON.stringify(notesData));
+    modal.style.display = 'none';
 
-      showSimNoteInline(simId);
-      const simModal = document.getElementById('sim-modal');
-      if (simModal && simModal.style.display === 'block') {
-        showSimNoteInline(simId, true);
-      }
-    });
-  }
+    showSimNoteInline(simId);
+    const simModal = document.getElementById('sim-modal');
+    if (simModal && simModal.style.display === 'block') {
+      showSimNoteInline(simId, true);
+    }
+  });
+}
 
   const notesClose = document.querySelector('#notes-modal .close');
   if (notesClose) {
@@ -1846,42 +1850,42 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.showSimNoteInline = function(simId, isModal = false) {
-    const notesData = JSON.parse(localStorage.getItem('simNotes')) || {};
-    const note = notesData[simId];
-    const target = isModal
-      ? document.getElementById('sim-modal-content')
-      : document.getElementById('console-content');
+  const notesData = JSON.parse(localStorage.getItem('simNotes')) || {};
+  const note = notesData[simId];
+  const target = isModal
+    ? document.getElementById('sim-modal-content')
+    : document.getElementById('console-content');
 
-    if (!target) return;
+  if (!target) return;
 
-    const existingNoteDiv = target.querySelector('.sim-note');
-    if (existingNoteDiv) existingNoteDiv.remove();
+  const existingNoteDiv = target.querySelector('.sim-note');
+  if (existingNoteDiv) existingNoteDiv.remove();
 
-    const noteDiv = document.createElement('div');
-    noteDiv.className = 'sim-note';
-    noteDiv.style.marginTop = '4px';
+  const noteDiv = document.createElement('div');
+  noteDiv.className = 'sim-note';
+  noteDiv.style.marginTop = '4px';
 
-    if (note) {
-      noteDiv.innerHTML = `
-        <p style="margin: 0; font-family: inherit; font-size: inherit;"><strong>Your Note:</strong> ${note.replace(/\n/g, '<br>')}</p>
-        <p style="margin: 2px 0 0 0;">
-          <a href="#" class="sim-note-link" onclick="openNotesModal('${simId}', '${target.querySelector('.console-title')?.textContent.trim() || 'Sim'}'); return false;">
-            ✏️ Edit Note
-          </a>
-        </p>
-      `;
-    } else {
-      noteDiv.innerHTML = `
-        <p style="margin: 0;">
-          <a href="#" class="sim-note-link" onclick="openNotesModal('${simId}', '${target.querySelector('.console-title')?.textContent.trim() || 'Sim'}'); return false;">
-            📝 Add Note
-          </a>
-        </p>
-      `;
-    }
+  if (note) {
+    noteDiv.innerHTML = `
+      <p><strong>Your Note:</strong> ${note.replace(/\n/g, '<br>')}</p>
+      <p style="margin: 0;">
+        <a href="#" class="sim-note-link" onclick="openNotesModal('${simId}', '${target.querySelector('.console-title')?.textContent.trim() || 'Sim'}'); return false;">
+          ✏️ Edit Note
+        </a>
+      </p>
+    `;
+  } else {
+    noteDiv.innerHTML = `
+      <p style="margin: 0;">
+        <a href="#" class="sim-note-link" onclick="openNotesModal('${simId}', '${target.querySelector('.console-title')?.textContent.trim() || 'Sim'}'); return false;">
+          📝 Add Note
+        </a>
+      </p>
+    `;
+  }
 
-    target.appendChild(noteDiv);
-  };
+  target.appendChild(noteDiv);
+};
 
 });
         

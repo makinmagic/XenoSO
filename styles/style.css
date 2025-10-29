@@ -620,13 +620,13 @@ body.dark-mode #console-content a {
   text-align: center;
 }
 
-.job-link {
+.job-link, .sim-note-link {
   color: #c169ff;
   text-decoration: none;
   font-weight: bold;
 }
 
-.job-link:hover {
+.job-link:hover, .sim-note-link:hover {
   text-decoration: underline;
 }
 

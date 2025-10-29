@@ -632,12 +632,14 @@ body.dark-mode #console-content a {
   text-decoration: underline;
 }
 
+#console-content a.sim-note-link,
 .sim-note-link {
   color: #FF7518;
   text-decoration: none;
   font-weight: bold;
 }
 
+#console-content a.sim-note-link:hover,
 .sim-note-link:hover {
   text-decoration: underline;
 }

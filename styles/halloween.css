@@ -636,6 +636,7 @@ body.dark-mode #console-content a {
 .sim-note-link {
   color: #FF7518;
   text-decoration: none;
+  font-size: inherit;
   font-weight: bold;
 }
 

@@ -620,13 +620,26 @@ body.dark-mode #console-content a {
   text-align: center;
 }
 
-.job-link, .sim-note-link {
+.job-link {
   color: #c169ff;
   text-decoration: none;
   font-weight: bold;
 }
 
-.job-link:hover, .sim-note-link:hover {
+.job-link:hover {
+  text-decoration: underline;
+}
+
+#console-content a.sim-note-link,
+.sim-note-link {
+  color: #c169ff;
+  text-decoration: none;
+  font-size: inherit;
+  font-weight: bold;
+}
+
+#console-content a.sim-note-link:hover,
+.sim-note-link:hover {
   text-decoration: underline;
 }
 

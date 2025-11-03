@@ -1,5 +1,5 @@
 name: Update Sim Names
-
+# re-register schedule
 on:
   schedule:
     - cron: "0 * * * *"

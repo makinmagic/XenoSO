@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://blogimages6.wordpress.com/wp-content/uploads/2024/10/snd.png" type="image/png"> <!-- Favicon -->
+    <link rel="icon" href="https://blogimages6.wordpress.com/wp-content/uploads/2024/10/snd.png" type="image/png">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>XenoSO Dashboard</title>
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css">
@@ -54,7 +54,7 @@
             <div style="display: flex; align-items: center;">
     <h3 id="lots-title" style="flex-grow: 1; text-align: center;"><span class="active-lots-icon"></span> Active Lots <span class="active-lots-icon"></span></h3>
     <i class="fa-solid fa-search search-icon" onclick="toggleSearch('lot')"></i>
-    <input type="text" id="lot-search" placeholder="Search any Lot" autocomplete="off" style="display:none; margin-left: 10px;" onkeyup="searchLot(event)">
+    <input type="text" id="lot-search" placeholder="Search any Lot" list="lotnames" autocomplete="off" style="display:none; margin-left: 10px;" onkeyup="searchLot(event)"><datalist id="lotnames"></datalist>
 </div>
             <div id="lot-filter">
     <i class="fa-solid fa-mug-hot" title="Service" onclick="filterLots('Service')"></i>

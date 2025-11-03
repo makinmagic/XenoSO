@@ -824,9 +824,16 @@ async function loadLotNames() {
 
 document.addEventListener("DOMContentLoaded", loadLotNames);
 
-document.getElementById("lot-search").addEventListener("change", (event) => {
-  searchLot({ key: "Enter", target: event.target });
+const lotSearch = document.getElementById("lot-search");
+
+["input", "change", "keyup"].forEach(evt => {
+  lotSearch.addEventListener(evt, (event) => {
+    if (event.type === "input" || event.key === "Enter" || event.keyCode === 13) {
+      searchLot({ key: "Enter", target: event.target });
+    }
+  });
 });
+
 
 async function searchLot(event) {
     if (event.key === 'Enter' || event.keyCode === 13) {

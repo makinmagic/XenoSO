@@ -1,69 +1,38 @@
-import fs from "fs";
-import https from "https";
+name: Update Sim Names
 
-const OUTPUT_PATH = "data/simnames.json";
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
 
-const BASE_NEIGHBORHOOD_URL = "https://api.xenoso.space/userapi/city/1/avatars/neighborhood/";
-const ONLINE_URL = "https://api.xenoso.space/userapi/avatars/online";
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
-function fetchJSON(url) {
-  return new Promise((resolve, reject) => {
-    https.get(url, (res) => {
-      let data = "";
-      res.on("data", (chunk) => (data += chunk));
-      res.on("end", () => {
-        try {
-          const json = JSON.parse(data);
-          resolve(json);
-        } catch (err) {
-          reject(new Error(`Invalid JSON from ${url}: ${err.message}`));
-        }
-      });
-    }).on("error", (err) => {
-      reject(new Error(`Failed to fetch ${url}: ${err.message}`));
-    });
-  });
-}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-(async () => {
-  try {
-    const allNames = new Set();
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-    for (let i = 1; i <= 7; i++) {
-      try {
-        const data = await fetchJSON(`${BASE_NEIGHBORHOOD_URL}${i}`);
-        const names = data.avatars.map((a) => a.name?.trim()).filter(Boolean);
-        names.forEach((n) => allNames.add(n));
-        console.log(`Fetched ${names.length} names from neighborhood ${i}`);
-      } catch (err) {
-        console.warn(`⚠️ Skipped neighborhood ${i}: ${err.message}`);
-      }
-    }
+      - name: Fetch and update simnames.json
+        run: |
+          mkdir -p data
+          node .github/scripts/update-simnames.js
 
-    try {
-      const onlineData = await fetchJSON(ONLINE_URL);
-      const onlineNames = onlineData.avatars.map((a) => a.name?.trim()).filter(Boolean);
-      onlineNames.forEach((n) => allNames.add(n));
-      console.log(`Fetched ${onlineNames.length} currently online players`);
-    } catch (err) {
-      console.warn(`⚠️ Skipped online players fetch: ${err.message}`);
-    }
-
-    let existing = [];
-    if (fs.existsSync(OUTPUT_PATH)) {
-      existing = JSON.parse(fs.readFileSync(OUTPUT_PATH, "utf-8"));
-      existing.forEach((n) => allNames.add(n));
-    }
-
-    const merged = Array.from(allNames).sort();
-    if (merged.length !== existing.length) {
-      fs.writeFileSync(OUTPUT_PATH, JSON.stringify(merged, null, 2));
-      console.log(`✅ Updated simnames.json with ${merged.length} total names`);
-    } else {
-      console.log("ℹ️ No new names to add. Skipping commit.");
-    }
-  } catch (err) {
-    console.error("❌ Fatal error updating simnames.json:", err);
-    process.exit(1);
-  }
-})();
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/simnames.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update simnames.json with new names"
+            git push
+          else
+            echo "No new names found. Skipping commit."
+          fi

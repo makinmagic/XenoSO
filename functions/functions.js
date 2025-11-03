@@ -811,6 +811,23 @@ async function searchSim(event) {
     }
 }
 
+async function loadLotNames() {
+  try {
+    const res = await fetch("https://makinmagic.github.io/XenoSO/data/lotnames.json");
+    const lotNames = await res.json();
+    const datalist = document.getElementById("lotnames");
+    datalist.innerHTML = lotNames.map(name => `<option value="${name}">`).join("");
+  } catch (err) {
+    console.error("Failed to load lotnames.json:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadLotNames);
+
+document.getElementById("lot-search").addEventListener("change", (event) => {
+  searchLot({ key: "Enter", target: event.target });
+});
+
 async function searchLot(event) {
     if (event.key === 'Enter' || event.keyCode === 13) {
         const lotName = event.target.value.trim();

@@ -811,6 +811,30 @@ async function searchSim(event) {
     }
 }
 
+// Autocomplete setup for Lot search
+async function loadLotNames() {
+  try {
+    const res = await fetch("https://makinmagic.github.io/XenoSO/data/lotnames.json");
+    const names = await res.json();
+
+    const datalist = document.getElementById("lotnames");
+    datalist.innerHTML = names.map(name => `<option value="${name}">`).join("");
+  } catch (err) {
+    console.error("Failed to load lotnames.json:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadLotNames();
+
+  const lotSearch = document.getElementById("lot-search");
+  if (lotSearch) {
+    lotSearch.addEventListener("change", (event) => {
+      searchLot({ key: "Enter", target: event.target });
+    });
+  }
+});
+
 async function searchLot(event) {
     if (event.key === 'Enter' || event.keyCode === 13) {
         const lotName = event.target.value.trim();

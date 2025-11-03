@@ -1,4 +1,4 @@
-name: Update Sim Names
+name: Update Sim and Lot Names
 
 on:
   schedule:
@@ -20,18 +20,18 @@ jobs:
         with:
           node-version: 20
 
-      - name: Fetch and update simnames.json
+      - name: Fetch and update simnames.json and lotnames.json
         run: |
           mkdir -p data
-          node .github/scripts/update-simnames.js
+          node .github/scripts/update-names.js
 
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/simnames.json
+          git add data/simnames.json data/lotnames.json
           if ! git diff --cached --quiet; then
-            git commit -m "Update simnames.json with new names"
+            git commit -m "Update names data"
             git push
           else
             echo "No new names found. Skipping commit."

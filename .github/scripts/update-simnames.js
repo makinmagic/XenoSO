@@ -2,7 +2,6 @@ import fs from "fs";
 import https from "https";
 
 const OUTPUT_PATH = "data/simnames.json";
-
 const BASE_NEIGHBORHOOD_URL = "https://api.xenoso.space/userapi/city/1/avatars/neighborhood/";
 const ONLINE_URL = "https://api.xenoso.space/userapi/avatars/online";
 
@@ -27,7 +26,7 @@ function fetchJSON(url) {
 
 (async () => {
   try {
-    const allNames = new Set();
+    const currentNames = new Set();
 
     for (let i = 1; i <= 7; i++) {
       try {
@@ -35,7 +34,7 @@ function fetchJSON(url) {
         const names = (data.avatars || [])
           .map(a => a.name?.trim())
           .filter(Boolean);
-        names.forEach(n => allNames.add(n));
+        names.forEach(n => currentNames.add(n));
         console.log(`Fetched ${names.length} names from neighborhood ${i}`);
       } catch (err) {
         console.warn(`⚠️ Skipped neighborhood ${i}: ${err.message}`);
@@ -47,7 +46,7 @@ function fetchJSON(url) {
       const onlineNames = (onlineData.avatars || [])
         .map(a => a.name?.trim())
         .filter(Boolean);
-      onlineNames.forEach(n => allNames.add(n));
+      onlineNames.forEach(n => currentNames.add(n));
       console.log(`Fetched ${onlineNames.length} currently online players`);
     } catch (err) {
       console.warn(`⚠️ Skipped online players fetch: ${err.message}`);
@@ -56,16 +55,24 @@ function fetchJSON(url) {
     let existing = [];
     if (fs.existsSync(OUTPUT_PATH)) {
       existing = JSON.parse(fs.readFileSync(OUTPUT_PATH, "utf-8"));
-      existing.forEach(n => allNames.add(n));
     }
 
-    const merged = Array.from(allNames).sort();
-    if (merged.length !== existing.length) {
-      fs.writeFileSync(OUTPUT_PATH, JSON.stringify(merged, null, 2));
-      console.log(`✅ Updated simnames.json with ${merged.length} total names`);
-    } else {
-      console.log("ℹ️ No new names to add. Skipping commit.");
+    const existingSet = new Set(existing);
+    const toAdd = Array.from(currentNames).filter(x => !existingSet.has(x));
+    const toRemove = existing.filter(x => !currentNames.has(x));
+
+    if (toAdd.length === 0 && toRemove.length === 0) {
+      console.log("ℹ️ No changes detected — skipping update.");
+      return;
     }
+
+    const merged = Array.from(currentNames).sort();
+    fs.writeFileSync(OUTPUT_PATH, JSON.stringify(merged, null, 2));
+
+    console.log(`✅ Updated simnames.json:`);
+    if (toAdd.length) console.log(`   ➕ Added ${toAdd.length} new names`);
+    if (toRemove.length) console.log(`   ➖ Removed ${toRemove.length} old names`);
+    console.log(`   💾 Total Sims: ${merged.length}`);
   } catch (err) {
     console.error("❌ Fatal error updating simnames.json:", err);
     process.exit(1);

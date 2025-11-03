@@ -692,59 +692,26 @@ function toggleSearch(type) {
     }
 }
 
-// === Load Sim Names ===
+// Autocomplete setup for Sim search
 async function loadSimNames() {
   try {
     const res = await fetch("https://makinmagic.github.io/XenoSO/data/simnames.json");
     const names = await res.json();
+
     const datalist = document.getElementById("simnames");
-    if (datalist) {
-      datalist.innerHTML = names.map(name => `<option value="${name}">`).join("");
-    }
+    datalist.innerHTML = names.map(name => `<option value="${name}">`).join("");
   } catch (err) {
     console.error("Failed to load simnames.json:", err);
   }
 }
 
-// === Load Lot Names ===
-async function loadLotNames() {
-  try {
-    const res = await fetch("https://makinmagic.github.io/XenoSO/data/lotnames.json");
-    const lotNames = await res.json();
-    const datalist = document.getElementById("lotnames");
-    if (datalist) {
-      datalist.innerHTML = lotNames.map(name => `<option value="${name}">`).join("");
-    }
-  } catch (err) {
-    console.error("Failed to load lotnames.json:", err);
-  }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   loadSimNames();
-  loadLotNames();
 
-  // Sim search
   const simSearch = document.getElementById("sim-search");
   if (simSearch) {
-    ["input", "change", "keyup"].forEach(evt => {
-      simSearch.addEventListener(evt, (event) => {
-        if (event.type === "input" || event.key === "Enter" || event.keyCode === 13) {
-          searchSim({ key: "Enter", target: event.target });
-        }
-      });
-    });
-  }
-
-  // Lot search
-  const lotSearch = document.getElementById("lot-search");
-  if (lotSearch) {
-    ["input", "change", "keyup"].forEach(evt => {
-      lotSearch.addEventListener(evt, (event) => {
-        if (event.type === "input" || event.key === "Enter" || event.keyCode === 13) {
-          searchLot({ key: "Enter", target: event.target });
-        }
-      });
+    simSearch.addEventListener("change", (event) => {
+      searchSim({ key: "Enter", target: event.target });
     });
   }
 });
@@ -843,30 +810,6 @@ async function searchSim(event) {
         }
     }
 }
-
-async function loadLotNames() {
-  try {
-    const res = await fetch("https://makinmagic.github.io/XenoSO/data/lotnames.json");
-    const lotNames = await res.json();
-    const datalist = document.getElementById("lotnames");
-    datalist.innerHTML = lotNames.map(name => `<option value="${name}">`).join("");
-  } catch (err) {
-    console.error("Failed to load lotnames.json:", err);
-  }
-}
-
-document.addEventListener("DOMContentLoaded", loadLotNames);
-
-const lotSearch = document.getElementById("lot-search");
-
-["input", "change", "keyup"].forEach(evt => {
-  lotSearch.addEventListener(evt, (event) => {
-    if (event.type === "input" || event.key === "Enter" || event.keyCode === 13) {
-      searchLot({ key: "Enter", target: event.target });
-    }
-  });
-});
-
 
 async function searchLot(event) {
     if (event.key === 'Enter' || event.keyCode === 13) {

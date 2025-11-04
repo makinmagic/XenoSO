@@ -1409,23 +1409,12 @@ async function loadTopPayingMOs() {
     ));
     const utcNow = new Date();
 
-    function isDSTActive() {
-      const now = new Date();
-      const jan = new Date(now.getFullYear(), 0, 1);
-      const jul = new Date(now.getFullYear(), 6, 1);
-		
-      return Math.min(jan.getTimezoneOffset(), jul.getTimezoneOffset()) !== now.getTimezoneOffset();
-    }
-
-    const dstOffset = isDSTActive() ? 5 : 4;
-
     const startTime = new Date(Date.UTC(
       formTimestamp.getUTCFullYear(),
       formTimestamp.getUTCMonth(),
       formTimestamp.getUTCDate(),
-      dstOffset, 0, 0
+      5, 0, 0
     ));
-
     const endTime = new Date(startTime);
     endTime.setUTCDate(startTime.getUTCDate() + 1);
 

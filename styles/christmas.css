@@ -14,7 +14,6 @@ body {
   background: linear-gradient(180deg, #fff7cc 0%, #f9e27a 25%, #e3b23c 50%, #f6d675 75%, #b98c22 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 6px rgb(0 0 0 / 25%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,8 +75,8 @@ body {
     }
 
     tr:hover {
-        background-color: #FFFAF0; 
-        color: #B22222; 
+        background-color: #2e8b57; 
+        color: #000; 
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 
@@ -447,7 +446,7 @@ body.dark-mode #console-content a {
   bottom: 20px;
   right: 20px;
   z-index: 999;
-  background-color: #9215e6;
+  background-color: #F1C75D;
   color: white;
   border: none;
   width: 48px;
@@ -463,7 +462,7 @@ body.dark-mode #console-content a {
 }
 
 #backToTopBtn:hover {
-  background-color: #a29bfe;
+  background-color: #ffdb81;
 }
 
 .modal {
@@ -632,7 +631,7 @@ body.dark-mode #console-content a {
 }
 
 .job-link {
-  color: #c169ff;
+  color: #FFD700;
   text-decoration: none;
   font-weight: bold;
 }
@@ -643,7 +642,7 @@ body.dark-mode #console-content a {
 
 #console-content a.sim-note-link,
 .sim-note-link {
-  color: #c169ff;
+  color: #FFD700;
   text-decoration: none;
   font-size: inherit;
   font-weight: bold;

@@ -200,7 +200,7 @@ body {
         margin: 0 auto;
         padding: 15px;
         border: 1px solid #ffd700;
-        background-color: rgb(251, 241, 0 / 0.16);
+        background-color: rgba(251, 241, 0, 0.16);
         border-radius: 10px;
         box-shadow: 0 0 10px #fff30050;
         text-align: left;

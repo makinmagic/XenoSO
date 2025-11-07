@@ -511,7 +511,7 @@ body.dark-mode #console-content a {
 .tab-btn {
   padding: 8px 16px;
   font-size: 1em;
-  background: #333;
+  background: #F1C75D;
   color: white;
   border: none;
   cursor: pointer;
@@ -519,7 +519,7 @@ body.dark-mode #console-content a {
 }
 
 .tab-btn.active {
-  background: #6600cc;
+  background: #ffd700;
 }
 
 .tab-content {

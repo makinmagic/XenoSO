@@ -70,7 +70,7 @@ body {
     }
 
     th {
-        background-color: #F1C75E; 
+        background-color: #FFD700; 
         color: #000;
     }
 
@@ -163,7 +163,7 @@ body {
 }
 
 .console-title {
-    background-color: #f1c75e;
+    background-color: #FFD700;
     color: black;
     padding: 10px;
     text-align: center;
@@ -266,7 +266,7 @@ body {
     display: flex;
     justify-content: space-around;
     margin: 10px;
-    color: #F1C75E;
+    color: #FFD700;
 }
 #lot-filter i {
     cursor: pointer;
@@ -275,7 +275,7 @@ body {
 }
 #lot-filter i:hover {
     transform: scale(1.2);
-    color: #F1C75E;
+    color: #FFD700;
 }
 
 .event-label {
@@ -373,7 +373,7 @@ body.dark-mode {
 }
 
 #events-container a {
-    color: #f1c75e;
+    color: #FFD700;
     text-decoration: underline;
     font-weight: bold;
 }
@@ -383,7 +383,7 @@ body.dark-mode #events-container a {
 }
 
 #console-content a, #sim-modal a {
-    color: #f1c75e;
+    color: #FFD700;
     text-decoration: underline;
     font-size: 14px;
     display: inline-block;

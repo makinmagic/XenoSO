@@ -591,9 +591,9 @@ body.dark-mode #console-content a {
 
 .job-btn.active {
   background-color: #ffd700;
-  color: white;
+  color: #000;
   border-color: #ffd700;
-  box-shadow: 0 0 10px rgba(146, 21, 230, 0.5);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
 .job-info {

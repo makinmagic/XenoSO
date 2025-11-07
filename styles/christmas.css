@@ -70,7 +70,7 @@ body {
     }
 
     th {
-        background-color: #FFD700; 
+        background-color: #eecf4e; 
         color: #000;
     }
 
@@ -163,7 +163,7 @@ body {
 }
 
 .console-title {
-    background-color: #FFD700;
+    background-color: #eecf4e;
     color: black;
     padding: 10px;
     text-align: center;

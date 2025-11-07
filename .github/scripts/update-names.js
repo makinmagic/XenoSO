@@ -62,16 +62,17 @@ function fetchJSON(url) {
 
     const existingSet = new Set(existing);
     const toAdd = Array.from(currentNames).filter(x => !existingSet.has(x));
-    const toRemove = existing.filter(x => !currentNames.has(x));
+    // const toRemove = existing.filter(x => !currentNames.has(x));
 
-    if (toAdd.length === 0 && toRemove.length === 0) {
+    // if (toAdd.length === 0 && toRemove.length === 0) {
+    if (toAdd.length === 0) {
       console.log("ℹ️ No changes detected in simnames.json — skipping update.");
     } else {
-      const merged = Array.from(currentNames).sort();
+      const merged = Array.from(new Set([...existing, ...currentNames])).sort();
       fs.writeFileSync(SIM_OUTPUT, JSON.stringify(merged, null, 2));
       console.log(`✅ Updated simnames.json:`);
       if (toAdd.length) console.log(`   ➕ Added ${toAdd.length} new Sims`);
-      if (toRemove.length) console.log(`   ➖ Removed ${toRemove.length} old Sims`);
+      // if (toRemove.length) console.log(`   ➖ Removed ${toRemove.length} old Sims`);
       console.log(`   💾 Total Sims: ${merged.length}`);
     }
 

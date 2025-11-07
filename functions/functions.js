@@ -1439,7 +1439,7 @@ async function loadTopPayingMOs() {
       .sort((a, b) => parseInt(b[1]) - parseInt(a[1]))
       .map(([key, val]) => `${key} (${parseInt(val)}%)`);
 
-    container.firstChild.textContent = `Today's top-paying MOs are: ${topMOs.join(', ')}`;
+    container.firstChild.textContent = `Today's top MOs are: ${topMOs.join(', ')}`;
     viewAllLink.style.display = "inline";
 
     const sorted = entries.sort((a, b) => parseInt(b[1]) - parseInt(a[1]));

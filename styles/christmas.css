@@ -8,17 +8,18 @@ body {
     }
 
     h1 {
-    text-align: center;
-    color: #F1C75E; 
-    font-size: 32px;
-    text-shadow: 0 0 4px rgb(255 210 80 / 60%), 0 0 10px rgb(255 230 120 / 40%); 
-    animation: shimmer 3s ease-in-out infinite; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: nowrap;
-    gap: 8px;
-    white-space: nowrap;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  background: linear-gradient(180deg, #fff7cc 0%, #f9e27a 25%, #e3b23c 50%, #f6d675 75%, #b98c22 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 6px rgb(0 0 0 / 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
 }
 
 @keyframes shimmer { 

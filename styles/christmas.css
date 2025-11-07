@@ -11,7 +11,8 @@ body {
     text-align: center;
     color: #F1C75E; 
     font-size: 32px;
-    text-shadow: 0 0 32px rgba(146, 21, 230, 0.8), 0 0 30px rgba(193, 105, 255, 0.8);
+    text-shadow: 0 0 4px rgb(255 210 80 / 60%), 0 0 10px rgb(255 230 120 / 40%); 
+    animation: shimmer 3s ease-in-out infinite; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,7 +20,16 @@ body {
     gap: 8px;
     white-space: nowrap;
 }
-    
+
+@keyframes shimmer { 
+        0%,100% { 
+        text-shadow: 0 0 4px rgb(255 210 80 / 60%), 0 0 10px rgb(255 230 120 / 40%); 
+        } 
+        50% { 
+        text-shadow: 0 0 6px rgb(255 240 180 / 90%), 0 0 14px rgb(255 255 220 / 70%); 
+        } 
+}
+
     h3 {
         text-align: center;
         color: #fff; 

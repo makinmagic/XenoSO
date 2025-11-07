@@ -476,7 +476,7 @@ body.dark-mode #console-content a {
 }
 
 .modal-content {
-  background-color: #1c003b;
+  background-color: #034f1b;
   margin: 4% auto;
   padding: 20px;
   border-radius: 10px;
@@ -484,7 +484,7 @@ body.dark-mode #console-content a {
   color: #fff;
   max-width: 600px;
   text-align: center;
-  border: 2px solid #9215e6;
+  border: 2px solid #FFD700;
 }
 
 #sim-modal .modal-content {

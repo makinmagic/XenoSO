@@ -1117,7 +1117,7 @@ function closeSimModal() {
   document.getElementById('sim-modal').style.display = 'none';
 }
 
-const eventsUrl = 'https://opensheet.elk.sh/1xWQc2P86fisaRSdxyGWwTddX_a4ZGmWYaWRK0ZfXb_4/Events';
+const eventsUrl = 'https://opensheet.vercel.app/1xWQc2P86fisaRSdxyGWwTddX_a4ZGmWYaWRK0ZfXb_4/Events';
 
 async function fetchEvents() {
     try {
@@ -1390,7 +1390,7 @@ const moPayoutAt150 = {
 let percentChart = null;
 
 async function loadTopPayingMOs() {
-  const url = 'https://opensheet.elk.sh/1DJHQ0f5X9NUuAouEf5osJgLV2r2nuzsGLIyjLkm-0NM/MOs';
+  const url = 'https://opensheet.vercel.app/1DJHQ0f5X9NUuAouEf5osJgLV2r2nuzsGLIyjLkm-0NM/MOs';
 
   try {
     const response = await fetch(url);
@@ -1709,7 +1709,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //Countdown
 async function loadCountdown() {
   try {
-    const response = await fetch('https://opensheet.elk.sh/1eTaXmyKRXZmWCvX5ZnSbjaWlT8X_KDWvN2PwBrlwEmc/Countdown');
+    const response = await fetch('https://opensheet.vercel.app/1eTaXmyKRXZmWCvX5ZnSbjaWlT8X_KDWvN2PwBrlwEmc/Countdown');
     const data = await response.json();
 
     const countdownData = data[0];

@@ -171,9 +171,9 @@ body {
     border-bottom: 1px solid #eee;
 }
 
-.memorial-mode,
-.memorial-mode #console-content,
-.memorial-mode #sim-modal-content {
+.memorial-active #console-container,
+.memorial-active #console-content,
+.memorial-active #sim-modal-content {
   background: #000 !important;
 }
 

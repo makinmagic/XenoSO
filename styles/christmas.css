@@ -171,6 +171,12 @@ body {
     border-bottom: 1px solid #eee;
 }
 
+.memorial-mode,
+.memorial-mode #console-content,
+.memorial-mode #sim-modal-content {
+  background: #000 !important;
+}
+
     .hidden {
     display: none;
 }

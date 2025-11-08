@@ -1558,24 +1558,6 @@ async function loadTopPayingMOs() {
       });
     });
 
-    document.querySelectorAll(".modal .close").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const modal = e.target.closest(".modal");
-        if (modal) modal.style.display = "none";
-      });
-    });
-
-    window.addEventListener("click", (e) => {
-      const modals = document.querySelectorAll(".modal");
-      modals.forEach((modal) => {
-        if (e.target === modal) modal.style.display = "none";
-      });
-    });
-
-    window.onclick = (e) => {
-      if (e.target == modal) modal.style.display = "none";
-    };
-
     container.style.display = "block";
 
     const bottomContainer = document.getElementById("bottom-container");
@@ -1976,6 +1958,32 @@ if (saveBtn) {
   target.appendChild(noteDiv);
 };
 
+});
+
+// Modal close behaviour
+document.addEventListener('click', (e) => {
+  const isModalContent = e.target.closest('.modal-content');
+  const isModal = e.target.closest('.modal');
+  const isOpenTrigger = e.target.closest('[onclick*="open"]');
+
+  if (e.target.matches('.modal .close')) {
+    e.target.closest('.modal').style.display = 'none';
+    return;
+  }
+
+  if (isModalContent || isOpenTrigger) return;
+
+  document.querySelectorAll('.modal').forEach(modal => {
+    if (modal.style.display === 'block' && !modal.querySelector('.modal-content').contains(e.target)) {
+      modal.style.display = 'none';
+    }
+  });
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+  }
 });
         
 /* document.addEventListener('DOMContentLoaded', () => {

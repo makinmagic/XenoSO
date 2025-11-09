@@ -901,7 +901,7 @@ setMemorialMode(!!memorialEntry, consoleContainer, consoleContent);
 if (memorialEntry) {
   const tribute = document.createElement('div');
   tribute.innerHTML = `
-    <p style="text-align:center; color:#FFD700; font-style:italic; margin-top:-0px; margin-bottom:15px;">
+    <p style="text-align:center; color:#FFD700; font-style:italic; margin-top:0px; margin-bottom:15px;">
       ${memorialEntry.message}
     </p>
   `;
@@ -1266,7 +1266,7 @@ setMemorialMode(!!memorialEntry, content, content);
 if (memorialEntry) {
   const tribute = document.createElement('div');
   tribute.innerHTML = `
-    <p style="text-align:center; color:#FFD700; font-style:italic; margin-top:-5px; margin-bottom:10px;">
+    <p style="text-align:center; color:#FFD700; font-style:italic; margin-top: 0px; margin-bottom:15px;">
       ${memorialEntry.message}
     </p>
   `;

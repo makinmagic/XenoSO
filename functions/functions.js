@@ -370,6 +370,8 @@ async function displayLotInfo(lotId) {
     consoleContent.dataset.id = lotId; // Set the current Lot ID
     consoleContent.dataset.type = 'lots'; // Set the type to Lots
 
+	setMemorialMode(false, document.getElementById('console-container'), consoleContent);
+
     const url = `https://api.xenoso.space/userapi/city/1/i${lotId}.json`;
 
     try {
@@ -528,6 +530,24 @@ consoleContent.innerHTML = `
     ${showHiddenNote ? `<p><em>There are sims inside with their location hidden.</em></p>` : ''}
 `;
 
+        const memorialList = await fetchMemorialList();
+        const isMemorializedLot = memorialList.some(entry =>
+            entry.name.toLowerCase() === ownerName.toLowerCase()
+        );
+
+        setMemorialMode(isMemorializedLot, document.getElementById('console-container'), consoleContent);
+
+        if (isMemorializedLot) {
+            const tribute = document.createElement('div');
+            tribute.innerHTML = `
+                <p style="text-align:center; color:#FFD700; font-style:italic; margin-top:15px; margin-bottom:15px;">
+                    🕯️ In Loving Memory of ${ownerName}, whose legacy lives on through this lot. 🕯️
+                </p>
+            `;
+            const img = consoleContent.querySelector('.console-img');
+            if (img) img.insertAdjacentElement('afterend', tribute);
+        }
+
 	    document.getElementById('console-container')?.scrollIntoView({
     	behavior: 'smooth',
    	block: 'start'
@@ -537,6 +557,18 @@ consoleContent.innerHTML = `
         console.error('Failed to fetch lot details:', error);
         consoleContent.innerHTML = 'Error loading lot details.';
     }
+}
+
+// Memorial List
+async function fetchMemorialList() {
+  try {
+    const response = await fetch('https://makinmagic.github.io/XenoSO/data/memorial.json');
+    if (!response.ok) throw new Error('Failed to fetch memorial list.');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching memorial list:', error);
+    return [];
+  }
 }
 
 async function fetchPlayerImages() {
@@ -564,13 +596,37 @@ async function fetchPlayerImages() {
         return {}; // Return an empty object on error
     }
 }
+
+function setMemorialMode(isActive, container, content) {
+  const isModal = container.id === 'sim-modal-content' || container.closest('#sim-modal');
+
+  if (isActive) {
+    if (isModal) {
+      const modalContent = document.querySelector('#sim-modal .modal-content');
+      if (modalContent) modalContent.style.backgroundColor = '#000';
+    } else {
+      container.style.background = '#000';
+      content.style.background = '#000';
+    }
+    container.dataset.memorial = 'true';
+  } else if (container.dataset.memorial === 'true') {
+    delete container.dataset.memorial;
+    content.removeAttribute('style');
+    container.removeAttribute('style');
+
+    if (isModal) {
+      const modalContent = document.querySelector('#sim-modal .modal-content');
+      if (modalContent) modalContent.removeAttribute('style');
+    }
+  }
+}
 	    
 async function displayPlayerInfo(avatarId) {
-    // Remove placeholder text
     const consoleContent = document.getElementById('console-content');
-    consoleContent.innerHTML = ''; // Clear existing content
-    consoleContent.dataset.id = avatarId; // Set the current Sim ID
-    consoleContent.dataset.type = 'sims'; // Set the type to Sims
+    consoleContent.innerHTML = '';
+	setMemorialMode(false, document.getElementById('console-container'), consoleContent);
+    consoleContent.dataset.id = avatarId;
+    consoleContent.dataset.type = 'sims';
 
     const playerImages = await fetchPlayerImages();
     const url = `https://api.xenoso.space/userapi/avatars/${avatarId}`;
@@ -618,6 +674,12 @@ async function displayPlayerInfo(avatarId) {
 	};
 	const jobName = jobMap[playerData.current_job];
 
+	// Memorial check
+const memorialList = await fetchMemorialList();
+const memorialEntry = memorialList.find(entry => 
+  entry.name.toLowerCase() === playerData.name.toLowerCase()
+);
+
         // Display all information in the Console
         consoleContent.innerHTML = `
             <div class="console-title">
@@ -639,6 +701,35 @@ async function displayPlayerInfo(avatarId) {
         `;
 		showSimNoteInline(avatarId);
 
+const consoleContainer = document.getElementById('console-container');
+setMemorialMode(!!memorialEntry, consoleContainer, consoleContent);
+
+if (memorialEntry) {
+  const tribute = document.createElement('div');
+  tribute.innerHTML = `
+    <p style="text-align:center; color:#FFD700; font-style:italic; margin-top:-5px; margin-bottom:10px;">
+      ${memorialEntry.message}
+    </p>
+  `;
+
+  const descriptionContainer = consoleContent.querySelector('.description-container');
+  if (descriptionContainer) {
+    descriptionContainer.parentNode.insertBefore(tribute, descriptionContainer);
+  }
+
+  const title = consoleContent.querySelector('.console-title');
+  if (title && !title.textContent.includes(memorialEntry.symbol)) {
+    title.innerHTML = `${memorialEntry.symbol} ${title.innerHTML} ${memorialEntry.symbol}`;
+  }
+
+  const onlineParagraph = Array.from(consoleContent.querySelectorAll('p')).find(p =>
+    p.textContent.toLowerCase().includes('currently online')
+  );
+  if (onlineParagraph) {
+    onlineParagraph.style.opacity = '0.3';
+  }
+}
+	
 	document.getElementById('console-container')?.scrollIntoView({
     	behavior: 'smooth',
    	block: 'start'
@@ -777,6 +868,11 @@ async function searchSim(event) {
 	    };
 	   const jobName = jobMap[playerData.current_job];
 
+		const memorialList = await fetchMemorialList();
+		const memorialEntry = memorialList.find(entry => 
+		  entry.name.toLowerCase() === playerData.name.toLowerCase()
+		);
+
             // Display all information in the Console
             consoleContent.innerHTML = `
                 <div class="console-title">
@@ -799,6 +895,35 @@ async function searchSim(event) {
             `;
 		showSimNoteInline(idFromName);
 
+const consoleContainer = document.getElementById('console-container');
+setMemorialMode(!!memorialEntry, consoleContainer, consoleContent);
+
+if (memorialEntry) {
+  const tribute = document.createElement('div');
+  tribute.innerHTML = `
+    <p style="text-align:center; color:#FFD700; font-style:italic; margin-top:-5px; margin-bottom:10px;">
+      ${memorialEntry.message}
+    </p>
+  `;
+
+  const descriptionContainer = consoleContent.querySelector('.description-container');
+  if (descriptionContainer) {
+    descriptionContainer.parentNode.insertBefore(tribute, descriptionContainer);
+  }
+
+  const title = consoleContent.querySelector('.console-title');
+  if (title && !title.textContent.includes(memorialEntry.symbol)) {
+    title.innerHTML = `${memorialEntry.symbol} ${title.innerHTML} ${memorialEntry.symbol}`;
+  }
+
+  const onlineParagraph = Array.from(consoleContent.querySelectorAll('p')).find(p =>
+    p.textContent.toLowerCase().includes('currently online')
+  );
+  if (onlineParagraph) {
+    onlineParagraph.style.opacity = '0.3';
+  }
+}
+			
 	document.getElementById('console-container')?.scrollIntoView({
     	behavior: 'smooth',
    	block: 'start'
@@ -977,8 +1102,11 @@ if (appendedHiddenHost) {
                 
             const showHiddenNote = totalSimsInside > knownSims.length;
 
-                        // Display lot information in Console
-            const consoleContent = document.getElementById('console-content');
+		const consoleContainer = document.getElementById('console-container');
+const consoleContent = document.getElementById('console-content');
+setMemorialMode(false, consoleContainer, consoleContent);
+			
+                        // Display lot information in Console			
             consoleContent.innerHTML = `
                 <div class="console-title">
                     ${lotData.name}
@@ -1025,6 +1153,26 @@ ${activeStatus === 'Yes' ? `
   ${showHiddenNote ? `<p><em>There are sims inside with their location hidden.</em></p>` : ''}
 ` : ''}
 `;
+
+	// Memorial check
+const memorialList = await fetchMemorialList();
+const isMemorializedLot = memorialList.some(entry =>
+  entry.name.toLowerCase() === ownerName.toLowerCase()
+);
+
+setMemorialMode(isMemorializedLot, consoleContainer, consoleContent);
+
+if (isMemorializedLot) {
+  const tribute = document.createElement('div');
+  tribute.innerHTML = `
+    <p style="text-align:center; color:#FFD700; font-style:italic; margin-top:15px; margin-bottom:15px;">
+      🕯️ In Loving Memory of ${ownerName}, whose legacy lives on through this lot. 🕯️
+    </p>
+  `;
+
+  const img = consoleContent.querySelector('.console-img');
+  if (img) img.insertAdjacentElement('afterend', tribute);
+}
 
 	document.getElementById('console-container')?.scrollIntoView({
     	behavior: 'smooth',
@@ -1107,6 +1255,40 @@ async function openSimModal(event) {
     `;
 	  showSimNoteInline(idFromName, true);
 
+// Memorial check
+const memorialList = await fetchMemorialList();
+const memorialEntry = memorialList.find(entry =>
+  entry.name.toLowerCase() === playerData.name.toLowerCase()
+);
+
+setMemorialMode(!!memorialEntry, content, content);
+
+if (memorialEntry) {
+  const tribute = document.createElement('div');
+  tribute.innerHTML = `
+    <p style="text-align:center; color:#FFD700; font-style:italic; margin-top:-5px; margin-bottom:10px;">
+      ${memorialEntry.message}
+    </p>
+  `;
+
+  const descriptionContainer = content.querySelector('.description-container');
+  if (descriptionContainer) {
+    descriptionContainer.parentNode.insertBefore(tribute, descriptionContainer);
+  }
+
+  const title = content.querySelector('.console-title');
+  if (title && !title.textContent.includes(memorialEntry.symbol)) {
+    title.innerHTML = `${memorialEntry.symbol} ${title.innerHTML} ${memorialEntry.symbol}`;
+  }
+
+  const onlineParagraph = Array.from(content.querySelectorAll('p')).find(p =>
+    p.textContent.toLowerCase().includes('currently online')
+  );
+  if (onlineParagraph) {
+    onlineParagraph.style.opacity = '0.3';
+  }
+}
+
   } catch (error) {
     console.error('Failed to fetch sim details:', error);
     content.innerHTML = '<p>Failed to load Sim info.</p>';
@@ -1176,6 +1358,7 @@ async function fetchEvents() {
 
 function displayEventInfo(event) {
     const consoleContent = document.getElementById('console-content');
+	setMemorialMode(false, document.getElementById('console-container'), consoleContent);
     const eventStartDate = new Date(event.startTime);
     const eventEndDate = new Date(event.endTime);
     const formattedDate = eventStartDate.toLocaleDateString(undefined, {

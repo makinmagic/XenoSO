@@ -1443,7 +1443,7 @@ async function displayCurrentEvent() {
         // Display all overlapping events
         if (currentEvents.length > 0) {
             currentEventContainer.innerHTML = currentEvents
-                .map(event => `🔥 Current Event: ${event.name} at ${event.location}!`)
+                .map(event => `Current Event: ${event.name} at ${event.location}`)
                 .join('<br>'); // Join with line breaks for multiple events
 
             currentEvents.forEach(event => addEventIconToLocation(event.location)); // Add balloon icon for each location

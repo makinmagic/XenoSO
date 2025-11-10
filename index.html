@@ -27,7 +27,7 @@
   <i class="fa-solid fa-rhombus"></i>
 </h1>
     <div id="tempoSim" style="font-weight: bold;">Time in Xenovia: Loading time...</div>
-   <!-- <div id="money-object" style="font-weight: bold;">Loading today's top-paying MOs...<a href="#" id="viewAllLink">View All</a></div> -->
+   <div id="money-object" style="font-weight: bold;">Loading today's top-paying MOs...<a href="#" id="viewAllLink">View All</a></div>
     <div id="countdown" style="text-align: center; font-weight: bold;"></div>
 	<p id="event-message" style="display: none; font-weight: bold; font-size: 18px; text-align: center;">In loving memory of our dear Zhad 🕯️</p>
     <div id="currentEvent" style="text-align: center; font-weight: bold;"></div>
@@ -131,7 +131,7 @@ async function init() {
     // fetchMoneyObject(); // Display the money object
     generateStars(); // Starry background - used with permission from Sorta
     await loadCountdown(); // Countdown messages
-    // await loadTopPayingMOs(); // Top-paying MOs (manual)
+    await loadTopPayingMOs(); // Top-paying MOs (manual)
     await loadOnlinePlayers(); // Load online players
     await loadLots(); // Load active lots
     fetchEvents(); // Load and display upcoming events

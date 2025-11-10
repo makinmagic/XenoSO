@@ -1573,7 +1573,7 @@ const moPayoutAt150 = {
 let percentChart = null;
 
 async function loadTopPayingMOs() {
-  const url = 'https://opensheet.vercel.app/1DJHQ0f5X9NUuAouEf5osJgLV2r2nuzsGLIyjLkm-0NM/MOs';
+  const url = 'https://opensheet.elk.sh/1DJHQ0f5X9NUuAouEf5osJgLV2r2nuzsGLIyjLkm-0NM/MOs';
 
   try {
     const response = await fetch(url);
@@ -1622,7 +1622,7 @@ async function loadTopPayingMOs() {
       .sort((a, b) => parseInt(b[1]) - parseInt(a[1]))
       .map(([key, val]) => `${key} (${parseInt(val)}%)`);
 
-    container.firstChild.textContent = `Today's top MOs are: ${topMOs.join(', ')}`;
+    container.firstChild.textContent = `Today's top-paying MOs are: ${topMOs.join(', ')}`;
     viewAllLink.style.display = "inline";
 
     const sorted = entries.sort((a, b) => parseInt(b[1]) - parseInt(a[1]));
@@ -1738,6 +1738,20 @@ async function loadTopPayingMOs() {
 
         btn.classList.add("active");
         document.getElementById(btn.dataset.tab).style.display = "block";
+      });
+    });
+
+    document.querySelectorAll(".modal .close").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const modal = e.target.closest(".modal");
+        if (modal) modal.style.display = "none";
+      });
+    });
+
+    window.addEventListener("click", (e) => {
+      const modals = document.querySelectorAll(".modal");
+      modals.forEach((modal) => {
+        if (e.target === modal) modal.style.display = "none";
       });
     });
 
@@ -2148,13 +2162,14 @@ document.addEventListener('click', (e) => {
   const isModalContent = e.target.closest('.modal-content');
   const isModal = e.target.closest('.modal');
   const isOpenTrigger = e.target.closest('[onclick*="open"]');
+  const isViewAll = e.target.id === 'viewAllLink' || e.target.closest('#viewAllLink');
 
   if (e.target.matches('.modal .close')) {
     e.target.closest('.modal').style.display = 'none';
     return;
   }
 
-  if (isModalContent || isOpenTrigger) return;
+  if (isModalContent || isOpenTrigger || isViewAll) return;
 
   document.querySelectorAll('.modal').forEach(modal => {
     if (modal.style.display === 'block' && !modal.querySelector('.modal-content').contains(e.target)) {

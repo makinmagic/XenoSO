@@ -1622,8 +1622,14 @@ async function loadTopPayingMOs() {
       .sort((a, b) => parseInt(b[1]) - parseInt(a[1]))
       .map(([key, val]) => `${key} (${parseInt(val)}%)`);
 
-    container.firstChild.textContent = `Today's top MOs are: ${topMOs.join(', ')}`;
-    viewAllLink.style.display = "inline";
+container.innerHTML = `Today's top MOs are: ${topMOs.join(', ')} <a href="#" id="viewAllLink">View All</a>`;
+
+const viewAllLink = document.getElementById("viewAllLink");
+
+viewAllLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  modal.style.display = "block";
+});
 
     const sorted = entries.sort((a, b) => parseInt(b[1]) - parseInt(a[1]));
 

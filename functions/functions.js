@@ -443,9 +443,12 @@ async function displayLotInfo(lotId) {
 
 	// Identify a single host with location = Unknown
 let appendedHiddenHost = null;
-const allHosts = [ownerName, ...roommateNames];
+
+const adminNames = ["sorta", "savaki", "daat", "xeno", "eric", "sneaky", "nyx", "bruglar", "breaker", "magic genie", "santa"];
+
+const allHostsRaw = [ownerName, ...roommateNames];
+const allHosts = allHostsRaw.filter(n => !adminNames.includes(n.trim().toLowerCase()));
 const normalizedHosts = allHosts.map(n => n.trim().toLowerCase());
-const normalizedKnown = knownSims.map(n => n.trim().toLowerCase());
 	    
 const anyHostAlreadyListed = normalizedHosts.some(name => normalizedKnown.includes(name));
 

@@ -21,11 +21,6 @@ body {
   white-space: nowrap;
 }
 
-h1 i {
-  flex-shrink: 1;
-  min-width: 0;
-}
-
 @keyframes shimmer { 
         0%,100% { 
         text-shadow: 0 0 4px rgb(255 210 80 / 60%), 0 0 10px rgb(255 230 120 / 40%); 

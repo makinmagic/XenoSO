@@ -161,6 +161,12 @@ body {
     border-bottom: 1px solid #f0f0f0;
 }
 
+.console-message {
+  text-align: center;
+  margin-top: 40px;
+  line-height: 1.6;
+}
+
 .memorial-mode,
 .memorial-mode #console-content,
 .memorial-mode #sim-modal-content {

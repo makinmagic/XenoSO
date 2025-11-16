@@ -951,7 +951,11 @@ if (memorialEntry) {
 		
         } catch (error) {
             console.error('Failed to fetch sim details:', error);
-            consoleContent.innerHTML = 'Sim not found.';
+            consoleContent.innerHTML = `
+			  <div class="console-message">
+			    🤔 Sim not found. Please check the spelling or try another name.
+			  </div>
+			`;
         }
     }
 }
@@ -1224,7 +1228,11 @@ if (isMemorializedLot) {
 		
         } catch (error) {
             console.error('Failed to fetch lot details:', error);
-            document.getElementById('console-content').innerHTML = 'Lot not found.';
+            document.getElementById('console-content').innerHTML = `
+			  <div class="console-message">
+			    🤔 Lot not found. Please check the spelling or try a different name.
+			  </div>
+			`;
         }
     }
 }

@@ -161,6 +161,12 @@ body {
     border-bottom: 1px solid #f0f0f0;
 }
 
+.console-message {
+  text-align: center;
+  margin-top: 40px;
+  line-height: 1.6;
+}
+
 .memorial-mode,
 .memorial-mode #console-content,
 .memorial-mode #sim-modal-content {
@@ -252,14 +258,6 @@ body {
         from { opacity: 0; }
         to { opacity: 1; }
     }
-
-.console-message {
-  text-align: center;
-  font-size: 1.2rem;
-  margin-top: 40px;
-  opacity: 0.85;
-  line-height: 1.6;
-}
 
 #lots-title, #players-title {
     margin-bottom: 10px;

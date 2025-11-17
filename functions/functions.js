@@ -228,7 +228,11 @@ const isFavorite = favoriteSims[avatar.avatar_id];
 
 } catch (error) {
         console.error('Failed to load online players:', error);
-        document.getElementById('players').innerHTML = 'Error loading data. Please check again soon.';
+        document.getElementById('players').innerHTML = `
+			  <div class="console-message">
+			    ⚠️ Error loading data. Please check again soon.
+			  </div>
+			`;
         // If there is an error, reset the title to show 0
         if (playersTitle) {
             playersTitle.innerHTML = `<span class="sims-online-icon"></span> Sims Online: 0 <span class="sims-online-icon"></span>`;

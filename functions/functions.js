@@ -712,7 +712,7 @@ const memorialEntry = memorialList.find(entry =>
                  alt="Profile Picture" 
                  class="console-img">
             <p style="text-align: center; margin-top: -9px;">
-                <a href="https://forms.gle/p7DTPGDpiztywdsM9" target="_blank" style="text-decoration: underline;">Submit/Change Profile Picture</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSd-aCzrhLeTmjeVUwR-1aekq5o7v0OhGpKQP-c5gUGULeHbQw/viewform?usp=pp_url&entry.1723241866=${encodeURIComponent(playerData.name)}" target="_blank" style="text-decoration: underline;">Submit/Change Profile Picture</a>
             </p>
             <div class="description-container">${formattedDescription}</div>
             <p><strong>Age:</strong> ${ageInDays} days old</p>

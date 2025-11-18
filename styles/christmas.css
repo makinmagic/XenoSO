@@ -687,6 +687,14 @@ body.dark-mode #console-content a {
   text-decoration: underline;
 }
 
+#console-content a.event-flag-link {
+  text-decoration: none;
+ }
+
+#console-content a.event-flag-link:hover {
+  text-decoration: underline;
+}
+
 span[title="Mentor"],
 span[title="Admin"] {
   filter: brightness(1) drop-shadow(0 0 2px #fff);

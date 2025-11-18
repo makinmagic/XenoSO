@@ -689,6 +689,7 @@ body.dark-mode #console-content a {
 
 #console-content a.event-flag-link {
   text-decoration: none;
+  font-size: inherit;
  }
 
 #console-content a.event-flag-link:hover {

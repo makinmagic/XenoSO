@@ -1354,7 +1354,13 @@ function closeSimModal() {
   document.getElementById('sim-modal').style.display = 'none';
 }
 
-const eventsUrl = 'https://opensheet.vercel.app/1xWQc2P86fisaRSdxyGWwTddX_a4ZGmWYaWRK0ZfXb_4/Events';
+const eventsUrl = 'https://opensheet.elk.sh/1m3_-Vj_cOlASYfhfQarUyECk0LyZF5GYj_mZoHHQ0ho/Events';
+const flagFormBaseUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfop2YQVz2xpxrOASE0BeyD7VN2m2e1JerLrOla5ZviCSYucg/viewform?usp=pp_url&entry.1329864422=';
+
+function isEventFlagged(event) {
+    const flaggedRaw = (event.Flagged || event.flagged || '').toString().trim().toLowerCase();
+    return flaggedRaw === 'true' || flaggedRaw === 'yes' || flaggedRaw === '1';
+}
 
 async function fetchEvents() {
     try {
@@ -1365,25 +1371,24 @@ async function fetchEvents() {
         const events = await response.json();
 
         const eventsContainer = document.getElementById('events-table').getElementsByTagName('tbody')[0];
-        eventsContainer.innerHTML = ''; // Clear any existing events
+        eventsContainer.innerHTML = '';
 
         const now = new Date();
 
-        // Filter upcoming events and sort them by startTime
 	const upcomingEvents = events
-    .filter(event => new Date(event.startTime) > now)
+    .filter(event => !isEventFlagged(event) && new Date(event.startTime) > now)
     .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
         if (upcomingEvents.length === 0) {
-            // Add a single row if there are no upcoming events
+
             const row = eventsContainer.insertRow();
             const cell = row.insertCell();
             cell.colSpan = 3;
             cell.style.textAlign = 'center';
             cell.textContent = "No upcoming events.";
-            cell.style.fontStyle = "italic"; // Optional styling
+            cell.style.fontStyle = "italic";
         } else {
-            // Populate the table with upcoming events
+
             upcomingEvents.forEach(event => {
                 const row = eventsContainer.insertRow();
                 const eventDate = new Date(event.startTime);
@@ -1398,7 +1403,7 @@ async function fetchEvents() {
                     <td>${event.location}</td>
                 `;
                 row.addEventListener('click', () => {
-                    displayEventInfo(event); // Show details in the Console when clicked
+                    displayEventInfo(event);
 			document.getElementById('console-container')?.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
@@ -1413,28 +1418,55 @@ async function fetchEvents() {
 
 function displayEventInfo(event) {
     const consoleContent = document.getElementById('console-content');
-	setMemorialMode(false, document.getElementById('console-container'), consoleContent);
+    setMemorialMode(false, document.getElementById('console-container'), consoleContent);
+
     const eventStartDate = new Date(event.startTime);
     const eventEndDate = new Date(event.endTime);
+
     const formattedDate = eventStartDate.toLocaleDateString(undefined, {
         weekday: 'long', month: 'long', day: 'numeric'
     });
-    const formattedTime = `${eventStartDate.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', hour12: true })} to ${eventEndDate.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', hour12: true })} (${Intl.DateTimeFormat().resolvedOptions().timeZone})`;
+
+    const formattedTime = `${eventStartDate.toLocaleTimeString(undefined, { 
+        hour: 'numeric', minute: 'numeric', hour12: true 
+    })} to ${eventEndDate.toLocaleTimeString(undefined, { 
+        hour: 'numeric', minute: 'numeric', hour12: true 
+    })} (${Intl.DateTimeFormat().resolvedOptions().timeZone})`;
+
+    const eventId = event['Event ID'] || '';
+
+    const flagLinkHtml = eventId
+        ? `
+        <p style="margin-top: 8px; text-align: center;">
+            <a href="${flagFormBaseUrl}${encodeURIComponent(eventId)}" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="event-flag-link">
+               🚩 Report/flag this event
+            </a>
+        </p>`
+        : '';
 
     consoleContent.innerHTML = `
         <div class="console-title">
             ${event.name}
         </div>
-        <p><strong>ℹ️ Description:</strong></p><div class="event-card">${event.description.replace(/(\r\n|\n|\r)/g, "<br>")}</div>
+        <p><strong>ℹ️ Description:</strong></p>
+        <div class="event-card">
+            ${event.description.replace(/(\r\n|\n|\r)/g, "<br>")}
+        </div>
+        ${flagLinkHtml}
         <p><strong>📅 Date:</strong> ${formattedDate}</p>
         <p><strong>🕐 Time:</strong> ${formattedTime}</p>
         <p><strong>📍 Location:</strong> ${event.location}</p>
-		<p style="margin-top: 10px;">
-            <a href="#" id="addToCalendarLink" style="text-decoration: underline; font: inherit;">⏰ Add to Calendar</a>
+        <p style="margin-top: 10px; text-align: underline;">
+            <a href="#" id="addToCalendarLink" style="text-decoration: underline; font: inherit;">
+                ⏰ Add to Calendar
+            </a>
         </p>
     `;
 
-	const addLink = document.getElementById('addToCalendarLink');
+    const addLink = document.getElementById('addToCalendarLink');
     if (addLink) {
         addLink.addEventListener('click', (e) => {
             e.preventDefault();
@@ -1483,34 +1515,34 @@ async function displayCurrentEvent() {
 
         const now = new Date();
         const currentEventContainer = document.getElementById("currentEvent");
-        let currentEvents = []; // Array to store all currently ongoing events
+        let currentEvents = [];
 
-        // Check if any events are currently ongoing
         events.forEach(event => {
+            if (isEventFlagged(event)) return;
+
             const startTime = new Date(event.startTime);
             const endTime = new Date(event.endTime);
 
             if (now >= startTime && now <= endTime) {
-                currentEvents.push(event); // Add ongoing event to the list
+                currentEvents.push(event);
             }
         });
 
-        // Display all overlapping events
         if (currentEvents.length > 0) {
             currentEventContainer.innerHTML = currentEvents
                 .map(event => `🔥 Current Event: ${event.name} at ${event.location}!`)
-                .join('<br>'); // Join with line breaks for multiple events
+                .join('<br>');
 
-            currentEvents.forEach(event => addEventIconToLocation(event.location)); // Add balloon icon for each location
+            currentEvents.forEach(event => addEventIconToLocation(event.location));
         } else {
-            currentEventContainer.innerHTML = ""; // Clear if no event is ongoing
+            currentEventContainer.innerHTML = "";
         }
     } catch (error) {
         console.error('Failed to fetch current events:', error);
     }
 }
 
-// Function to add the balloon icon to the active event's location in the Active Lots
+// Function to add the fire icon to the active event's location in the Active Lots
 function addEventIconToLocation(locationName) {
     const lotsTable = document.getElementById("lots");
     const rows = lotsTable.querySelectorAll("tbody tr");

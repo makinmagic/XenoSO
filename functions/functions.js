@@ -453,7 +453,7 @@ let appendedHiddenHost = null;
 
 const adminNamesLower = [
   "sorta","savaki","daat","xeno","eric","sneaky",
-  "nyx","bruglar","breaker","magic genie","santa"
+  "nyx","bruglar","breaker","magic genie","peta","holly claus","santa" 
 ];
 
 const allHosts = [ownerName, ...roommateNames]
@@ -1096,7 +1096,7 @@ const knownSims = Array.from(playersContainer.querySelectorAll('tr'))
 
 const adminNamesLower = [
   "sorta","savaki","daat","xeno","eric","sneaky",
-  "nyx","bruglar","breaker","magic genie","santa"
+  "nyx","bruglar","breaker","magic genie","peta","holly claus","santa"
 ];
 
 let appendedHiddenHost = null;

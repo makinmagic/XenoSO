@@ -201,6 +201,14 @@ body {
     display: inline-block;
 }
 
+@media (max-width: 500px) {
+
+  .lot-admit-icon {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
     .description-container {
         max-width: 260px; 
         word-wrap: break-word; 

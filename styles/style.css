@@ -195,6 +195,12 @@ body {
   vertical-align: middle;
 }
 
+.lot-admit-icon {
+    margin-right: 4px;
+    margin-left: 4px;
+    display: inline-block;
+}
+
     .description-container {
         max-width: 260px; 
         word-wrap: break-word; 

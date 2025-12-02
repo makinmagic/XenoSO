@@ -232,14 +232,10 @@ h1 {
 }
 
 @media (max-width: 500px) {
-  .lot-admit-icon img.emoji {
-    transform: scale(0.8);
-    transform-origin: center;
-  }
 
   .lot-admit-icon {
-    margin-left: 2px;
-    margin-right: 2px;
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }
 

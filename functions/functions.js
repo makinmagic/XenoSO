@@ -324,7 +324,7 @@ function filterLots(type) {
         const admitIcons = {
             0: "🟢", // Admit All
             1: "🟡", // Admit List
-            2: "🟡", // Ban List
+            2: "🟢", // Ban List
             3: "🔴", // Ban All
             4: "🟢"  // Admit All
         };
@@ -413,7 +413,7 @@ async function displayLotInfo(lotId) {
         const admitModeMapping = {
             0: '🟢 Admit All',
             1: '🟡 Admit List',
-            2: '🟡 Ban List',
+            2: '🟢 Ban List',
             3: '🔴 Ban All',
             4: '🟢 Admit All'
         };
@@ -1011,7 +1011,7 @@ async function searchLot(event) {
             const admitModeMapping = {
                 0: '🟢 Admit All',
                 1: '🟡 Admit List',
-                2: '🟡 Ban List',
+                2: '🟢 Ban List',
                 3: '🔴 Ban All',
                 4: '🟢 Admit All'
             };

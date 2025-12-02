@@ -195,7 +195,7 @@ body {
   vertical-align: middle;
 }
 
-.lot-admit-icon {
+.lot-admit-icon, .mayor-icon {
     margin-right: 4px;
     margin-left: 4px;
     display: inline-block;
@@ -203,7 +203,7 @@ body {
 
 @media (max-width: 500px) {
 
-  .lot-admit-icon {
+  .lot-admit-icon, .mayor-icon {
     margin-left: 0px;
     margin-right: 0px;
   }

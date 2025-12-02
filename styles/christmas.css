@@ -655,7 +655,12 @@ body.dark-mode #console-content a {
   .job-btn {
     font-size: 11px;
     padding: 6px 8px;
-  }
+  },
+ .lot-admit-icon {
+        margin-right: 2px;
+        margin-left: 2px;
+        transform: scale(0.9);
+    }
 }
 
 @keyframes pulse {

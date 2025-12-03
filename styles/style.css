@@ -44,7 +44,7 @@ body {
         padding: 10px;
         display: flex;
         flex-direction: column;
-        margin-bottom: 20px; /* Add spacing between rows */
+        margin-bottom: 20px;
     }
 
     table {
@@ -195,7 +195,7 @@ body {
   vertical-align: middle;
 }
 
-.lot-admit-icon, .mayor-icon {
+.lot-admit-icon {
     margin-right: 4px;
     margin-left: 4px;
     display: inline-block;
@@ -203,7 +203,22 @@ body {
 
 @media (max-width: 500px) {
 
-  .lot-admit-icon, .mayor-icon {
+  .lot-admit-icon {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
+.mayor-icon {
+    margin-right: 4px;
+    margin-left: 4px;
+    display: inline-block;
+    filter: brightness(1) drop-shadow(0 0 2px #fff);
+}
+
+@media (max-width: 500px) {
+
+  .mayor-icon {
     margin-left: 0px;
     margin-right: 0px;
   }
@@ -239,17 +254,15 @@ body {
         align-items: center;
     }
 
-    /* Adjust order on mobile */
     #console-container {
-        order: 1; /* Console first in mobile view */
+        order: 1;
     }
 
     #rewards-container {
-        order: 2; /* Rewards after Console in mobile view */
+        order: 2;
     }
 }
 
-    /* Show icon on row hover */
     table tr {
         position: relative;
     }
@@ -267,7 +280,6 @@ body {
         animation: fade-in 0.3s; 
     }
 
-    /* Fade-in animation */
     @keyframes fade-in {
         from { opacity: 0; }
         to { opacity: 1; }

@@ -225,7 +225,7 @@ h1 {
   vertical-align: middle;
 }
 
-.lot-admit-icon, .mayor-icon {
+.lot-admit-icon {
     margin-right: 4px;
     margin-left: 4px;
     display: inline-block;
@@ -233,7 +233,22 @@ h1 {
 
 @media (max-width: 500px) {
 
-  .lot-admit-icon, .mayor-icon {
+  .lot-admit-icon {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+
+.mayor-icon {
+    margin-right: 4px;
+    margin-left: 4px;
+    display: inline-block;
+    filter: brightness(1) drop-shadow(0 0 2px #fff);
+}
+
+@media (max-width: 500px) {
+
+  .mayor-icon {
     margin-left: 0px;
     margin-right: 0px;
   }

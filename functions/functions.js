@@ -181,10 +181,9 @@ if (jobLevel !== null && !isNaN(jobLevel)) {
     lotName = lotMapping[avatar.location] || 'Unknown';
 }
 		
-            const creationDate = new Date(playerDetails.date * 1000);
-            const currentDate = new Date();
-            const ageInDays = Math.floor((currentDate - creationDate) / (1000 * 60 * 60 * 24));
-
+const creationDate = new Date(playerDetails.date * 1000);
+const currentDate = new Date();
+const ageInDays = Math.floor((currentDate - creationDate) / (1000 * 60 * 60 * 24));
 
 const isFavorite = favoriteSims[avatar.avatar_id];
 					
@@ -324,7 +323,7 @@ function filterLots(type) {
         const admitIcons = {
             0: "🟢", // Admit All
             1: "🟡", // Admit List
-            2: "🟢", // Ban List
+            2: "🟡", // Ban List
             3: "🔴", // Ban All
             4: "🟢"  // Admit All
         };
@@ -413,7 +412,7 @@ async function displayLotInfo(lotId) {
         const admitModeMapping = {
             0: '🟢 Admit All',
             1: '🟡 Admit List',
-            2: '🟢 Ban List',
+            2: '🟡 Ban List',
             3: '🔴 Ban All',
             4: '🟢 Admit All'
         };
@@ -655,6 +654,28 @@ function setMemorialMode(isActive, container, content) {
     }
   }
 }
+
+function getNextSkillLock(creationDate) {
+    const creationMs = creationDate.getTime();
+    const nowMs = Date.now();
+    const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
+    const cycles = Math.floor((nowMs - creationMs) / sevenDays) + 1;
+    const nextLockMs = creationMs + cycles * sevenDays;
+    const nextLockDate = new Date(nextLockMs);
+
+    const lockWeekday = nextLockDate.toLocaleDateString(undefined, { weekday: 'long' });
+    const lockTime = nextLockDate.toLocaleTimeString(undefined, { hour: 'numeric', minute: 'numeric', hour12: true });
+    const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    return {
+        date: nextLockDate,
+        weekday: lockWeekday,
+        time: lockTime,
+        timezone: userTZ,
+        formatted: `${lockWeekday} at ${lockTime} (${userTZ})`
+    };
+}
 	    
 async function displayPlayerInfo(avatarId) {
     const consoleContent = document.getElementById('console-content');
@@ -684,6 +705,7 @@ async function displayPlayerInfo(avatarId) {
         const creationDate = new Date(playerData.date * 1000);
         const currentDate = new Date();
         const ageInDays = Math.floor((currentDate - creationDate) / (1000 * 60 * 60 * 24));
+		const nextLock = getNextSkillLock(creationDate);
 
         const playersContainer = document.getElementById('players');
         const locationRow = Array.from(playersContainer.querySelectorAll('tr'))
@@ -726,8 +748,9 @@ const memorialEntry = memorialList.find(entry =>
             <p><strong>Age:</strong> ${ageInDays} days old</p>
             <p><strong>Location:</strong> ${playerLocation}</p>
 	    ${jobName ? `<p><strong>Job:</strong> ${jobName}</p>` : ''}
+		    <p><strong>Next Skill Lock:</strong> ${nextLock.formatted}</p>
 				${playerData.mayor_nhood !== null 
-		    ? `<p><span style="filter: brightness(1) drop-shadow(0 0 2px #fff);">🎩</span> Mayor of ${nhoodMap[playerData.mayor_nhood]}</p>`
+		    ? `<p>🎩 Mayor of ${nhoodMap[playerData.mayor_nhood]}</p>`
 		    : ''
 		}
         `;
@@ -865,6 +888,7 @@ async function searchSim(event) {
             const creationDate = new Date(playerData.date * 1000);
             const currentDate = new Date();
             const ageInDays = Math.floor((currentDate - creationDate) / (1000 * 60 * 60 * 24));
+			const nextLock = getNextSkillLock(creationDate);
 
             const playersContainer = document.getElementById('players');
             const onlineRow = Array.from(playersContainer.querySelectorAll('tr')).find(row => {
@@ -917,8 +941,9 @@ async function searchSim(event) {
                 <p><strong>Age:</strong> ${ageInDays} days old</p>
                 ${isOnline ? `<p><strong>Location:</strong> ${playerLocation}</p>` : ''}
 		${jobName ? `<p><strong>Job:</strong> ${jobName}</p>` : ''}
+		        <p><strong>Next Skill Lock:</strong> ${nextLock.formatted}</p>
 		${playerData.mayor_nhood !== null 
-		    ? `<p><span style="filter: brightness(1) drop-shadow(0 0 2px #fff);">🎩</span> Mayor of ${nhoodMap[playerData.mayor_nhood]}</p>`
+		    ? `<p>🎩 Mayor of ${nhoodMap[playerData.mayor_nhood]}</p>`
 		    : ''
 		}
                 <p><strong>Currently Online:</strong> ${isOnline ? 'Yes 🟢' : 'No 🔴'}</p>
@@ -1009,11 +1034,11 @@ async function searchLot(event) {
 
             // Mapping for admit modes
             const admitModeMapping = {
-                0: '🟢 Admit All',
-                1: '🟡 Admit List',
-                2: '🟢 Ban List',
-                3: '🔴 Ban All',
-                4: '🟢 Admit All'
+                0: 'Admit All',
+                1: 'Admit List',
+                2: 'Ban List',
+                3: 'Ban All',
+                4: 'Admit All'
             };
 
             // Mapping for lot categories
@@ -1260,6 +1285,7 @@ async function openSimModal(event) {
     const creationDate = new Date(playerData.date * 1000);
     const currentDate = new Date();
     const ageInDays = Math.floor((currentDate - creationDate) / (1000 * 60 * 60 * 24));
+	const nextLock = getNextSkillLock(creationDate);
 
     // Check if the player is online
     const playersContainer = document.getElementById('players');
@@ -1305,8 +1331,9 @@ async function openSimModal(event) {
   	<p><strong>Age:</strong> ${ageInDays} days old</p>
   	${isOnline ? `<p><strong>Location:</strong> ${playerLocation}</p>` : ''}
   	${jobName ? `<p><strong>Job:</strong> ${jobName}</p>` : ''}
+	<p><strong>Next Skill Lock:</strong> ${nextLock.formatted}</p>
 	${playerData.mayor_nhood !== null 
-		    ? `<p><span style="filter: brightness(1) drop-shadow(0 0 2px #fff);">🎩</span> Mayor of ${nhoodMap[playerData.mayor_nhood]}</p>`
+		    ? `<p>🎩 Mayor of ${nhoodMap[playerData.mayor_nhood]}</p>`
 		    : ''
 		}
   	<p><strong>Currently Online:</strong> ${isOnline ? 'Yes 🟢' : 'No 🔴'}</p>

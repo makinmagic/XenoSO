@@ -323,7 +323,7 @@ function filterLots(type) {
         const admitIcons = {
             0: "🟢", // Admit All
             1: "🟡", // Admit List
-            2: "🟡", // Ban List
+            2: "🟢", // Ban List
             3: "🔴", // Ban All
             4: "🟢"  // Admit All
         };
@@ -412,7 +412,7 @@ async function displayLotInfo(lotId) {
         const admitModeMapping = {
             0: '🟢 Admit All',
             1: '🟡 Admit List',
-            2: '🟡 Ban List',
+            2: '🟢 Ban List',
             3: '🔴 Ban All',
             4: '🟢 Admit All'
         };
@@ -750,7 +750,7 @@ const memorialEntry = memorialList.find(entry =>
 	    ${jobName ? `<p><strong>Job:</strong> ${jobName}</p>` : ''}
 		    <p><strong>Next Skill Lock:</strong> ${nextLock.formatted}</p>
 				${playerData.mayor_nhood !== null 
-		    ? `<p>🎩 Mayor of ${nhoodMap[playerData.mayor_nhood]}</p>`
+		    ? `<p><span style="filter: brightness(1) drop-shadow(0 0 2px #fff);">🎩</span> Mayor of ${nhoodMap[playerData.mayor_nhood]}</p>`
 		    : ''
 		}
         `;
@@ -943,7 +943,7 @@ async function searchSim(event) {
 		${jobName ? `<p><strong>Job:</strong> ${jobName}</p>` : ''}
 		        <p><strong>Next Skill Lock:</strong> ${nextLock.formatted}</p>
 		${playerData.mayor_nhood !== null 
-		    ? `<p>🎩 Mayor of ${nhoodMap[playerData.mayor_nhood]}</p>`
+		    ? `<p><span style="filter: brightness(1) drop-shadow(0 0 2px #fff);">🎩</span> Mayor of ${nhoodMap[playerData.mayor_nhood]}</p>`
 		    : ''
 		}
                 <p><strong>Currently Online:</strong> ${isOnline ? 'Yes 🟢' : 'No 🔴'}</p>
@@ -1333,7 +1333,7 @@ async function openSimModal(event) {
   	${jobName ? `<p><strong>Job:</strong> ${jobName}</p>` : ''}
 	<p><strong>Next Skill Lock:</strong> ${nextLock.formatted}</p>
 	${playerData.mayor_nhood !== null 
-		    ? `<p>🎩 Mayor of ${nhoodMap[playerData.mayor_nhood]}</p>`
+		    ? `<p><span style="filter: brightness(1) drop-shadow(0 0 2px #fff);">🎩</span> Mayor of ${nhoodMap[playerData.mayor_nhood]}</p>`
 		    : ''
 		}
   	<p><strong>Currently Online:</strong> ${isOnline ? 'Yes 🟢' : 'No 🔴'}</p>

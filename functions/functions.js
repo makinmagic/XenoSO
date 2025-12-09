@@ -1750,114 +1750,85 @@ async function loadTopPayingMOs() {
       modal.style.display = "block";
     };
 
-    // Percentage Chart
-    const ctx = document.getElementById("percentChart").getContext("2d");
-    const labels = sorted.map(([key]) => key); // TEXT ONLY
-    const dataPoints = sorted.map(([, val]) => parseInt(val));
+	// Percentages
+	const percentContainer = document.getElementById("percentBars");
+	percentContainer.innerHTML = "";
+	
+	const maxPct = 150;
+	
+	sorted.forEach(([key, val]) => {
+	  const pct = parseInt(val);
+	  const color =
+	    pct === 150 ? '#f39c12' :
+	    pct >= 140 ? '#27ae60' :
+	    pct >= 100 ? '#8e44ad' :
+	                 '#c0392b';
+	
+	  const clamped = Math.min(pct, maxPct);
+	  const relWidth = (clamped / maxPct) * 100;
+	
+	  const row = document.createElement("div");
+	  row.className = "mo-row";
+	  row.innerHTML = `
+	    <div class="mo-label">${key}</div>
+	    <div class="mo-bar" style="background:${color}; width:${relWidth}%;">
+	      <span>${pct}%</span>
+	    </div>
+	  `;
+	  percentContainer.appendChild(row);
+	});
 
-    if (percentChart) {
-      percentChart.destroy();
-    }
+	  // Payouts
+	const payoutContainer = document.getElementById("payoutBars");
+	payoutContainer.innerHTML = "";
 
-    percentChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: '% Multiplier',
-          borderRadius: 6,
-          data: dataPoints,
-          backgroundColor: dataPoints.map(val =>
-            val === 150 ? '#f39c12' : val >= 140 ? '#27ae60' : val >= 100 ? '#8e44ad' : '#c0392b'
-          )
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        layout: { padding: { left: 10, right: 10, top: 5, bottom: 5 } },
-        scales: {
-          x: { display: false },
-          y: {
-            ticks: { color: '#eee', font: { size: 18, weight: 'bold' } },
-            grid: { color: '#333' }
-          }
-        },
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: ctx => `${ctx.raw}%` } },
-          datalabels: {
-            anchor: 'center',
-            align: 'center',
-            color: '#fff',
-            font: { weight: 'bold', size: 18 },
-            formatter: value => `${value}%`
-          }
-        }
-      },
-      plugins: [ChartDataLabels]
-    });
-
-    // Payout Chart
-    const payoutCtx = document.getElementById("payoutChart").getContext("2d");
-    const entriesWithPayout = entries.map(([key, val]) => {
-      const pct = parseInt(val);
-      const payout150 = moPayoutAt150[key];
-      const base = payout150 / 1.5;
-      const actual = Math.round(base * (pct / 100));
-      return { key, pct, actual };
-    }).sort((a, b) => b.actual - a.actual);
-
-    const payoutLabels = entriesWithPayout.map(entry => entry.key);
-    const payoutValues = entriesWithPayout.map(entry => entry.actual);
-    const payoutColors = payoutValues.map(val =>
-      val >= 500 ? '#f39c12' : val >= 300 ? '#27ae60' : '#c0392b'
-    );
-
-    new Chart(payoutCtx, {
-      type: 'bar',
-      data: {
-        labels: payoutLabels,
-        datasets: [{
-          label: 'Total Payout ($)',
-          borderRadius: 6,
-          data: payoutValues,
-          backgroundColor: payoutColors
-        }]
-      },
-      options: {
-        indexAxis: 'y',
-        layout: { padding: { left: 10, right: 10, top: 5, bottom: 5 } },
-        scales: {
-          x: { display: false },
-          y: {
-            ticks: { color: '#eee', font: { size: 18, weight: 'bold' } },
-            grid: { color: '#333' }
-          }
-        },
-        plugins: {
-          legend: { display: false },
-          tooltip: { callbacks: { label: ctx => `$${ctx.raw}` } },
-          datalabels: {
-            anchor: 'center',
-            align: 'center',
-            color: '#fff',
-            font: { weight: 'bold', size: 18 },
-            formatter: value => `$${value}`
-          }
-        }
-      },
-      plugins: [ChartDataLabels]
-    });
+	const entriesWithPayout = entries.map(([key, val]) => {
+	  const pct = parseInt(val);
+	  const payout150 = moPayoutAt150[key];
+	
+	  if (!payout150) return { key, pct, actual: 0 };
+	
+	  const base = payout150 / 1.5;
+	  const actual = Math.round(base * (pct / 100));
+	
+	  return { key, pct, actual };
+	}).sort((a, b) => b.actual - a.actual);
+	
+	entriesWithPayout.forEach(entry => {
+	  const { key, actual } = entry;
+	
+	  const color =
+	    actual >= 500 ? '#f39c12' :
+	    actual >= 300 ? '#27ae60' :
+	                    '#c0392b';
+	
+	  const maxPayout = entriesWithPayout[0].actual;
+	  const width = Math.round((actual / maxPayout) * 100);
+	
+	  const row = document.createElement("div");
+	  row.className = "mo-row";
+	  row.innerHTML = `
+	  <div class="mo-label">${key}</div>
+	  <div class="mo-bar" style="background:${color}; width:${width}%">
+	    <span>$${actual}</span>
+	  </div>
+	`;
+	  payoutContainer.appendChild(row);
+	});
 
     document.querySelectorAll(".tab-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-        document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
-
-        btn.classList.add("active");
-        document.getElementById(btn.dataset.tab).style.display = "block";
-      });
-    });
+	  btn.addEventListener("click", () => {
+	    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+	    btn.classList.add("active");
+	
+	    document.querySelectorAll("#moModal .tab-content").forEach(tab => {
+	      tab.style.display = "none";
+	    });
+	
+	    const id = btn.dataset.tab;
+	    document.getElementById(id).style.display = "block";
+	  });
+	});
 
     document.querySelectorAll(".modal .close").forEach((btn) => {
       btn.addEventListener("click", (e) => {

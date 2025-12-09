@@ -735,6 +735,14 @@ span[title="Admin"] {
 
 .mo-bar-wrapper {
   padding: 5px 10px;
+  text-align: left;
+}
+
+.mo-note {
+  text-align: center;
+  color: #aaa;
+  font-size: 0.85em;
+  margin-top: 12px;
 }
 
 .mo-row {
@@ -747,6 +755,7 @@ span[title="Admin"] {
 
 .mo-label {
   width: 140px;
+  text-align: left;
   font-weight: bold;
 }
 

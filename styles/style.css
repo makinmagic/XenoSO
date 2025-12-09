@@ -519,6 +519,38 @@ body.dark-mode #console-content a {
   margin-top: 5% !important;
 }
 
+/* MO Charts */
+
+.mo-bar-wrapper {
+  padding: 5px 10px;
+}
+
+.mo-row {
+  display: flex;
+  align-items: center;
+  margin: 6px 0;
+  font-size: 18px;
+  color: #fff;
+}
+
+.mo-label {
+  width: 140px;
+  font-weight: bold;
+}
+
+.mo-bar {
+  flex-grow: 1;
+  height: 22px;
+  border-radius: 6px;
+  margin: 0 10px;
+}
+
+.mo-value {
+  width: 70px;
+  text-align: right;
+  font-weight: bold;
+}
+
 .close {
   color: #aaa;
   float: right;

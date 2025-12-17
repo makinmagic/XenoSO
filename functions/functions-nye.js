@@ -32,6 +32,15 @@ function createFirework() {
 
 function launchFireworks() {
     setInterval(() => {
-        createFirework();
+
+        const burstCount = Math.floor(Math.random() * 2) + 2;
+
+        for (let i = 0; i < burstCount; i++) {
+            
+            setTimeout(() => {
+                createFirework();
+            }, i * 150);
+        }
+
     }, 2000);
 }

@@ -39,7 +39,7 @@ function launchFireworks() {
             
             setTimeout(() => {
                 createFirework();
-            }, i * 150);
+            }, i * 300);
         }
 
     }, 2000);

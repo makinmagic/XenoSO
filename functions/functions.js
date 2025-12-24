@@ -2098,8 +2098,11 @@ function sortByFavorites() {
 document.addEventListener("DOMContentLoaded", function () {
   const now = new Date();
 
-  const start = new Date(Date.UTC(2025, 11, 23, 5, 0, 0)); // Dec 23 midnight EST
-  const expiry = new Date(Date.UTC(2025, 11, 24, 5, 0, 0)); // Dec 24 midnight EST
+  const start  = new Date(Date.UTC(2025, 11, 24, 11, 0, 0)); // Dec 24 @ 11:00 UTC
+  const expiry = new Date(Date.UTC(2025, 11, 26, 8, 0, 0));  // Dec 26 @ 08:00 UTC
+
+  // const start = new Date(Date.UTC(2025, 11, 23, 5, 0, 0)); // Dec 23 midnight EST
+  // const expiry = new Date(Date.UTC(2025, 11, 24, 5, 0, 0)); // Dec 24 midnight EST
 
   const msg = document.getElementById('event-message');
   if (!msg) return;

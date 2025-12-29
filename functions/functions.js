@@ -45,14 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
 // Define emoji rules
 function formatDisplayName(name) {
   const adminNames = ["Sorta", "Savaki", "Daat", "Xeno", "Eric", "Sneaky", "Nyx", "Bruglar", "Breaker", "Magic Genie", "PETA", "Holly Claus", "Santa", "Nyra Vale", "Headless Horseman"];
-  const mentorNames = ["Mentor Teddy", "Mr Teddy", "Jack Lumberjack", "Beary Cold"];
+  const supportstaffNames = ["Xeno Teddy", "Teddy Claus", "Mr Teddy", "Jack Lumberjack", "Beary Cold", "Rainbow Brite"];
 
   let display = name;
 
   if (adminNames.includes(name)) {
     display += ` <span title="Admin">🛡️</span>`;
-  } else if (mentorNames.includes(name)) {
-    display += ` <span title="Mentor">🎓</span>`;
+  } else if (supportstaffNames.includes(name)) {
+    display += ` <span title="Support Staff">🔰</span>`;
   }
 
   return display;

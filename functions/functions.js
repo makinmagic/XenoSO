@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Define emoji rules
 function formatDisplayName(name) {
   const adminNames = ["Sorta", "Savaki", "Daat", "Xeno", "Eric", "Sneaky", "Nyx", "Bruglar", "Breaker", "Magic Genie", "PETA", "Holly Claus", "Santa", "Nyra Vale", "Headless Horseman"];
-  const supportstaffNames = ["Xeno Teddy", "Teddy Claus", "Mr Teddy", "Jack Lumberjack", "Beary Cold", "Rainbow Brite"];
+  const supportstaffNames = ["Xeno Teddy", "Teddy Claus", "Mr Teddy", "Jack Lumberjack", "Beary Cold", "Rainbow Brite", "Snickey Doodler", "Mera"];
 
   let display = name;
 

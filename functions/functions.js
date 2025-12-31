@@ -2117,7 +2117,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 }); */
 
-// One-off local-date event: Christmas message
+/* // One-off local-date event: Christmas message
 document.addEventListener("DOMContentLoaded", function () {
   const now = new Date();
 
@@ -2129,6 +2129,23 @@ document.addEventListener("DOMContentLoaded", function () {
     now.getDate() === 25;
 
   msg.style.display = isChristmas ? "" : "none";
+}); */
+
+// One-off local-date event: NYE message
+document.addEventListener("DOMContentLoaded", function () {
+  const now = new Date();
+
+  const msg = document.getElementById("event-message");
+  if (!msg) return;
+
+  const month = now.getMonth();
+  const day = now.getDate();
+
+  const isNewYear =
+    (month === 11 && day === 31) ||
+    (month === 0 && day === 1);
+
+  msg.style.display = isNewYear ? "" : "none";
 });
 
 //Countdown

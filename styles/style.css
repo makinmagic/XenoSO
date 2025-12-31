@@ -519,38 +519,6 @@ body.dark-mode #console-content a {
   margin-top: 5% !important;
 }
 
-/* MO Charts */
-
-.mo-bar-wrapper {
-  padding: 5px 10px;
-}
-
-.mo-row {
-  display: flex;
-  align-items: center;
-  margin: 6px 0;
-  font-size: 18px;
-  color: #fff;
-}
-
-.mo-label {
-  width: 140px;
-  font-weight: bold;
-}
-
-.mo-bar {
-  flex-grow: 1;
-  height: 22px;
-  border-radius: 6px;
-  margin: 0 10px;
-}
-
-.mo-value {
-  width: 70px;
-  text-align: right;
-  font-weight: bold;
-}
-
 .close {
   color: #aaa;
   float: right;
@@ -726,6 +694,62 @@ span[title="Mentor"],
 span[title="Admin"] {
   filter: brightness(1) drop-shadow(0 0 2px #fff);
   margin-left: 2px;
+}
+
+/* MO Charts */
+
+#moModal .modal-content {
+  max-width: 650px;
+  margin: 4% auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.mo-bar-wrapper {
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.mo-note {
+  text-align: center;
+  color: #aaa;
+  font-size: 0.85em;
+  margin-top: 12px;
+}
+
+.mo-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 10px;
+  margin: 11px 0;
+}
+
+.mo-label {
+  min-width: 90px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 20px;
+  padding-right: 0;
+}
+
+.mo-bar {
+  position: relative;
+  height: 42px;
+  border-radius: 10px;
+}
+
+.mo-bar span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: 18px;
+  color: #fff;
 }
 
     /* Stars background - used with permission from Sorta */

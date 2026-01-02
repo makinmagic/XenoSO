@@ -543,7 +543,7 @@ consoleContent.innerHTML = `
     <p><strong>Lot Type:</strong> ${categoryMapping[lotData.category] || 'Unknown'}</p>
     <p><strong>Admit Mode:</strong> ${admitModeMapping[lotData.admit_mode] || 'Unknown'}</p>
     <p><strong>Established on:</strong> ${creationDate}</p>
-    <p><strong>Owner:</strong> <span class="sim-name" data-simname="${ownerName}" onclick="openSimModal(event)" style="color: #FFA502;">${ownerName}</span></p>
+    <p><strong>Owner:</strong> <span class="sim-name" data-simname="${ownerName}" onclick="openSimModal(event)" style="color: #0ff;">${ownerName}</span></p>
     <p><strong>Roommates:</strong> ${
         roommateNames.length > 0
         ? roommateNames.map(name =>
@@ -558,7 +558,7 @@ consoleContent.innerHTML = `
             const isHidden = name.includes('(hidden)');
             const isOwner = trimmed === ownerName;
             const isRoommate = roommateNames.includes(trimmed);
-            const color = isOwner ? '#FFA502' : isRoommate ? '#DDA0DD' : '#FFF';
+            const color = isOwner ? '#0ff' : isRoommate ? '#DDA0DD' : '#FFF';
             return `<span class="sim-name" data-simname="${trimmed}" onclick="openSimModal(event)" style="color: ${color};">${formatDisplayName(trimmed)}${isHidden ? ' (hidden)' : ''}</span>`;
       }).join(', ')
     : 'None'
@@ -1221,7 +1221,7 @@ setMemorialMode(false, consoleContainer, consoleContent);
 		<p><strong>Established on:</strong> ${creationDate}</p>
                 <p><strong>Admit Mode:</strong> ${admitModeMapping[lotData.admit_mode] || 'Unknown'}</p>
                 <p><strong>Owner:</strong> 
-  <span class="sim-name" data-simname="${ownerName}" onclick="openSimModal(event)" style="color: #FFA502;">
+  <span class="sim-name" data-simname="${ownerName}" onclick="openSimModal(event)" style="color: #0ff;">
     ${ownerName}
   </span>
 </p>
@@ -1244,7 +1244,7 @@ ${isActive ? `
           const isHidden = name.includes('(hidden)');
           const isOwner = trimmed === ownerName;
           const isRoommate = roommateNames.includes(trimmed);
-          const color = isOwner ? '#FFA502' : isRoommate ? '#DDA0DD' : '#FFF';
+          const color = isOwner ? '#0ff' : isRoommate ? '#DDA0DD' : '#FFF';
           return `<span class="sim-name" data-simname="${trimmed}" onclick="openSimModal(event)" style="color: ${color};">${formatDisplayName(trimmed)}${isHidden ? ' (hidden)' : ''}</span>`;
       }).join(', ')
     : 'None'

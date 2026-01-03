@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Define emoji rules
 function formatDisplayName(name) {
-  const adminNames = ["Sorta", "Savaki", "Daat", "Xeno", "Eric", "Sneaky", "Nyx", "Bruglar", "Breaker", "Magic Genie", "PETA", "Holly Claus", "Santa", "Nyra Vale", "Headless Horseman"];
+  const adminNames = ["Sorta", "Savaki", "Daat", "Xeno", "Eric", "Sneaky", "Nyx", "Bruglar", "Breaker", "Magic Genie", "PETA", "Holly Claus", "Santa", "Nyra Vale", "-_-", "Headless Horseman"];
   const supportstaffNames = ["Xeno Teddy", "Teddy Claus", "Mr Teddy", "Jack Lumberjack", "Beary Cold", "Rainbow Brite", "Snickey Doodler", "Mera", "Sit and Spin"];
 
   let display = name;
@@ -466,7 +466,7 @@ let appendedHiddenHost = null;
 
 const adminNamesLower = [
   "sorta","savaki","daat","xeno","eric","sneaky",
-  "nyx","bruglar","breaker","magic genie","peta","holly claus","santa","nyra vale","headless horseman" 
+  "nyx","bruglar","breaker","magic genie","peta","holly claus","santa","nyra vale","-_-","headless horseman" 
 ];
 
 const allHosts = [ownerName, ...roommateNames]
@@ -1143,7 +1143,7 @@ const knownSims = Array.from(playersContainer.querySelectorAll('tr'))
 
 const adminNamesLower = [
   "sorta","savaki","daat","xeno","eric","sneaky",
-  "nyx","bruglar","breaker","magic genie","peta","holly claus","santa","nyra vale","headless horseman"
+  "nyx","bruglar","breaker","magic genie","peta","holly claus","santa","nyra vale","-_-","headless horseman"
 ];
 
 let appendedHiddenHost = null;

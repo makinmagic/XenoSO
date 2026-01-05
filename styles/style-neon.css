@@ -217,7 +217,7 @@ body {
     margin-right: 4px;
     margin-left: 4px;
     display: inline-block;
-    filter: brightness(1) drop-shadow(0 0 2px #fff);
+    filter: brightness(1) drop-shadow(0 0 1px #fff);
 }
 
 @media (max-width: 500px) {

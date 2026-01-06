@@ -758,16 +758,20 @@ span[title="Admin"] {
   color: #fff;
 }
 
+html, body {
+  overscroll-behavior: none;
+}
+
     /* Stars background - used with permission from Sorta */
     .stars {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      top: 0;
-      left: 0;
-      overflow: hidden;
-    }
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  max-width: 100vw;
+  max-height: 100vh;
+}
     
     .star {
       position: absolute;

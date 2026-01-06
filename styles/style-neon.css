@@ -26,6 +26,18 @@ body {
         font-size: 32px;
     }
 
+@media (max-width: 480px) {
+  h1 {
+    font-size: 29px;
+  }
+}
+
+@media (max-width: 480px) {
+  h3 {
+    font-size: 27px;
+  }
+}
+
     #main-container {
         display: flex;
         justify-content: space-between;

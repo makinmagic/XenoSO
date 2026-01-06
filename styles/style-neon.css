@@ -19,6 +19,12 @@ body {
     gap: 8px;
     white-space: nowrap;
 }
+
+@media (max-width: 420px) {
+  h1 {
+    white-space: normal;
+  }
+}
     
     h3 {
         text-align: center;

@@ -765,7 +765,8 @@ span[title="Admin"] {
 }
 
 html, body {
-  overscroll-behavior: none;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
     /* Stars background - used with permission from Sorta */

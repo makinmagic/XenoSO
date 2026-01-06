@@ -765,11 +765,20 @@ span[title="Admin"] {
 }
 
 html, body {
-  max-width: 100%;
   overflow-x: hidden;
 }
 
-    /* Stars background - used with permission from Sorta */
+/* Stars background - used with permission from Sorta */
+
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+
     .stars {
   position: fixed;
   inset: 0;

@@ -47,12 +47,15 @@ function formatDisplayName(name) {
   const adminNames = ["Sorta", "Savaki", "Daat", "Xeno", "Eric", "Sneaky", "Nyx", "Bruglar", "Breaker", "Magic Genie", "PETA", "Holly Claus", "Santa", "Nyra Vale", "-_-", "Headless Horseman"];
   const supportstaffNames = ["Xeno Teddy", "Teddy Claus", "Mr Teddy", "Jack Lumberjack", "Beary Cold", "Rainbow Brite", "Snickey Doodler", "Mera", "Sit and Spin"];
 
+  const ADMIN_BADGE_URL = "https://makinmagic.github.io/XenoSO/images/admin-badge.png";
+  const STAFF_BADGE_URL = "https://makinmagic.github.io/XenoSO/images/staff-badge.png";
+
   let display = name;
 
   if (adminNames.includes(name)) {
-    display += ` <span title="Admin">🛡️</span>`;
+    display += ` <img class="badge" src="${ADMIN_BADGE_URL}" alt="Admin" title="Admin">`;
   } else if (supportstaffNames.includes(name)) {
-    display += ` <span title="Support Staff">🔰</span>`;
+    display += ` <img class="badge" src="${STAFF_BADGE_URL}" alt="Support Staff" title="Support Staff">`;
   }
 
   return display;

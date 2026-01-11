@@ -225,6 +225,14 @@ body {
   }
 }
 
+.badge {
+  width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  vertical-align: -3px;
+  image-rendering: auto;
+}
+
 .mayor-icon {
     margin-right: 4px;
     margin-left: 4px;
@@ -234,7 +242,7 @@ body {
 
 @media (max-width: 500px) {
 
-  .mayor-icon {
+  .mayor-icon, .badge {
     margin-left: 0px;
     margin-right: 0px;
   }

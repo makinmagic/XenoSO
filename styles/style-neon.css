@@ -228,7 +228,6 @@ body {
 .badge {
   width: 18px;
   height: 18px;
-  margin-left: 6px;
   vertical-align: -3px;
   image-rendering: auto;
 }

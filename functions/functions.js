@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Define emoji rules
 function formatDisplayName(name) {
   const adminNames = ["Sorta", "Savaki", "Daat", "Xeno", "Eric", "Sneaky", "Nyx", "Bruglar", "Breaker", "Magic Genie", "PETA", "Holly Claus", "Santa", "Nyra Vale", "-_-", "Headless Horseman"];
-  const supportstaffNames = ["Xeno Teddy", "Teddy Claus", "Mr Teddy", "Jack Lumberjack", "Beary Cold", "Rainbow Brite", "Snickey Doodler", "Mera", "Sit and Spin"];
+  const supportstaffNames = ["Xeno Teddy", "Teddy Claus", "Magic Teddy", "Mr Teddy", "Jack Lumberjack", "Beary Cold", "Rainbow Brite", "Snickey Doodler", "Mera", "Sit and Spin"];
 
   const ADMIN_BADGE_URL = "https://makinmagic.github.io/XenoSO/images/admin-badge.png";
   const STAFF_BADGE_URL = "https://makinmagic.github.io/XenoSO/images/staff-badge.png";

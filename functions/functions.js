@@ -1819,14 +1819,13 @@ const moPayoutAt150 = {
 let percentChart = null;
 
 async function loadTopPayingMOs() {
-  const url = 'https://opensheet.elk.sh/1DJHQ0f5X9NUuAouEf5osJgLV2r2nuzsGLIyjLkm-0NM/MOs';
+  const url = `https://makinmagic.github.io/XenoSO/data/highest_paying_object.json?cb=${Date.now()}`;
 
   try {
-    const response = await fetch(url);
-    const data = await response.json();
-    if (!data.length) return;
-
-    const latest = data[data.length - 1];
+    const response = await fetch(url, { cache: "no-store" });
+	const latest = await response.json();
+	
+	if (!latest || !latest.Timestamp) return;
     const local = new Date(latest.Timestamp);
     const formTimestamp = new Date(Date.UTC(
       local.getFullYear(),
@@ -1861,7 +1860,27 @@ async function loadTopPayingMOs() {
       return;
     }
 
-    const entries = Object.entries(latest).filter(([key]) => key !== "Timestamp");
+	if (Array.isArray(latest.items)) {
+	  const keyMap = {
+	    "Writer": "Writers",
+	    "Board": "Boards",
+	    "Pinata": "Pinatas",
+	    "Phone": "Phones",
+	    "Easel": "Easels",
+	    "Gnome": "Gnomes",
+	    "Jam": "Jams",
+	    "Potion": "Potions"
+	  };
+	
+	  latest.items.forEach(({ name, percent }) => {
+	    const key = keyMap[name] || name;
+	    latest[key] = String(percent);
+	  });
+	}
+
+    const entries = Object.entries(latest).filter(([key]) =>
+	  key !== "Timestamp" && key !== "items" && key !== "date"
+	);
 
     const topMOs = entries
       .filter(([, val]) => parseInt(val) > 139)

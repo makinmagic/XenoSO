@@ -1,1 +1,37 @@
-{ "date": "", "items": [] }
+{
+  "date": "2026-02-17",
+  "items": [
+    {
+      "name": "Writer",
+      "percent": 150
+    },
+    {
+      "name": "Board",
+      "percent": 150
+    },
+    {
+      "name": "Pinata",
+      "percent": 149
+    },
+    {
+      "name": "Phone",
+      "percent": 142
+    },
+    {
+      "name": "Gnome",
+      "percent": 94
+    },
+    {
+      "name": "Potion",
+      "percent": 84
+    },
+    {
+      "name": "Easel",
+      "percent": 79
+    },
+    {
+      "name": "Jam",
+      "percent": 50
+    }
+  ]
+}

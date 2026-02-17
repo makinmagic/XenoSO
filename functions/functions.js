@@ -1883,7 +1883,7 @@ async function loadTopPayingMOs() {
 	);
 
     const topMOs = entries
-      .filter(([, val]) => parseInt(val) > 139)
+      .filter(([, val]) => parseInt(val) > 144)
       .sort((a, b) => parseInt(b[1]) - parseInt(a[1]))
       .map(([key, val]) => `${key} (${parseInt(val)}%)`);
 

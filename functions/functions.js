@@ -1828,12 +1828,12 @@ async function loadTopPayingMOs() {
 	if (!latest || !latest.Timestamp) return;
     const local = new Date(latest.Timestamp);
     const formTimestamp = new Date(Date.UTC(
-      local.getFullYear(),
-      local.getMonth(),
-      local.getDate(),
-      local.getHours(),
-      local.getMinutes(),
-      local.getSeconds()
+      local.getUTCFullYear(),
+	  local.getUTCMonth(),
+      local.getUTCDate(),
+	  local.getUTCHours(),
+	  local.getUTCMinutes(),
+	  local.getUTCSeconds()
     ));
     const utcNow = new Date();
 

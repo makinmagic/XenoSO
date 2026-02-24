@@ -1,38 +1,38 @@
 {
-  "Timestamp": "2026-02-23T04:02:11Z",
-  "date": "2026-02-22",
+  "Timestamp": "2026-02-24T04:02:13Z",
+  "date": "2026-02-23",
   "items": [
     {
+      "name": "Jam",
+      "percent": 150
+    },
+    {
       "name": "Board",
-      "percent": 148
-    },
-    {
-      "name": "Gnome",
-      "percent": 147
-    },
-    {
-      "name": "Phone",
-      "percent": 140
+      "percent": 149
     },
     {
       "name": "Writer",
-      "percent": 132
+      "percent": 116
     },
     {
-      "name": "Pinata",
-      "percent": 105
-    },
-    {
-      "name": "Jam",
-      "percent": 67
-    },
-    {
-      "name": "Easel",
-      "percent": 62
+      "name": "Phone",
+      "percent": 116
     },
     {
       "name": "Potion",
-      "percent": 61
+      "percent": 98
+    },
+    {
+      "name": "Pinata",
+      "percent": 96
+    },
+    {
+      "name": "Gnome",
+      "percent": 90
+    },
+    {
+      "name": "Easel",
+      "percent": 56
     }
   ]
 }

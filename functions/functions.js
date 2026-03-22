@@ -2115,13 +2115,13 @@ function sortByFavorites() {
       }
     }
 
-/* //One-off events
+//One-off events
 
 document.addEventListener("DOMContentLoaded", function () {
   const now = new Date();
 
-  const start = new Date(Date.UTC(2025, 11, 23, 5, 0, 0)); // Dec 23 midnight EST
-  const expiry = new Date(Date.UTC(2025, 11, 24, 5, 0, 0)); // Dec 24 midnight EST
+  const start = new Date(Date.UTC(2025, 02, 22, 5, 0, 0)); // Mar 22 midnight EST
+  const expiry = new Date(Date.UTC(2025, 02, 23, 5, 0, 0)); // Mar 23 midnight EST
 
   const msg = document.getElementById('event-message');
   if (!msg) return;
@@ -2137,7 +2137,7 @@ document.addEventListener("DOMContentLoaded", function () {
       setTimeout(() => msg.style.display = 'none', expiry - start);
     }, start - now);
   }
-}); */
+});
 
 /* // One-off local-date event: Christmas message
 document.addEventListener("DOMContentLoaded", function () {
@@ -2151,9 +2151,9 @@ document.addEventListener("DOMContentLoaded", function () {
     now.getDate() === 25;
 
   msg.style.display = isChristmas ? "" : "none";
-}); */
+});
 
-// One-off local-date event: NYE message
+/ One-off local-date event: NYE message
 document.addEventListener("DOMContentLoaded", function () {
   const now = new Date();
 
@@ -2168,7 +2168,7 @@ document.addEventListener("DOMContentLoaded", function () {
     (month === 0 && day === 1);
 
   msg.style.display = isNewYear ? "" : "none";
-});
+}); */
 
 // Countdown
 async function loadCountdown() {

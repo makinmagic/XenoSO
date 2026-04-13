@@ -123,20 +123,20 @@ async function loadOnlinePlayers() {
     <tr>
 	<th>
     	Sim
-    	<i class="fa-solid fa-arrow-up-arrow-down" style="cursor: pointer;" onclick="sortTable(0, 'text')"></i>
+    	<i class="fa-solid fa-sort" style="cursor: pointer;" onclick="sortTable(0, 'text')"></i>
     	<i class="fa-solid fa-star" style="cursor: pointer;" onclick="sortByFavorites()"></i>
 	</th>
         <th class="hidden">ID</th>
         <th>
             Age 
-            <i class="fa-solid fa-arrow-up-arrow-down" 
+            <i class="fa-solid fa-sort" 
                style="cursor: pointer;" 
                onclick="sortTable(2, 'number')"></i>
         </th>
         <th class="hidden">Location ID</th>
         <th>
     Location 
-    <i class="fa-solid fa-arrow-up-arrow-down" 
+    <i class="fa-solid fa-sort" 
        style="cursor: pointer;" 
        onclick="sortTable(4, 'text')"></i>
     <i class="fa-solid fa-briefcase" 

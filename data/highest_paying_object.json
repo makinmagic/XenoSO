@@ -1,7 +1,11 @@
 {
-  "Timestamp": "2026-04-15T04:02:15Z",
-  "date": "2026-04-15",
+  "Timestamp": "2026-04-16T04:02:12Z",
+  "date": "2026-04-16",
   "items": [
+    {
+      "name": "Easel",
+      "percent": 150
+    },
     {
       "name": "Board",
       "percent": 150
@@ -11,28 +15,24 @@
       "percent": 150
     },
     {
+      "name": "Jam",
+      "percent": 147
+    },
+    {
       "name": "Phone",
-      "percent": 150
+      "percent": 90
     },
     {
       "name": "Gnome",
-      "percent": 128
-    },
-    {
-      "name": "Jam",
-      "percent": 102
+      "percent": 82
     },
     {
       "name": "Writer",
-      "percent": 86
-    },
-    {
-      "name": "Easel",
-      "percent": 59
+      "percent": 71
     },
     {
       "name": "Potion",
-      "percent": 56
+      "percent": 50
     }
   ]
 }
